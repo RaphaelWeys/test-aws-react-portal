@@ -1,0 +1,25 @@
+.splash {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+    font-family: Helvetica;
+    display: none;
+}
+
+.splash .content {
+    text-align: center;
+    margin-top: 40vh; /* poussé de la moitié de hauteur de viewport */
+    transform: translateY(-40%); /* tiré de la moitié de sa propre hauteur */
+}
+
+.logo-yem {
+    width: 155px;
+}

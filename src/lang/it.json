@@ -1,0 +1,49 @@
+{
+  "login-no-account": "Non hai un account YEM? ",
+  "login-create-account": "crealo gratuitamente",
+  "login-forgotten-password": "Hai dimenticato la password?",
+  "login-connection": "Connesione",
+
+  "register-have-account": "Hai un account YEM?",
+  "register-connection-link": "Connezione",
+  "register-title": "Pronto a provare il nuovo modo di gestire un contratto ?",
+  "register-subtitle": "YEM solutions are very pertinent both for SMEs & International Groups. They will allow to demistify and simplify largely the activity of​ the energy manager across Europe Eric Bogne,​ Corporate Energy Manager of Auchan.",
+  "register-society": "Azienda",
+  "register-sector": "Settore",
+  "register-submit": "Crea",
+  "register-firstname": "Nome",
+  "register-surname": "Cognome",
+  "register-email": "Email",
+  "register-password": "Password",
+  "register-confirm-password": "Conferma password",
+  "register-information": "Le soluzioni YEM sono pensate per aziende con consumi minimi di 1.000.000 kWh/anno di energia elettrica e/o 200.000 smc/anno di gas.",
+  "register-general-condition-1": "Ho preso visione delle",
+  "register-general-condition-2": "Condizioni Generali",
+  "register-general-condition-3": "YEM che dichiaro di accettare integralmente *",
+  "register-privacy-information-1": "Dichiaro di aver preso visione dell’",
+  "register-privacy-information-2": "Informativa Privacy",
+  "register-privacy-information-3": "e prendo atto che il conferimento dei miei dati personali è necessario per l’attivazione dei servizi offerti dalla Piattaforma YEM *",
+  "register-new-product": "Al trattamento dei miei dati personali al fine di poter essere contattato per la presentazione, l’offerta e l’eventuale acquisto di nuovi prodotti e servizi della Piattaforma YEM.",
+
+  "home-title": "Ciao, cosa vuoi fare oggi?",
+  "home-app-optimization": "Ottimizzare il mio contratto",
+  "home-app-marketplace": "Ottimizzare il mio contratto",
+  "home-notifications": "Notifiche",
+  "home-all-notifications": "Visualizza tutte le notifiche",
+  "home-perspective": "Perspective",
+  "home-last-month": "Last month",
+
+  "header-company-profile": "Proﬁlo aziendale",
+  "header-invoice-payment": "Fatture e pagamento",
+  "header-change-password": "Cambia password",
+  "header-general-condition": "Condizioni generali",
+  "header-privacy-disclaimer": "Informativa Privacy",
+  "header-log-out": "Esci",
+
+  "global-previous": "Indietro",
+  "global-next": "Seguito",
+
+  "country-FR": "Francia",
+  "country-IT": "Italia"
+
+}

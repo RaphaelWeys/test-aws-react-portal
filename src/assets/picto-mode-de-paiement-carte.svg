@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="57" height="32" viewBox="0 0 57 32">
+  <g id="picto-mode-de-paiement-carte" transform="translate(-1055 -629)">
+    <rect id="Rectangle_921" data-name="Rectangle 921" width="57" height="32" transform="translate(1055 629)" fill="transparent"/>
+    <g id="Picto-mode-de-paiement-carte-2" data-name="Picto-mode-de-paiement-carte" transform="translate(1019 -643)">
+      <rect id="Rectangle_729" data-name="Rectangle 729" width="28.691" height="20.226" rx="5" transform="translate(50 1278)" fill="none" stroke="#636567" stroke-miterlimit="10" stroke-width="2"/>
+      <rect id="Rectangle_730" data-name="Rectangle 730" width="28.691" height="5.265" transform="translate(50 1282.848)" fill="#636567"/>
+      <path id="Tracé_126" data-name="Tracé 126" d="M0,0H10.232" transform="translate(54.395 1292.646)" fill="none" stroke="#636567" stroke-linecap="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

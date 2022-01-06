@@ -1,0 +1,27 @@
+{
+  "headers": {
+    "/**": {
+      "Cache-Control": "no-store, no-cache",
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin",
+      "Permissions-Policy": "accelerometer=(), geolocation=(), fullscreen=(self), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), display-capture=(self)",
+      "Content-Security-Policy": "script-src 'self' https://js.stripe.com apis.google.com *.googletagmanager.com *.google-analytics.com https://cdn.lr-in.com https://cdn.lr-ingest.io; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; frame-src https://js.stripe.com https://hooks.stripe.com www.youtube.com *.yem-energy.com; img-src 'self' data: www.googletagmanager.com *.yem-energy.com yem-energy.com www.google-analytics.com www.google.com www.google.fr; font-src 'self' data: https://fonts.googleapis.com fonts.gstatic.com; connect-src 'self' https://api.stripe.com *.herokuapp.com https://*.lr-in.com https://*.lr-ingest.io www.google-analytics.com; object-src 'none'; worker-src 'self' blob: data: ;",
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+    },
+    "/images/**": {
+      "Cache-Control": "public, max-age=3600"
+    },
+    "/static/media/**": {
+      "Cache-Control": "public, max-age=3600"
+    }
+  },
+  "root": "build/",
+  "routes": {
+    "/**": "index.html"
+  },
+  "types": {
+    "application/x-javascript": "js",
+    "text/css": "css"
+  }
+}

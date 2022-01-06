@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It should match snapshot 1`] = `
+.c2 {
+  margin-right: 30px;
+}
+
+.c3 {
+  margin-right: 70px;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c4 > :first-child {
+  font-weight: bold;
+  margin-bottom: 9px;
+}
+
+.c4 > :nth-child(2) {
+  font-size: 13px;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c6 {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0;
+}
+
+.c6:hover {
+  cursor: pointer;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 16px 16px 13px;
+  border-top: 2px dotted black;
+  border-bottom: 2px dotted black;
+}
+
+.c0 .c5 {
+  margin-left: 30px;
+}
+
+<div>
+  <div
+    class="c0 sc-pJurq cwzEZF"
+    data-testid="payment-history-item"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        <img
+          alt="picto logo"
+          src="/static/media/picto-optimization.5dca1da9.svg"
+        />
+      </div>
+      <div
+        class="c3"
+      >
+        01/07/2020
+      </div>
+      <div
+        class="c4"
+      >
+        <div>
+          YEM Optimization subscription
+        </div>
+        <div>
+          payment-history-reference
+          : 
+          1 year subscription - 4 contracts
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1"
+    >
+      <div
+        data-testid="price-test"
+      >
+        1 800.00
+         €
+      </div>
+      <button
+        class="c5 c6"
+        data-testid="button-download"
+        type="button"
+      >
+        <svg
+          height="18.867"
+          viewBox="0 0 18.492 18.867"
+          width="18.492"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            id="download"
+            transform="translate(0.5)"
+          >
+            <g
+              data-name="Groupe 708"
+              id="Groupe_708"
+              transform="translate(17.492 18.367) rotate(180)"
+            >
+              <path
+                d="M0,0V6.945H17.492V0"
+                data-name="Tracé 85"
+                fill="none"
+                id="Tracé_85"
+                stroke="#727577"
+                stroke-miterlimit="10"
+                stroke-width="1"
+                transform="translate(17.492 6.945) rotate(180)"
+              />
+              <path
+                d="M15.023,0,7.511,7.512,0,0"
+                data-name="Tracé 86"
+                fill="none"
+                id="Tracé_86"
+                stroke="#727577"
+                stroke-miterlimit="10"
+                stroke-width="1"
+                transform="translate(16.258 13.017) rotate(180)"
+              />
+              <line
+                data-name="Ligne 33"
+                fill="none"
+                id="Ligne_33"
+                stroke="#727577"
+                stroke-miterlimit="10"
+                stroke-width="1"
+                transform="translate(8.746 18.367) rotate(180)"
+                y1="12.862"
+              />
+            </g>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
