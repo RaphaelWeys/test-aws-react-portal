@@ -3,6 +3,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+
 import GradientButton from '../../components/GradientButton/GradientButton';
 import { Input } from '../../components/Input';
 import { AlertStyled } from '../../components/Modal/ScreenModal/ForgotPasswordModal/ForgotPasswordModal.styled';
@@ -10,7 +11,7 @@ import { getValidationCheck } from '../../constants';
 import { useUpdatePassword } from '../../endpoints/user/useUpdatePassword';
 import MainLayout from '../../layout/MainLayout';
 import RectangleBox from '../../layout/RectangleBox/RectangleBox';
-import { Navigation } from '../../navigation/index';
+import { Navigation } from '../../navigation';
 import history from '../../router/history';
 import { TextRegular } from '../../style/utils';
 import { WrapperAlert } from './UpdatePassword.styled';
@@ -62,9 +63,9 @@ const UpdatePassword: FC<Props> = ({ className }) => {
     <MainLayout>
       <div className={className}>
         <RectangleBox showLogo={false} title={t('update-password-title')}>
-          <Space direction="vertical" size="large" align="center">
+          <Space align="center" direction="vertical" size="large">
             <WrapperAlert>
-              {error && <AlertStyled message={t('update-password-changed-failed')} type="error" showIcon />}
+              {error && <AlertStyled showIcon message={t('update-password-changed-failed')} type="error" />}
             </WrapperAlert>
 
             {isSuccess ? (
@@ -78,35 +79,35 @@ const UpdatePassword: FC<Props> = ({ className }) => {
                   <Col span={24}>
                     <Controller
                       as={Input}
-                      name="oldPassword"
-                      label={t('update-password-current-password')}
                       control={control}
-                      type="password"
                       error={errors?.oldPassword}
+                      label={t('update-password-current-password')}
+                      name="oldPassword"
+                      type="password"
                     />
                   </Col>
                   <Col span={24}>
                     <Controller
                       as={Input}
-                      name="newPassword"
-                      label={t('update-password-new-password')}
                       control={control}
-                      type="password"
                       error={errors?.newPassword}
+                      label={t('update-password-new-password')}
+                      name="newPassword"
+                      type="password"
                     />
                   </Col>
                   <Col span={24}>
                     <Controller
                       as={Input}
-                      name="confirmNewPassword"
-                      label={t('update-password-confirm-new-password')}
                       control={control}
-                      type="password"
                       error={errors?.confirmNewPassword}
+                      label={t('update-password-confirm-new-password')}
+                      name="confirmNewPassword"
+                      type="password"
                     />
                   </Col>
                   <Col span={12}>
-                    <GradientButton type="submit" isLoading={isLoading}>
+                    <GradientButton isLoading={isLoading} type="submit">
                       {t('global-change')}
                     </GradientButton>
                   </Col>

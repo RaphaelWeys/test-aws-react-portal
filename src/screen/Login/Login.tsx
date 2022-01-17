@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
 import CustomLink from '../../components/CustomLink';
 import GradientButton from '../../components/GradientButton';
 import { Input } from '../../components/Input';
@@ -14,17 +15,13 @@ import { useTenant } from '../../context/TenantContext';
 import { useUserInfo } from '../../context/UserInfoContext';
 import { useLogin } from '../../endpoints/registration/useLogin';
 import useGetFollowApp from '../../hooks/useGetFollowApp';
+import useSaveToken from '../../hooks/useSaveToken';
 import RectangleBox from '../../layout/RectangleBox';
 import { Navigation } from '../../navigation';
-import { BlueStyle, TextRegular } from '../../style/utils';
-import { saveTokenCookies } from '../../utils';
+import { MainLinkStyle, TextRegular } from '../../style/utils';
 import { isClient, isMultiAccess } from '../../utils/behavior';
 import { getQueryParameters } from '../../utils/url';
-
-export type FormLogin = {
-  username: string;
-  password: string;
-} & { tenant?: string };
+import { FormLogin } from './Login.interface';
 
 interface PropsLogin {
   className?: string;
@@ -42,6 +39,7 @@ const Login: FC<PropsLogin> = ({ className }) => {
   const { env, tenantName } = useTenant();
   const [modalTermAndCondition, setModalTermAndCondition] = React.useState(null);
   const followAppUrl = useGetFollowApp();
+  const { saveToken } = useSaveToken();
 
   useEffect(() => {
     register({ name: 'username' }, { required: true });
@@ -50,8 +48,7 @@ const Login: FC<PropsLogin> = ({ className }) => {
 
   const handleSuccessLogin = React.useCallback(
     (userInfo) => {
-      saveTokenCookies(userInfo.token, env.REACT_APP_SUB_DOMAIN);
-      // saveTokenCookies(userInfo.token, 'localhost');
+      saveToken(userInfo.token);
 
       if (callback) {
         window.location.assign(`${callback}`);
@@ -60,15 +57,13 @@ const Login: FC<PropsLogin> = ({ className }) => {
 
       if (!userInfo.validated) {
         history.push(`${Navigation.CONFIRM_EMAIL}?userid=${userInfo._id}`);
-      } else {
-        if (env.REACT_APP_REDIRECT_YOP_ON_LOGIN) window.location.assign(followAppUrl);
-        else {
-          setUserInfo(userInfo);
-          history.push(Navigation.DASHBOARD);
-        }
+      } else if (env.REACT_APP_REDIRECT_YOP_ON_LOGIN) window.location.assign(followAppUrl);
+      else {
+        setUserInfo(userInfo);
+        history.push(Navigation.DASHBOARD);
       }
     },
-    [callback, env.REACT_APP_REDIRECT_YOP_ON_LOGIN, env.REACT_APP_SUB_DOMAIN, followAppUrl, history, setUserInfo],
+    [callback, env.REACT_APP_REDIRECT_YOP_ON_LOGIN, followAppUrl, history, saveToken, setUserInfo],
   );
 
   const onSubmit = (data: FormLogin): void => {
@@ -98,41 +93,41 @@ const Login: FC<PropsLogin> = ({ className }) => {
               {t('login-no-account')} <CustomLink to="/register">{t('login-create-account')}</CustomLink>
             </TextRegular>
           )}
-          {error && <Alert message={t(`login-alert-error-${error.response?.status}`)} type="error" showIcon />}
+          {error && <Alert showIcon message={t(`login-alert-error-${error.response?.status}`)} type="error" />}
           <form onSubmit={handleSubmit(onSubmit)}>
             <Space direction="vertical" size="large">
               <Row gutter={[0, 18]}>
                 <Col span={24}>
                   <Controller
+                    autoFocus
                     as={Input}
-                    name="username"
-                    label={t('global-email')}
                     control={control}
-                    type="text"
                     error={errors?.username}
                     htmlFor="username"
-                    autoFocus
+                    label={t('global-email')}
+                    name="username"
+                    type="text"
                   />
                 </Col>
                 <Col span={24}>
                   <Controller
                     as={Input}
-                    name="password"
-                    label={t('global-password')}
                     control={control}
-                    type="password"
-                    htmlFor="password"
                     error={errors?.password}
+                    htmlFor="password"
+                    label={t('global-password')}
+                    name="password"
+                    type="password"
                   />
                 </Col>
               </Row>
 
-              <BlueStyle>
+              <MainLinkStyle>
                 <InvisibleButton onClick={() => setShowForgotModal(true)}>
                   {t('login-forgotten-password')}
                 </InvisibleButton>
-              </BlueStyle>
-              <GradientButton type="submit" isLoading={isLoading} fullWidth>
+              </MainLinkStyle>
+              <GradientButton fullWidth isLoading={isLoading} type="submit">
                 {t('login-connection')}
               </GradientButton>
             </Space>
@@ -144,10 +139,10 @@ const Login: FC<PropsLogin> = ({ className }) => {
 
       {modalTermAndCondition && (
         <ModalTermAndCondition
-          title={t('modal-cgu-rgpd-title')}
-          onClose={() => setModalTermAndCondition(null)}
           handleSuccessLogin={modalTermAndCondition.onSuccess}
+          title={t('modal-cgu-rgpd-title')}
           userInfo={modalTermAndCondition.userInfo}
+          onClose={() => setModalTermAndCondition(null)}
         />
       )}
     </div>

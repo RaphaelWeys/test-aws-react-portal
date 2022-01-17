@@ -1,11 +1,11 @@
-import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
-import i18next from 'i18next';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import i18next from 'i18next';
+import React from 'react';
 
-import SelectLang from '../SelectLang';
 import { LocalContext } from '../../../context/LocalContext';
 import { UserInfoContext } from '../../../context/UserInfoContext';
+import SelectLang from '../SelectLang';
 
 jest.mock('i18next');
 jest.mock('axios');

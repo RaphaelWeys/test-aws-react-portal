@@ -3,19 +3,19 @@ import React from 'react';
 function UserGraphIcon({ color = '#BDBEBF' }) {
   return (
     <svg
-      style={{ display: 'block' }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="30.057"
       height="21.253"
+      style={{ display: 'block' }}
       viewBox="0 0 30.057 21.253"
+      width="30.057"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <g transform="translate(.462 .086)">
         <g
+          data-name="Groupe 1834"
           fill="none"
           stroke={color}
           strokeMiterlimit="10"
           strokeWidth="1.2"
-          data-name="Groupe 1834"
           transform="translate(.138 .514)"
         >
           <path

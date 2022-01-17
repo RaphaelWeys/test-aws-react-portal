@@ -1,13 +1,13 @@
-import React from 'react';
 import { fireEvent, render as renderUi, waitFor } from '@testing-library/react';
-import { Router } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import React from 'react';
+import { Router } from 'react-router-dom';
 
-import Login from '../Login';
-import history from '../../../router/history';
-import { UserInfoContext } from '../../../context/UserInfoContext';
 import { LocalContext } from '../../../context/LocalContext';
+import { UserInfoContext } from '../../../context/UserInfoContext';
+import history from '../../../router/history';
+import Login from '../Login';
 
 jest.mock('axios');
 jest.mock('js-cookie');
@@ -23,15 +23,13 @@ afterAll(() => {
 const localValue = { local: 'string', setLocal: jest.fn() };
 const userInfoValue = { userInfo: {}, setUserInfo: jest.fn() };
 
-const render = (ui: React.ReactNode) => {
-  return renderUi(
+const render = (ui: React.ReactNode) => renderUi(
     <Router history={history}>
       <LocalContext.Provider value={localValue}>
         <UserInfoContext.Provider value={userInfoValue}>{ui}</UserInfoContext.Provider>
       </LocalContext.Provider>
     </Router>,
   );
-};
 
 test('It should authenticate with correct IDs', async () => {
   const email = 'test@email.com';

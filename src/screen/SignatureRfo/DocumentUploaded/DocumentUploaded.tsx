@@ -1,16 +1,16 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Col, Row, Space } from 'antd';
 import { EyeOutlined } from '@ant-design/icons/lib';
-import styled, { css, ThemeContext } from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { Col, Row, Space } from 'antd';
 import moment from 'moment';
+import React, { FC, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled, { css, ThemeContext } from 'styled-components';
 
 import CommonButton from '../../../components/CommonButton';
-import { SupplierNoteLabel } from '../SignatureRfo.styled';
-import { GrayBox } from './DocumentUploaded.styled';
+import InvisibleButton from '../../../components/InvisibleButton/InvisibleButton';
 import ModalAbandonOffer from '../../../components/Modal/ModalAbandonOffer';
 import { SIGNATURE_DOC_SIGNER_STATUS, SIGNATURE_DOC_SUPPLIER_STATUS } from '../../../config/app-config';
-import InvisibleButton from '../../../components/InvisibleButton/InvisibleButton';
+import { SupplierNoteLabel } from '../SignatureRfo.styled';
+import { GrayBox } from './DocumentUploaded.styled';
 
 interface Props {
   getSignaturePack: () => Promise<any>;
@@ -44,7 +44,7 @@ const DocumentUploaded: FC<Props> = ({
         return `${process.env.REACT_APP_BACKEND_PORTAL_URL}/signature/docSupplier/download/${packId}/${fileId}`;
       return `${process.env.REACT_APP_BACKEND_PORTAL_URL}/signature/docSigner/download/${packId}/${fileId}`;
     },
-    [packId, currentVersion.docSignerStatus],
+    [currentVersion.docSignerStatus, packId, isSupplier],
   );
 
   const hideModalAandonOffer = useCallback(() => {
@@ -53,7 +53,7 @@ const DocumentUploaded: FC<Props> = ({
 
   return (
     <>
-      <Space direction="vertical" size="middle" className={className}>
+      <Space className={className} direction="vertical" size="middle">
         <Space direction="vertical">
           <Row>
             <Col>
@@ -130,10 +130,10 @@ const DocumentUploaded: FC<Props> = ({
 
       {showModalAbandonOffer && (
         <ModalAbandonOffer
-          onCancel={hideModalAandonOffer}
           customCancel={hideModalAandonOffer}
-          packId={packId}
           getSignaturePack={getSignaturePack}
+          packId={packId}
+          onCancel={hideModalAandonOffer}
         />
       )}
     </>

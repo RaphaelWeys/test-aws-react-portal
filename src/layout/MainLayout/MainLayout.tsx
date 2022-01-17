@@ -7,9 +7,7 @@ interface Props {
   className?: string;
 }
 
-const MainLayout: FC<Props> = ({ className, children }) => {
-  return <div className={className}>{children}</div>;
-};
+const MainLayout: FC<Props> = ({ className, children }) => <div className={className}>{children}</div>;
 
 export default styled(MainLayout)<{ hasBg?: boolean }>`
   ${({ hasBg = true, theme: { breakpoints } }) => css`

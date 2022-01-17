@@ -3,21 +3,21 @@ import React from 'react';
 function CompanyIcon() {
   return (
     <svg
-      style={{ display: 'block' }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="31.712"
       height="20.169"
+      style={{ display: 'block' }}
       viewBox="0 0 31.712 20.169"
+      width="31.712"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <g transform="translate(.6 .6)">
         <g>
           <g>
             <path
+              d="M12.072 18.962H0V0h3.613v10.436l5.338-4.029a.43.43 0 01.691.334l.04 3.993h.194l5.411-4.085a.632.632 0 011.014.491l.017 2.576"
               fill="none"
               stroke="#000"
               strokeMiterlimit="10"
               strokeWidth="1.2"
-              d="M12.072 18.962H0V0h3.613v10.436l5.338-4.029a.43.43 0 01.691.334l.04 3.993h.194l5.411-4.085a.632.632 0 011.014.491l.017 2.576"
             />
           </g>
         </g>

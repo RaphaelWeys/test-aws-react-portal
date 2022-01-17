@@ -1,8 +1,11 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import { InputProps } from 'antd/lib/input';
 import React, { FC } from 'react';
 import { FieldError } from 'react-hook-form';
 
+import useDesktop from '../../../hooks/useDesktop';
 import { Error, Label } from '../../../style/utils';
+import { callAll } from '../../../utils';
 import { getErrorMessage } from '../../../utils/input';
 import {
   InputPasswordStyled,
@@ -11,9 +14,6 @@ import {
   WrapperInputText,
   WrapperSpinner,
 } from './InputText.styled';
-import useDesktop from '../../../hooks/useDesktop';
-import { LoadingOutlined } from '@ant-design/icons';
-import { callAll } from '../../../utils';
 
 type Props = {
   className?: string;

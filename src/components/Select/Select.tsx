@@ -7,8 +7,8 @@ import styled, { css } from 'styled-components';
 
 import useDesktop from '../../hooks/useDesktop';
 import { Error, Label } from '../../style/utils';
-import { getErrorMessage } from '../../utils/input';
 import { callAll } from '../../utils';
+import { getErrorMessage } from '../../utils/input';
 
 export interface Item extends Omit<LabeledValue, 'label'> {
   label: string;
@@ -55,6 +55,7 @@ export default styled(Select)`
     && {
       .ant-select {
         width: 100%;
+        border-radius: 4px;
       }
       .ant-select-selector {
         background: ${colors.whiteDark};

@@ -7,17 +7,17 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import InvisibleButton from '../../../components/InvisibleButton';
+import { useOrder } from '../../../context/OrderContext';
 import { useScroll } from '../../../context/ScrollContext';
 import useContactUs from '../../../hooks/useContactUs';
+import basketState from '../../../StoreForm/basketState';
+import { updateBasketForm } from '../../../StoreForm/updateState';
+import { getQueryParameters } from '../../../utils/url';
 import BasketForm from '../BasketForm';
 import BasketItem from '../BasketItem';
 import BasketPay from '../BasketPay';
 import BasketValidate from '../BasketValidate';
-import { useOrder } from '../BasketWrapper';
 import { CancelIcon, ContactUs, Line, Logo, Step, Title, WrapperSteps } from './AppBasket.styled';
-import { updateBasketForm } from '../../../StoreForm/updateState';
-import basketState from '../../../StoreForm/basketState';
-import { getQueryParameters } from '../../../utils/url';
 
 interface Props {
   className?: string;
@@ -76,23 +76,21 @@ const AppBasket: FC<Props> = ({ className, icon }) => {
             </InvisibleButton>
           </CancelIcon>
 
-          <Logo src={icon} alt="" />
+          <Logo alt="" src={icon} />
           <Title>{order?.app === 'tender' ? t('basket-title-marketplace') : t('basket-title-optimization')}</Title>
           <WrapperSteps>
             <Line />
-            {steps.map((step) => {
-              return (
-                <Step key={step.id} isActive={step.id === actualStep}>
-                  {step.label}
-                </Step>
-              );
-            })}
+            {steps.map((step) => (
+              <Step isActive={step.id === actualStep} key={step.id}>
+                {step.label}
+              </Step>
+            ))}
           </WrapperSteps>
           {actualStep === 0 && <BasketItem nextStep={() => setActualStep(1)} />}
-          {actualStep === 1 && <BasketForm previousStep={() => setActualStep(0)} nextStep={() => setActualStep(2)} />}
+          {actualStep === 1 && <BasketForm nextStep={() => setActualStep(2)} previousStep={() => setActualStep(0)} />}
           <Elements stripe={stripePromise}>
             {actualStep === 2 && (
-              <BasketPay previousStep={() => setActualStep(1)} nextStep={() => setIsPaymentValidated(true)} />
+              <BasketPay nextStep={() => setIsPaymentValidated(true)} previousStep={() => setActualStep(1)} />
             )}
           </Elements>
         </>

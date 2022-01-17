@@ -1,3 +1,8 @@
+import 'moment/locale/es';
+import 'moment/locale/fr';
+import 'moment/locale/it';
+import 'moment/locale/nl';
+
 import { ConfigProvider } from 'antd';
 import enUs from 'antd/lib/locale/en_US';
 import esES from 'antd/lib/locale/es_ES';
@@ -6,11 +11,8 @@ import itIt from 'antd/lib/locale/it_IT';
 import nlNl from 'antd/lib/locale/nl_NL';
 import i18next from 'i18next';
 import moment from 'moment';
-import 'moment/locale/es';
-import 'moment/locale/fr';
-import 'moment/locale/it';
-import 'moment/locale/nl';
 import React, { FC, useState } from 'react';
+
 import { getQueryParameters } from '../utils/url';
 import { useUserInfo } from './UserInfoContext';
 
@@ -47,4 +49,4 @@ const LocalProvider: FC = ({ children }) => {
   return <ConfigProvider locale={localAnt}>{children}</ConfigProvider>;
 };
 
-export { LocalProvider, LocalContext };
+export { LocalContext,LocalProvider };

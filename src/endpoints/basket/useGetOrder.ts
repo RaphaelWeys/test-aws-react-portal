@@ -2,8 +2,8 @@ import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
 
 import { useApi } from '../../context/ApiContext';
+import { useOrder } from '../../context/OrderContext';
 import { Order } from '../../interface/order';
-import { useOrder } from '../../screen/Basket/BasketWrapper';
 
 export const useGetOrder = (orderId: string) => {
   const client = useApi();

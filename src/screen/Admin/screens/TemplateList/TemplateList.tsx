@@ -4,9 +4,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import GradientButton from '../../../../components/GradientButton';
-import Select from '../../../../components/Select';
+import { Input } from '../../../../components/Input';
 import TextArea from '../../../../components/Input/TextArea';
+import Select from '../../../../components/Select';
 import { AdminLanguageItems } from '../../../../config/app-config';
+import { useGetSubject } from '../../../../endpoints/admin/template/useGetSubject';
 import { useGetTemplateRaw } from '../../../../endpoints/admin/template/useGetTemplateRaw';
 import { useGetTemplates } from '../../../../endpoints/admin/template/useGetTemplates';
 import { useUpdateAction } from '../../../../endpoints/admin/template/useUpdateAction';
@@ -14,8 +16,6 @@ import { useUpdateDocuments } from '../../../../endpoints/admin/template/useUpda
 import { useUpdateTemplate } from '../../../../endpoints/admin/template/useUpdateTemplate';
 import { Template } from '../../../../interface/template';
 import ButtonDownload from './ButtonDownload';
-import { Input } from '../../../../components/Input';
-import { useGetSubject } from '../../../../endpoints/admin/template/useGetSubject';
 
 interface Props {
   className?: string;
@@ -140,31 +140,31 @@ const TemplateList: FC<Props> = () => {
         <Row gutter={24}>
           <Col span={4}>
             <Select
-              value={app}
-              onChange={setApp}
               items={[
                 { label: 'Optimization', value: 'follow', key: '0' },
                 { label: 'Portal', value: 'portal', key: '1' },
                 { label: 'Marketplace', value: 'tender', key: '2' },
               ]}
+              value={app}
+              onChange={setApp}
             />
           </Col>
           <Col span={4}>
-            <Select value={lang} onChange={setLang} items={AdminLanguageItems} />
+            <Select items={AdminLanguageItems} value={lang} onChange={setLang} />
           </Col>
         </Row>
 
         <Row gutter={24}>
           <Col span={8}>
             <Select
+              items={(templates || []).map((temp) => ({ label: temp.name, value: temp.name, key: temp.name }))}
               label={t('admin-template-label-select')}
+              placeholder={t('admin-template-placeholder-select')}
               value={selectedTemplate?.name}
               onChange={(value) => {
                 const currentTemplate = templates?.find((temp) => temp.name === value);
                 setSelectedTemplate(currentTemplate);
               }}
-              placeholder={t('admin-template-placeholder-select')}
-              items={(templates || []).map((temp) => ({ label: temp.name, value: temp.name, key: temp.name }))}
             />
           </Col>
         </Row>
@@ -173,10 +173,10 @@ const TemplateList: FC<Props> = () => {
           <Row gutter={24}>
             <Col span={8}>
               <Select
-                value={selectedDocumentId}
-                label={selectedTemplate.preview.documentLabel}
-                onChange={(id) => setSelectedDocumentId(id)}
                 items={(documents || []).map((doc) => ({ label: doc.label, value: doc.id, key: doc.label }))}
+                label={selectedTemplate.preview.documentLabel}
+                value={selectedDocumentId}
+                onChange={(id) => setSelectedDocumentId(id)}
               />
             </Col>
           </Row>
@@ -188,12 +188,12 @@ const TemplateList: FC<Props> = () => {
               <Controller
                 as={Input}
                 control={control}
-                name="subject"
-                label="Subject"
-                error={errors?.subject}
-                customOnChange={(e) => {
+                customOnChange={() => {
                   setIsTemplateSaved(false);
                 }}
+                error={errors?.subject}
+                label="Subject"
+                name="subject"
               />
             </Col>
           </Row>
@@ -201,30 +201,26 @@ const TemplateList: FC<Props> = () => {
 
         {selectedDocumentId && (selectedTemplate?.preview.buttons.length || 0) > 0 && (
           <Space size="large">
-            {selectedTemplate?.preview.buttons.map((button) => {
-              return (
-                <>
-                  <Popconfirm
-                    placement="bottomLeft"
-                    title={t('admin-template-popover-get-title')}
-                    okButtonProps={{ style: { display: 'none' } }}
-                    disabled={isTemplateSaved}
-                  >
-                    <Button onClick={() => isTemplateSaved && handleTriggerAction(button.action)}>
-                      {button.label}
-                    </Button>
-                  </Popconfirm>
-                  {button.downloadable && action && (
-                    <ButtonDownload
-                      app={app}
-                      filename={action.filename}
-                      action={button.action}
-                      isTemplateSaved={isTemplateSaved}
-                    />
-                  )}
-                </>
-              );
-            })}
+            {selectedTemplate?.preview.buttons.map((button) => (
+              <>
+                <Popconfirm
+                  disabled={isTemplateSaved}
+                  okButtonProps={{ style: { display: 'none' } }}
+                  placement="bottomLeft"
+                  title={t('admin-template-popover-get-title')}
+                >
+                  <Button onClick={() => isTemplateSaved && handleTriggerAction(button.action)}>{button.label}</Button>
+                </Popconfirm>
+                {button.downloadable && action && (
+                  <ButtonDownload
+                    action={button.action}
+                    app={app}
+                    filename={action.filename}
+                    isTemplateSaved={isTemplateSaved}
+                  />
+                )}
+              </>
+            ))}
           </Space>
         )}
 
@@ -251,17 +247,17 @@ const TemplateList: FC<Props> = () => {
           <Controller
             as={TextArea}
             control={control}
-            name="templateEdited"
-            rows={18}
-            defaultValue={templateRaw}
-            customOnChange={(e) => {
+            customOnChange={() => {
               setIsTemplateSaved(false);
             }}
+            defaultValue={templateRaw}
             disabled={!selectedTemplate}
+            name="templateEdited"
+            rows={18}
           />
         )}
 
-        <GradientButton type="submit" isLoading={updateTemplateLoading} disabled={isTemplateSaved}>
+        <GradientButton disabled={isTemplateSaved} isLoading={updateTemplateLoading} type="submit">
           {t('global-save')}
         </GradientButton>
       </Space>

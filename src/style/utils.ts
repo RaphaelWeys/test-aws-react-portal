@@ -1,61 +1,5 @@
 import styled, { css } from 'styled-components';
 
-type IJustify = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
-type IAlign = 'stretch' | 'center' | 'flex-start' | 'flex-end' | 'baseline' | 'initial' | 'inherit';
-type IDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
-type IDisplay = 'inline-block';
-
-export const AlignItems = styled.div<{
-  justify?: IJustify;
-  align?: IAlign;
-  flex?: boolean;
-  noFlexWrap?: boolean;
-  space?: number;
-  direction?: IDirection;
-  bothSideSpace?: boolean;
-  display?: IDisplay;
-  allSpace?: boolean;
-}>`
-  ${({
-    justify = 'flex-start',
-    align = 'center',
-    flex = false,
-    noFlexWrap = false,
-    space = 0,
-    direction = 'row',
-    bothSideSpace,
-    display,
-    allSpace,
-  }) => css`
-    align-items: ${align};
-    display: ${display || 'flex'};
-    justify-content: ${justify};
-    flex-direction: ${direction};
-    ${!noFlexWrap && 'flex-wrap: wrap;'};
-
-    > * {
-      ${flex && 'flex: 1'};
-
-      ${bothSideSpace
-        ? space && (direction === 'row' || direction === 'row-reverse')
-          ? `margin-right: ${space / 16}rem; margin-left: ${space / 16}rem`
-          : `margin-top: ${space / 16}rem; margin-bottom: ${space / 16}rem`
-        : null};
-
-      ${allSpace ? `margin: ${space / 16}rem` : null}
-    }
-    > * + * {
-      ${space && (direction === 'row' || direction === 'row-reverse')
-        ? bothSideSpace
-          ? `margin-right: ${space / 16}rem; margin-left: ${space / 16}rem`
-          : `margin-left: ${space / 16}rem`
-        : bothSideSpace
-        ? `margin: ${space / 16}rem 0`
-        : `margin-top: ${space / 16}rem`};
-    }
-  `}
-`;
-
 export const Margin = styled.div<{ mt?: number; mb?: number; ml?: number; mr?: number }>`
   ${({ mt, mb, ml, mr }) => css`
     ${mt && `margin-top: ${mt}px`};
@@ -105,6 +49,13 @@ export const HeaderThree = styled.div`
   `}
 `;
 
+export const TextSmall = styled.div`
+  ${({ theme: { colors, fontSize } }) => css`
+    font-size: ${fontSize.small};
+    color: ${colors.grayDark};
+  `}
+`;
+
 export const TextRegular = styled.div`
   ${({ theme: { colors, fontSize } }) => css`
     font-size: ${fontSize.regular};
@@ -120,6 +71,14 @@ export const TextRegularBold = styled.div`
   `}
 `;
 
+export const TextColored = styled.div<{ color: string }>`
+  ${({ theme: { fontSize }, color }) => css`
+    font-size: ${fontSize.regular};
+    color: ${color};
+    font-weight: bold;
+  `}
+`;
+
 export const Label = styled.label`
   ${({ theme: { colors, fontSize } }) => css`
     font-size: ${fontSize.regular};
@@ -128,7 +87,7 @@ export const Label = styled.label`
   `}
 `;
 
-export const BlueStyle = styled.div<{ disabled?: boolean }>`
+export const MainLinkStyle = styled.div<{ disabled?: boolean }>`
   ${({ theme: { colors, fontSize }, disabled }) => css`
     font-size: ${fontSize.small};
     color: ${disabled ? colors.gray : colors.baseColor};

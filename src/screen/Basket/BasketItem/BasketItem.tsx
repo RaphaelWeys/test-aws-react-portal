@@ -5,9 +5,9 @@ import styled, { css } from 'styled-components';
 import GradientButton from '../../../components/GradientButton';
 import { Input } from '../../../components/Input';
 import InvisibleButton from '../../../components/InvisibleButton';
+import { useOrder } from '../../../context/OrderContext';
 import { useUpdateBasketCoupon } from '../../../endpoints/basket/useUpdateBasketCoupon';
 import { getCurrencyFormatted } from '../../../utils/number';
-import { useOrder } from '../BasketWrapper';
 import {
   Divider,
   FormStyled,
@@ -62,7 +62,7 @@ const BasketItem: FC<Props> = ({ className, nextStep }) => {
   return (
     <div className={className}>
       {order?.items.map((item, index) => (
-        <RFOPrice key={index} data-testid="wrapperPrice">
+        <RFOPrice data-testid="wrapperPrice" key={index}>
           <RFO>
             <div>{item.name}</div>
             <div>{item.description}</div>
@@ -73,19 +73,19 @@ const BasketItem: FC<Props> = ({ className, nextStep }) => {
 
       <PromoCode>
         <FormStyled>
-          <Label onClick={() => setShowInput(true)} isActive={showInput || !!code || !!order.couponCode}>
+          <Label isActive={showInput || !!code || !!order.couponCode} onClick={() => setShowInput(true)}>
             {t('basket-item-promo-code')}
           </Label>
           {showInput && (
             <WrapperInput>
               <Input
-                type="text"
-                onChange={handleChangeInput}
-                value={inputValue}
-                onKeyPress={handleKeyPress}
-                error={statusErrorUpdate ? t(`basket-item-incorrect-coupon-${statusErrorUpdate}`) : undefined}
-                data-testid="inputCode"
                 autoFocus
+                data-testid="inputCode"
+                error={statusErrorUpdate ? t(`basket-item-incorrect-coupon-${statusErrorUpdate}`) : undefined}
+                type="text"
+                value={inputValue}
+                onChange={handleChangeInput}
+                onKeyPress={handleKeyPress}
               />
               <InvisibleButton type="button" onClick={handleClickOk}>
                 {t('global-ok')}

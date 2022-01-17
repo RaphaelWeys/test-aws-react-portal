@@ -1,18 +1,18 @@
-import React, { FC } from 'react';
-import { ThemeContext } from 'styled-components';
 import { Space } from 'antd';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import Modal from '../Modal';
-import { TextRegular } from '../../../style/utils';
-import Hr from '../../Hr';
-import GradientButton from '../../GradientButton';
-import SafeHTMLTranslate from '../../SafeHTMLTranslate';
-import { useUserInfo } from '../../../context/UserInfoContext';
 import { useHistory } from 'react-router';
+import { ThemeContext } from 'styled-components';
+
+import { useUserInfo } from '../../../context/UserInfoContext';
 import { useDeleteMultiAccessUser } from '../../../endpoints/multiAccess/useDeleteMultiAccessUser';
+import { Navigation } from '../../../navigation';
+import { TextRegular } from '../../../style/utils';
+import GradientButton from '../../GradientButton';
+import Hr from '../../Hr';
 import KamDeleteIcon from '../../icons/KamDeleteIcon';
-import { Navigation } from '../../../navigation/index';
+import SafeHTMLTranslate from '../../SafeHTMLTranslate';
+import Modal from '../Modal';
 
 interface Props {
   className?: string;
@@ -59,7 +59,7 @@ const ModalDeleteMultiAccess: FC<Props> = ({
   }, [deleteUser, history, userId]);
 
   return (
-    <Modal className={className} size="large" onCancel={onClose} icon={<KamDeleteIcon />} title={title} {...modalProps}>
+    <Modal className={className} icon={<KamDeleteIcon />} size="large" title={title} onCancel={onClose} {...modalProps}>
       <Space direction="vertical" size={25}>
         <div>
           <TextRegular>
@@ -73,14 +73,14 @@ const ModalDeleteMultiAccess: FC<Props> = ({
           <Hr />
 
           <Space size="middle">
-            <GradientButton onClick={onClose} variant="outlined">
+            <GradientButton variant="outlined" onClick={onClose}>
               {t('global-cancel')}
             </GradientButton>
             {canDelete && (
               <GradientButton
+                isLoading={isLoading}
                 style={{ background: themeContext.colors.orange }}
                 onClick={handleDelete}
-                isLoading={isLoading}
               >
                 {t('modal-delete-multi-access-delete-account-btn')}
               </GradientButton>

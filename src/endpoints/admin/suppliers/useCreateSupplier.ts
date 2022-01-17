@@ -1,8 +1,8 @@
+import { message } from 'antd';
 import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
-import { message } from 'antd';
 
-import { FormData } from '../../../components/Modal/ModalEditSupplier/ModalEditSupplier';
+import { FormData } from '../../../components/Modal/ModalEditSupplier/ModalEditSupplier.interface';
 import { useApi } from '../../../context/ApiContext';
 import { Supplier } from '../../../interface/supplier';
 

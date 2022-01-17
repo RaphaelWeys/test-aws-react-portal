@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+
 import { useGetKamListForManager } from '../../../endpoints/multiAccess/useGetKamListForManager';
 import { useTransfersAllAccount } from '../../../endpoints/multiAccess/useTransfersAllAccount';
 import { Navigation } from '../../../navigation';
@@ -51,10 +52,10 @@ const ModalTransfersAllAccount: FC<Props> = ({ className, onClose, userId, first
   return (
     <Modal
       className={className}
-      size="large"
-      onCancel={onClose}
       icon={<TransfersAccountIcon />}
+      size="large"
       title={`${firstName} ${lastName}`}
+      onCancel={onClose}
     >
       <Space direction="vertical" size={25}>
         <div>
@@ -67,9 +68,8 @@ const ModalTransfersAllAccount: FC<Props> = ({ className, onClose, userId, first
               <Col span={24}>
                 <Controller
                   as={Select}
-                  name="kam"
-                  style={{ width: '300px' }}
                   control={control}
+                  error={errors.kam}
                   items={(data || [])
                     .filter((item) => item.id !== userId)
                     .map((item) => ({
@@ -78,8 +78,9 @@ const ModalTransfersAllAccount: FC<Props> = ({ className, onClose, userId, first
                       key: item.id,
                     }))}
                   label={t('modal-transfert-all-account-select')}
-                  error={errors.kam}
                   loading={getKamLoading}
+                  name="kam"
+                  style={{ width: '300px' }}
                 />
               </Col>
             </Row>
@@ -87,7 +88,7 @@ const ModalTransfersAllAccount: FC<Props> = ({ className, onClose, userId, first
             <Hr />
 
             <Space size="middle">
-              <GradientButton onClick={onClose} variant="outlined">
+              <GradientButton variant="outlined" onClick={onClose}>
                 {t('global-close')}
               </GradientButton>
               <GradientButton isLoading={isLoading} type="submit">

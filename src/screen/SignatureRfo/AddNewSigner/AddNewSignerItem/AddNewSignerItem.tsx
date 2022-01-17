@@ -1,12 +1,12 @@
 import { CloseOutlined } from '@ant-design/icons';
+import { Col, Row, Space } from 'antd';
 import React, { FC, useCallback, useEffect, useMemo } from 'react';
+import { Controller, UseFormMethods } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styled, { ThemeContext } from 'styled-components';
-import { Controller, UseFormMethods } from 'react-hook-form';
-import { Col, Row, Space } from 'antd';
 
-import InputText from '../../../../components/Input/Text';
 import CommonButton from '../../../../components/CommonButton';
+import InputText from '../../../../components/Input/Text';
 import InvisibleButton from '../../../../components/InvisibleButton/InvisibleButton';
 import { regexEmail } from '../../../../constants';
 
@@ -52,7 +52,7 @@ const AddNewSignerItem: FC<Props> = ({
     formMethods.register({ name: 'firstname' }, { required: true });
     formMethods.register({ name: 'lastname' }, { required: true });
     formMethods.register({ name: 'phone' }, { required: true });
-  }, [formMethods.register]);
+  }, [formMethods]);
 
   useEffect(() => {
     formMethods.register(
@@ -76,7 +76,7 @@ const AddNewSignerItem: FC<Props> = ({
         },
       },
     );
-  }, [formMethods.register, isValidator, validators, signers]);
+  }, [formMethods, isValidator, validators, signers]);
 
   const handleOnSubmit = useCallback(
     (data) => {
@@ -103,15 +103,15 @@ const AddNewSignerItem: FC<Props> = ({
 
       <Space direction="vertical">
         <form onSubmit={formMethods.handleSubmit(handleOnSubmit)}>
-          <Row gutter={16} align="middle">
+          <Row align="middle" gutter={16}>
             {fields.map((field) => (
               <Col span={5}>
                 <Controller
-                  control={formMethods.control}
                   as={InputText}
-                  name={field.name}
+                  control={formMethods.control}
                   error={formMethods.errors[field.name]}
                   label={field.label}
+                  name={field.name}
                 />
               </Col>
             ))}
@@ -125,8 +125,8 @@ const AddNewSignerItem: FC<Props> = ({
           <div>
             {items.map((item, index) => (
               <Row
-                justify="space-between"
                 align="middle"
+                justify="space-between"
                 style={{ borderBottom: '1px solid #A6ADB4', padding: '10px 0' }}
               >
                 <Col>

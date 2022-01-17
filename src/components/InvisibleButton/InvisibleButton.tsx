@@ -1,15 +1,13 @@
-import React, { FC, ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import React, { ButtonHTMLAttributes, DetailedHTMLProps,FC } from 'react';
 import styled, { css } from 'styled-components';
 
 type Props = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
-const InvisibleButton: FC<Props> = ({ children, onClick, className, type = 'button', ...rest }) => {
-  return (
-    <button onClick={onClick} className={className} type={type} {...rest}>
+const InvisibleButton: FC<Props> = ({ children, onClick, className, type = 'button', ...rest }) => (
+    <button className={className} type={type} onClick={onClick} {...rest}>
       {children}
     </button>
   );
-};
 
 export default styled(InvisibleButton)`
   ${({ disabled }) =>

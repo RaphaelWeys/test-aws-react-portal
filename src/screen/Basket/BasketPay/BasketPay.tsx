@@ -9,19 +9,19 @@ import styled from 'styled-components';
 import creditCardIcon from '../../../assets/picto-mode-de-paiement-carte.svg';
 import SepaIcon from '../../../assets/picto-mode-de-paiement-SEPA.svg';
 import GradientButton from '../../../components/GradientButton/GradientButton';
+import { useOrder } from '../../../context/OrderContext';
 import { useUpdateIntentStripe } from '../../../endpoints/basket/useUpdateIntentStripe';
 import { useValidatePayment } from '../../../endpoints/basket/useValidatePayment';
 import RectangleBox from '../../../layout/RectangleBox';
 import basketState from '../../../StoreForm/basketState';
 import { updateBasketForm } from '../../../StoreForm/updateState';
 import { getCurrencyFormatted } from '../../../utils/number';
+import { getQueryParameters } from '../../../utils/url';
 import { ContainerButton } from '../BasketForm/BasketForm.styled';
-import { useOrder } from '../BasketWrapper';
 import CardForm from '../CardForm';
 import IbanForm from '../IbanForm';
 import { Options, SepaText, WrapperCardElement, WrapperForm } from './BasketPay.styled';
 import OptionPayItem from './OptionPayItem';
-import { getQueryParameters } from '../../../utils/url';
 
 interface Props {
   className?: string;
@@ -66,7 +66,7 @@ const ErrorPayment = styled(({ className, errorMessage }: IErrorPayment) => {
   }
 `;
 
-const antIcon = <LoadingOutlined style={{ fontSize: '6.25rem' }} spin />;
+const antIcon = <LoadingOutlined spin style={{ fontSize: '6.25rem' }} />;
 
 const OPTION_PAYMENT = {
   SEPA: 0,
@@ -89,7 +89,11 @@ const BasketPay: FC<Props> = ({ className, previousStep, nextStep }) => {
   const { mutate: getIntentStripe, data: intentStripe } = useUpdateIntentStripe();
 
   useEffect(() => {
-    const paymentMethod = isFreeCoupon ? 'free' : selectedOption === OPTION_PAYMENT.CREDIT_CARD ? 'card' : 'sepa_debit';
+    let paymentMethod;
+
+    if (isFreeCoupon) paymentMethod = 'free';
+    else if (selectedOption === OPTION_PAYMENT.CREDIT_CARD) paymentMethod = 'card';
+    else paymentMethod = 'sepa_debit';
 
     getIntentStripe({
       orderId: order.id,
@@ -157,7 +161,7 @@ const BasketPay: FC<Props> = ({ className, previousStep, nextStep }) => {
   }
 
   return (
-    <RectangleBox showLogo={false} className={className}>
+    <RectangleBox className={className} showLogo={false}>
       <h1>
         {t('basket-pay-title')} {getCurrencyFormatted(intentStripe.amountToPay)}
       </h1>
@@ -170,24 +174,24 @@ const BasketPay: FC<Props> = ({ className, previousStep, nextStep }) => {
         <>
           <Options>
             <OptionPayItem
+              disabled={selectedOption === 1 && formStripePending}
               icon={SepaIcon}
-              title={t('basket-pay-SEPA')}
+              isSelected={selectedOption === 0}
               text={t('basket-pay-SEPA-content')}
+              title={t('basket-pay-SEPA')}
               onClick={() => {
                 setSelectedOption(0);
               }}
-              isSelected={selectedOption === 0}
-              disabled={selectedOption === 1 && formStripePending}
             />
             <OptionPayItem
+              disabled={selectedOption === 0 && formStripePending}
               icon={creditCardIcon}
-              title={t('basket-pay-credit-card')}
+              isSelected={selectedOption === 1}
               text={t('basket-pay-credit-card-content')}
+              title={t('basket-pay-credit-card')}
               onClick={() => {
                 setSelectedOption(1);
               }}
-              isSelected={selectedOption === 1}
-              disabled={selectedOption === 0 && formStripePending}
             />
           </Options>
 
@@ -213,15 +217,13 @@ const BasketPay: FC<Props> = ({ className, previousStep, nextStep }) => {
         </>
       )}
       <ContainerButton>
-        <GradientButton onClick={previousStep} noGradient variant="outlined" fullWidth disabled={formStripePending}>
+        <GradientButton fullWidth noGradient disabled={formStripePending} variant="outlined" onClick={previousStep}>
           {t('global-back')}
         </GradientButton>
-        <GradientButton type="button" fullWidth onClick={handleContinueClick} disabled={formStripePending}>
-          {isFreeCoupon
-            ? t('basket-pay-continue')
-            : selectedOption === OPTION_PAYMENT.SEPA
-            ? t('basket-accept-pay')
-            : t('basket-pay')}
+        <GradientButton fullWidth disabled={formStripePending} type="button" onClick={handleContinueClick}>
+          {isFreeCoupon && t('basket-pay-continue')}
+          {selectedOption === OPTION_PAYMENT.SEPA && t('basket-accept-pay')}
+          {!isFreeCoupon && selectedOption !== OPTION_PAYMENT.SEPA && t('basket-pay')}
         </GradientButton>
       </ContainerButton>
     </RectangleBox>

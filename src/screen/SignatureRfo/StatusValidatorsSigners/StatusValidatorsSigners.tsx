@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import { Col, Row, Space } from 'antd';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import { GrayBox } from '../DocumentUploaded/DocumentUploaded.styled';
 import { Signers, Validators } from '../../../interface/signature';
+import { GrayBox } from '../DocumentUploaded/DocumentUploaded.styled';
 import ValidatorsSigners from './ValidatorsSigners';
 
 interface Props {
@@ -35,10 +35,10 @@ const StatusValidatorsSigners: FC<Props> = ({ className, validators, signers, pa
           <Col span={24}>
             <GrayBox>
               <ValidatorsSigners
-                validators={validators}
-                signers={signers}
-                packId={packId}
                 canSendEmail={canSendEmail}
+                packId={packId}
+                signers={signers}
+                validators={validators}
               />
             </GrayBox>
           </Col>

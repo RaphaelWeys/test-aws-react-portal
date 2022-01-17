@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import { Col, Row, Space } from 'antd';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import { SIGNATURE_DOC_SUPPLIER_STATUS } from '../../../config/app-config';
 import InfoStatusRfo from '../../../components/InfoStatusRfo/InfoStatusRfo';
-import NoDocument from '../NoDocument';
+import { SIGNATURE_DOC_SUPPLIER_STATUS } from '../../../config/app-config';
+import { SignaturePackSupplier } from '../../../interface/signature';
+import RectangleBox from '../../../layout/RectangleBox/RectangleBox';
 import DocumentUploaded from '../DocumentUploaded/DocumentUploaded';
 import HistoricBlock from '../HistoricBlock/HistoricBlock';
-import RectangleBox from '../../../layout/RectangleBox/RectangleBox';
-import { SignaturePackSupplier } from '../../../interface/signature';
+import NoDocument from '../NoDocument';
 
 interface Props {
   className?: string;
@@ -22,8 +22,8 @@ const Supplier: FC<Props> = ({ className, signaturePack, packId, getSignaturePac
   const [t] = useTranslation();
 
   return (
-    <RectangleBox showLogo={false} title={signaturePack.documentReference} className={className}>
-      <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+    <RectangleBox className={className} showLogo={false} title={signaturePack.documentReference}>
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {[
           SIGNATURE_DOC_SUPPLIER_STATUS.NO_DOCUMENT,
           SIGNATURE_DOC_SUPPLIER_STATUS.WAITING_FOR_SIGNATURE,
@@ -32,8 +32,8 @@ const Supplier: FC<Props> = ({ className, signaturePack, packId, getSignaturePac
           <Row>
             <Col span={24}>
               <InfoStatusRfo
-                title={t(`signature-rfo-${signaturePack.currentVersion.docSupplierStatus}-title`)}
                 description={`signature-rfo-${signaturePack.currentVersion.docSupplierStatus}-description`}
+                title={t(`signature-rfo-${signaturePack.currentVersion.docSupplierStatus}-title`)}
               />
             </Col>
           </Row>
@@ -60,23 +60,23 @@ const Supplier: FC<Props> = ({ className, signaturePack, packId, getSignaturePac
         </Space>
 
         {signaturePack.currentVersion.docSupplierStatus === SIGNATURE_DOC_SUPPLIER_STATUS.NO_DOCUMENT && (
-          <NoDocument packId={packId as string} getSignaturePack={getSignaturePack} />
+          <NoDocument getSignaturePack={getSignaturePack} packId={packId as string} />
         )}
 
         {[SIGNATURE_DOC_SUPPLIER_STATUS.WAITING_FOR_SIGNATURE, SIGNATURE_DOC_SUPPLIER_STATUS.SIGNED].includes(
           signaturePack.currentVersion.docSupplierStatus,
         ) && (
           <DocumentUploaded
-            getSignaturePack={getSignaturePack}
-            currentVersion={signaturePack.currentVersion}
-            packId={packId as string}
             isSupplier
+            currentVersion={signaturePack.currentVersion}
+            getSignaturePack={getSignaturePack}
+            packId={packId as string}
             status={signaturePack.currentVersion.docSupplierStatus}
           />
         )}
 
         {signaturePack.archivedVersions.length > 0 && (
-          <HistoricBlock archivedVersions={signaturePack.archivedVersions} packId={packId as string} isSupplier />
+          <HistoricBlock isSupplier archivedVersions={signaturePack.archivedVersions} packId={packId as string} />
         )}
       </Space>
     </RectangleBox>

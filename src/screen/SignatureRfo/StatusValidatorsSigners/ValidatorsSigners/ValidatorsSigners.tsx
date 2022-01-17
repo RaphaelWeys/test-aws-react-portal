@@ -1,17 +1,17 @@
-import React, { FC, useCallback } from 'react';
-import styled from 'styled-components';
 import { Col, message, Row, Space } from 'antd';
-import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import React, { FC, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import { AlignItems, BoldBlack } from '../../../../style/utils';
-import { Contact, OrangeCanceled } from '../StatusValidatorsSigners.styled';
 import CommonButton from '../../../../components/CommonButton/CommonButton';
 import EmailIcon from '../../../../components/icons/EmailIcon';
-import { Signers, Validators } from '../../../../interface/signature';
 import { SIGNATURE_MEMBER_STATUS } from '../../../../config/app-config';
-import useRequest from '../../../../hooks/useRequest';
 import { optionsSendEmailAgain } from '../../../../endpoints/signature';
+import useRequest from '../../../../hooks/useRequest';
+import { Signers, Validators } from '../../../../interface/signature';
+import { BoldBlack } from '../../../../style/utils';
+import { Contact, OrangeCanceled } from '../StatusValidatorsSigners.styled';
 
 interface Props {
   className?: string;
@@ -57,7 +57,6 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
                   <div>{t(`signature-rfo-documents-status-member-refused-${user}`)}</div>
                   <div>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's
                   </div>
                 </Space>
               </OrangeCanceled>
@@ -79,7 +78,7 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
         message.success(t('signature-rfo-historic-block-email-sent'));
       });
     },
-    [t],
+    [packId, sendEmail, t],
   );
 
   if (validators.length === 0 && signers.length === 0) {
@@ -87,7 +86,7 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
   }
 
   return (
-    <Space direction="vertical" size="large" className={className}>
+    <Space className={className} direction="vertical" size="large">
       <Space direction="vertical">
         <Row style={{ width: '100%' }}>
           <Col span={24}>
@@ -97,10 +96,10 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
           </Col>
         </Row>
         {validators.map((validator) => (
-          <AlignItems style={{ padding: '10px 0', borderBottom: '1px solid #A6ADB4', width: '100%' }}>
-            <Row justify="space-between" align="middle" style={{ width: '100%' }}>
+          <Space style={{ padding: '10px 0', borderBottom: '1px solid #A6ADB4' }}>
+            <Row align="middle" justify="space-between" style={{ width: '100%' }}>
               <Col>
-                <AlignItems noFlexWrap>
+                <Space>
                   <Contact>
                     <BoldBlack>
                       <span>{validator.firstname}</span> <span>{validator.lastname}</span>
@@ -113,26 +112,24 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
                     </div>
                   </Contact>
                   {getStatus(validator.status, 'validator')}
-                </AlignItems>
+                </Space>
               </Col>
 
               {validator.status === SIGNATURE_MEMBER_STATUS.MEMBER_INVITED && canSendEmail && (
                 <Col>
-                  <AlignItems>
-                    <CommonButton type="primary" onClick={() => handleClickSendBackEmail(validator.email)}>
-                      <AlignItems space={8}>
-                        <EmailIcon />
-                        <span>{t('signature-rfo-email-button')}</span>
-                      </AlignItems>
-                    </CommonButton>
-                  </AlignItems>
+                  <CommonButton type="primary" onClick={() => handleClickSendBackEmail(validator.email)}>
+                    <Space>
+                      <EmailIcon />
+                      <span>{t('signature-rfo-email-button')}</span>
+                    </Space>
+                  </CommonButton>
                 </Col>
               )}
             </Row>
-          </AlignItems>
+          </Space>
         ))}
       </Space>
-      <AlignItems direction="column" align="flex-start">
+      <Space align="start" direction="vertical">
         <Row style={{ width: '100%' }}>
           <Col span={24}>
             <BoldBlack style={{ paddingBottom: '1rem', borderBottom: '1px solid #a6adb4' }}>
@@ -141,10 +138,10 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
           </Col>
         </Row>
         {signers.map((signer) => (
-          <AlignItems style={{ padding: '10px 0', borderBottom: '1px solid #A6ADB4', width: '100%' }}>
-            <Row justify="space-between" align="middle" style={{ width: '100%' }}>
+          <Space style={{ padding: '10px 0', borderBottom: '1px solid #A6ADB4' }}>
+            <Row align="middle" justify="space-between" style={{ width: '100%' }}>
               <Col>
-                <AlignItems noFlexWrap>
+                <Space>
                   <Contact>
                     <BoldBlack>
                       <span>{signer.firstname}</span> <span>{signer.lastname}</span>
@@ -157,25 +154,23 @@ const ValidatorsSigners: FC<Props> = ({ className, signers, validators, packId, 
                     </div>
                   </Contact>
                   {getStatus(signer.status, 'signer')}
-                </AlignItems>
+                </Space>
               </Col>
 
               {signer.status === SIGNATURE_MEMBER_STATUS.MEMBER_INVITED && canSendEmail && (
                 <Col>
-                  <AlignItems>
-                    <CommonButton type="primary" onClick={() => handleClickSendBackEmail(signer.email)}>
-                      <AlignItems space={8}>
-                        <EmailIcon />
-                        <span>{t('signature-rfo-email-button')}</span>
-                      </AlignItems>
-                    </CommonButton>
-                  </AlignItems>
+                  <CommonButton type="primary" onClick={() => handleClickSendBackEmail(signer.email)}>
+                    <Space>
+                      <EmailIcon />
+                      <span>{t('signature-rfo-email-button')}</span>
+                    </Space>
+                  </CommonButton>
                 </Col>
               )}
             </Row>
-          </AlignItems>
+          </Space>
         ))}
-      </AlignItems>
+      </Space>
     </Space>
   );
 };

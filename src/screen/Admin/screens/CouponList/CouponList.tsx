@@ -13,9 +13,13 @@ import moment, { Moment } from 'moment';
 import React, { FC, useEffect, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
+import styled from 'styled-components';
 
+import InputNumber from '../../../../components/Input/Number';
+import InputText from '../../../../components/Input/Text';
 import InvisibleButton from '../../../../components/InvisibleButton';
 import RangePicker from '../../../../components/RangePicker/RangePicker';
+import Select from '../../../../components/Select';
 import Table from '../../../../components/Table';
 import { useCreateCoupon } from '../../../../endpoints/admin/coupon/useCreateCoupon';
 import { useDeleteCoupon } from '../../../../endpoints/admin/coupon/useDeleteCoupon';
@@ -25,10 +29,6 @@ import { useUpdateCoupon } from '../../../../endpoints/admin/coupon/useUpdateCou
 import { Coupon, CouponOrder, CouponRaw } from '../../../../interface/coupon';
 import { UserInfoLight } from '../../../../interface/user';
 import { InputStyled, WrapperAction } from './CouponList.styled';
-import Select from '../../../../components/Select';
-import InputNumber from '../../../../components/Input/Number';
-import InputText from '../../../../components/Input/Text';
-import styled from 'styled-components';
 
 interface Props {
   className?: string;
@@ -172,9 +172,7 @@ const CouponList: FC<Props> = ({ className }) => {
     }));
   };
 
-  const isValidKey = (key: string): key is keyof typeof filterSelectOptions => {
-    return key in filterSelectOptions;
-  };
+  const isValidKey = (key: string): key is keyof typeof filterSelectOptions => key in filterSelectOptions;
 
   const handleChangeSelect = (value: SelectValue, key: string) => {
     if (isValidKey(key))
@@ -263,23 +261,23 @@ const CouponList: FC<Props> = ({ className }) => {
     }
   };
 
-  const headerTable = () => {
-    return ['code', 'app', 'purpose', 'value', 'user', 'date', 'multipleUsage', 'actions'].map((key, index) => {
+  const headerTable = () =>
+    ['code', 'app', 'purpose', 'value', 'user', 'date', 'multipleUsage', 'actions'].map((key, index) => {
       let input: React.ReactNode | null = (
         <InputText
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeInput(e, key)}
           data-testid={`${key}-test`}
           disabled={isAddingRow || !!selectedCoupon}
           label={key}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeInput(e, key)}
         />
       );
 
       if (key === 'date') {
         input = (
           <RangePicker
+            allowEmpty={[true, true]}
             customOnChange={handleChangeRangePicker}
             disabled={isAddingRow || !!selectedCoupon}
-            allowEmpty={[true, true]}
             format="DD-MM-YYYY"
             label={key}
           />
@@ -287,16 +285,16 @@ const CouponList: FC<Props> = ({ className }) => {
       } else if (key === 'multipleUsage' || key === 'app')
         input = (
           <Select
-            disabled={isAddingRow || !!selectedCoupon}
-            defaultValue={filterSelectOptions[key][0]}
-            style={{ width: '100px' }}
             data-testid="select-filter-app"
-            onChange={(value: SelectValue) => handleChangeSelect(value, key)}
-            label={key}
+            defaultValue={filterSelectOptions[key][0]}
+            disabled={isAddingRow || !!selectedCoupon}
             items={filterSelectOptions[key].map((option) => ({
               label: capitalize(option),
               value: option,
             }))}
+            label={key}
+            style={{ width: '100px' }}
+            onChange={(value: SelectValue) => handleChangeSelect(value, key)}
           />
         );
 
@@ -309,16 +307,16 @@ const CouponList: FC<Props> = ({ className }) => {
             return (
               <WrapperAction>
                 <InvisibleButton onClick={() => handleActivateEditMode(record)}>
-                  <EditTwoTone twoToneColor="" style={{ fontSize: '18px' }} data-testid="edit-icon" />
+                  <EditTwoTone data-testid="edit-icon" style={{ fontSize: '18px' }} twoToneColor="" />
                 </InvisibleButton>
                 <Popconfirm
+                  cancelText="No"
+                  okText="Yes"
                   placement="bottomRight"
                   title="Are you sure you want to delete it ?"
                   onConfirm={() => deleteCoupon(record.id)}
-                  okText="Yes"
-                  cancelText="No"
                 >
-                  <DeleteTwoTone twoToneColor="#eb2f96" style={{ fontSize: '18px' }} data-testid="delete-icon" />
+                  <DeleteTwoTone data-testid="delete-icon" style={{ fontSize: '18px' }} twoToneColor="#eb2f96" />
                 </Popconfirm>
               </WrapperAction>
             );
@@ -328,7 +326,6 @@ const CouponList: FC<Props> = ({ className }) => {
         },
       };
     });
-  };
 
   const userListFormatted = useMemo(() => {
     const newList = [...(userList || [])];
@@ -343,69 +340,69 @@ const CouponList: FC<Props> = ({ className }) => {
         id: '0',
         code:
           coupon.id !== selectedCoupon?.id ? (
-            <Controller as={InputStyled} name="code" control={control} type="text" error={errors.code} autoFocus />
+            <Controller autoFocus as={InputStyled} control={control} error={errors.code} name="code" type="text" />
           ) : (
             selectedCoupon.code
           ),
         app: (
           <Controller
             as={Select}
-            name="app"
             control={control}
-            style={{ width: '100px' }}
             items={optionsAppNewRow.map((option) => ({
               label: option,
               value: option,
             }))}
+            name="app"
+            style={{ width: '100px' }}
           />
         ),
-        purpose: <Controller as={InputText} name="purpose" control={control} type="text" />,
-        value: <Controller as={InputNumber} name="value" control={control} type="text" error={errors.value} />,
+        purpose: <Controller as={InputText} control={control} name="purpose" type="text" />,
+        value: <Controller as={InputNumber} control={control} error={errors.value} name="value" type="text" />,
         user: (
           <Controller
             as={Select}
-            name="user"
-            style={{ width: '250px' }}
             control={control}
             items={userListFormatted.map((user: UserInfoLight) => ({
               label: capitalize(`${user.firstName} ${user.lastName} ${user.company ? `/ ${user.company}` : ''}`),
               value: user.id,
             }))}
+            name="user"
+            style={{ width: '250px' }}
           />
         ),
         date: (
-          <Controller as={RangePicker} name="date" control={control} allowEmpty={[true, true]} format="DD-MM-YYYY" />
+          <Controller allowEmpty={[true, true]} as={RangePicker} control={control} format="DD-MM-YYYY" name="date" />
         ),
         multipleUsage: (
           <Controller
             as={Select}
-            name="multipleUsage"
             control={control}
-            style={{ width: '100px' }}
             items={optionsMultipleNewRow.map((option) => ({
               label: option,
               value: option,
             }))}
+            name="multipleUsage"
+            style={{ width: '100px' }}
           />
         ),
         orders: coupon.orders,
         actions:
           selectedCoupon && coupon.id === selectedCoupon.id ? (
             <WrapperAction>
-              <InvisibleButton type="submit" data-testid="submit-btn">
-                <CheckCircleTwoTone twoToneColor="#52c41a" style={{ fontSize: '18px' }} />
+              <InvisibleButton data-testid="submit-btn" type="submit">
+                <CheckCircleTwoTone style={{ fontSize: '18px' }} twoToneColor="#52c41a" />
               </InvisibleButton>
               <InvisibleButton onClick={() => setSelectedCoupon(undefined)}>
-                <CloseCircleTwoTone twoToneColor="#eb2f96" style={{ fontSize: '18px' }} />
+                <CloseCircleTwoTone style={{ fontSize: '18px' }} twoToneColor="#eb2f96" />
               </InvisibleButton>
             </WrapperAction>
           ) : (
             <WrapperAction>
-              <InvisibleButton type="submit" data-testid="submit-btn">
-                <CheckCircleTwoTone twoToneColor="#52c41a" style={{ fontSize: '18px' }} />
+              <InvisibleButton data-testid="submit-btn" type="submit">
+                <CheckCircleTwoTone style={{ fontSize: '18px' }} twoToneColor="#52c41a" />
               </InvisibleButton>
               <InvisibleButton onClick={cancelAddRow}>
-                <CloseCircleTwoTone twoToneColor="#eb2f96" style={{ fontSize: '18px' }} />
+                <CloseCircleTwoTone style={{ fontSize: '18px' }} twoToneColor="#eb2f96" />
               </InvisibleButton>
             </WrapperAction>
           ),
@@ -503,42 +500,38 @@ const CouponList: FC<Props> = ({ className }) => {
       }),
     );
 
-    const data: IFormattedCouponOrder[] = (selectedOrders || []).map((order: CouponOrder, index: number) => {
-      return {
-        app: order.order.app,
-        purpose: order.order.purpose,
-        product: order.order.product,
-        reference: order.order.reference,
-        date: moment(order.date).format('DD-MM-YYYY'),
-        amount: `${order.amount} €`,
-        username: order.user?.username,
-        user: order.user ? `${order.user.firstName} ${order.user.lastName}` : '',
-        company: order.user?.company,
-        key: index,
-      };
-    });
+    const data: IFormattedCouponOrder[] = (selectedOrders || []).map((order: CouponOrder, index: number) => ({
+      app: order.order.app,
+      purpose: order.order.purpose,
+      product: order.order.product,
+      reference: order.order.reference,
+      date: moment(order.date).format('DD-MM-YYYY'),
+      amount: `${order.amount} €`,
+      username: order.user?.username,
+      user: order.user ? `${order.user.firstName} ${order.user.lastName}` : '',
+      company: order.user?.company,
+      key: index,
+    }));
 
-    return <Table columns={columns} bordered dataSource={data} pagination={false} data-testid="table-expanded" />;
+    return <Table bordered columns={columns} data-testid="table-expanded" dataSource={data} pagination={false} />;
   };
 
   return (
     <div className={className}>
       <Button
-        onClick={addCoupon}
-        type="primary"
-        style={{ marginBottom: 16 }}
         disabled={isAddingRow}
         loading={createCouponLoading}
+        style={{ marginBottom: 16 }}
+        type="primary"
+        onClick={addCoupon}
       >
         Add a coupon
       </Button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Table
           bordered
-          loading={isGetCouponLoading}
-          expandedRowKeys={rowExpanded}
-          dataSource={dataTable()}
           columns={headerTable()}
+          dataSource={dataTable()}
           expandable={{
             expandedRowRender,
             expandIcon: ({ expanded, onExpand, record }) => {
@@ -556,6 +549,8 @@ const CouponList: FC<Props> = ({ className }) => {
               setSelectedOrders(coupons?.[record.key].orders);
             },
           }}
+          expandedRowKeys={rowExpanded}
+          loading={isGetCouponLoading}
         />
       </form>
     </div>

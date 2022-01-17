@@ -1,9 +1,9 @@
-import { Space, Modal as ModalAnt } from 'antd';
+import { Modal as ModalAnt,Space } from 'antd';
+import { ModalProps } from 'antd/lib/modal';
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { HeaderOne } from '../../style/utils';
-import { ModalProps } from 'antd/lib/modal';
 
 interface Props extends Omit<ModalProps, 'width'> {
   className?: string;
@@ -25,17 +25,17 @@ const Modal: FC<Props> = ({ className, children, title, icon, size, ...modalProp
 
   return (
     <ModalAnt
+      centered
+      closable
+      visible
       className={className}
+      footer={false}
       title={
         <Space size="middle">
           {icon && icon}
           {title && <HeaderOne>{title}</HeaderOne>}
         </Space>
       }
-      footer={false}
-      visible
-      centered
-      closable
       width={width}
       {...modalProps}
     >

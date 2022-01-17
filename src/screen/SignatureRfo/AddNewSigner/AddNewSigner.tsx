@@ -1,15 +1,15 @@
-import React, { FC, useCallback, useState } from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { Space } from 'antd';
+import React, { FC, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import AddNewSignerItem from './AddNewSignerItem';
-import { SignersForm, ValidatorsForm } from '../SignatureRfo';
 import CommonButton from '../../../components/CommonButton';
-import { Error } from '../../../style/utils';
-import useRequest from '../../../hooks/useRequest';
 import { optionsStartProcessSignature } from '../../../endpoints/signature';
+import useRequest from '../../../hooks/useRequest';
+import { Error } from '../../../style/utils';
+import { SignersForm, ValidatorsForm } from '../SignatureRfo';
+import AddNewSignerItem from './AddNewSignerItem';
 
 interface Props {
   className?: string;
@@ -77,30 +77,30 @@ const AddNewSigner: FC<Props> = ({ className, setShowAddValidators, packId, getS
   return (
     <Space className={className} direction="vertical">
       <AddNewSignerItem
-        onSubmit={handleSubmitValidators}
-        title={t('signature-rfo-choose-validator-title')}
-        description={t('signature-rfo-choose-validator-description')}
         isValidator
-        items={validators}
-        handleDeleteItem={handleDeleteValidators}
+        description={t('signature-rfo-choose-validator-description')}
         formMethods={formValidatorsMethods}
+        handleDeleteItem={handleDeleteValidators}
+        items={validators}
         signers={signers}
+        title={t('signature-rfo-choose-validator-title')}
         validators={validators}
+        onSubmit={handleSubmitValidators}
       />
       <AddNewSignerItem
-        onSubmit={handleSubmitSigner}
-        items={signers}
-        title={t('signature-rfo-choose-signer-title')}
         description={t('signature-rfo-choose-signer-description')}
-        handleDeleteItem={handleDeleteSigners}
         formMethods={formSignersMethods}
+        handleDeleteItem={handleDeleteSigners}
+        items={signers}
         signers={signers}
+        title={t('signature-rfo-choose-signer-title')}
         validators={validators}
+        onSubmit={handleSubmitSigner}
       />
       {error && <Error>{t(error)}</Error>}
       <Space>
         <CommonButton onClick={() => setShowAddValidators(false)}>{t('global-back')}</CommonButton>
-        <CommonButton type="primary" onClick={onSubmit} loading={isPending}>
+        <CommonButton loading={isPending} type="primary" onClick={onSubmit}>
           {t('signature-rfo-start-signature')}
         </CommonButton>
       </Space>

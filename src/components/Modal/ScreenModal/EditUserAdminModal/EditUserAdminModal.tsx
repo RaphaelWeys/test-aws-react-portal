@@ -1,19 +1,20 @@
+import { Space } from 'antd';
+import moment from 'moment';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import moment from 'moment';
 
 import { useGetUser } from '../../../../endpoints/admin/users/useGetUser';
-import { AlignItems, Margin } from '../../../../style/utils';
+import { Margin } from '../../../../style/utils';
 import CommonButton from '../../../CommonButton';
 import { Input } from '../../../Input';
 import Radio from '../../../Input/Radio';
+import InputText from '../../../Input/Text';
 import Loader from '../../../Loader';
 import RangePicker from '../../../RangePicker';
 import Modal from '../../Modal';
 import { WrapperFooter } from './EditUserAdminModal.styled';
-import InputText from '../../../Input/Text';
 
 interface IProps {
   className?: string;
@@ -57,7 +58,7 @@ const EditUserAdminModal: FC<IProps> = ({ className, toggleModal, userLight, del
       reset({
         ...user,
         yopSubsriptionPeriod: subscriptionStart ? [moment(subscriptionStart), moment(subscriptionEnd)] : null,
-        yopContracts: maxContracts ? maxContracts : 0,
+        yopContracts: maxContracts || 0,
       });
     }
   }, [user, reset, subscriptionStart, subscriptionEnd, maxContracts]);
@@ -79,9 +80,7 @@ const EditUserAdminModal: FC<IProps> = ({ className, toggleModal, userLight, del
       register(
         { name: 'yopSubsriptionPeriod' },
         {
-          validate: (value) => {
-            return value ? undefined : 'Period required';
-          },
+          validate: (value) => (value ? undefined : 'Period required'),
         },
       );
     }
@@ -89,7 +88,7 @@ const EditUserAdminModal: FC<IProps> = ({ className, toggleModal, userLight, del
 
   const onSubmit = useCallback(
     (data: FormData) => {
-      let products = user.products || {
+      const products = user.products || {
         follow: undefined,
       };
 
@@ -102,7 +101,7 @@ const EditUserAdminModal: FC<IProps> = ({ className, toggleModal, userLight, del
       if (freemiumOrPremium === 'premium') {
         if (!products.follow) products.follow = {};
 
-        products.follow.contracts = parseInt(data.yopContracts.toString());
+        products.follow.contracts = parseInt(data.yopContracts.toString(), 10);
         products.follow.subscriptionStart = data.yopSubsriptionPeriod[0].format('YYYY-MM-DD');
         products.follow.subscriptionEnd = data.yopSubsriptionPeriod[1].format('YYYY-MM-DD');
       }
@@ -121,65 +120,65 @@ const EditUserAdminModal: FC<IProps> = ({ className, toggleModal, userLight, del
     <div className={className}>
       <Modal
         visible
-        onCancel={(): void => toggleModal()}
-        closable={false}
-        title={t('modal-edit-user-title')}
         className={className}
+        closable={false}
         getContainer={false}
         size="large"
+        title={t('modal-edit-user-title')}
+        onCancel={(): void => toggleModal()}
       >
         {getUserLoading ? (
           <Loader />
         ) : (
           <form onSubmit={handleSubmit(onSubmit)}>
-            <AlignItems direction="column" align="stretch" space={5}>
-              <AlignItems space={24}>
+            <Space direction="vertical">
+              <Space size="large">
                 <Controller
+                  autoFocus
                   as={Input}
-                  name="firstName"
-                  htmlFor="firstName"
-                  label={t('modal-edit-user-input-firstname')}
                   control={control}
                   error={errors.firstName}
+                  htmlFor="firstName"
+                  label={t('modal-edit-user-input-firstname')}
+                  name="firstName"
                   type="text"
-                  autoFocus
                 />
                 <Controller
                   as={Input}
-                  name="lastName"
-                  htmlFor="lastName"
-                  label={t('modal-edit-user-input-lastname')}
                   control={control}
                   error={errors.lastName}
+                  htmlFor="lastName"
+                  label={t('modal-edit-user-input-lastname')}
+                  name="lastName"
                   type="text"
                 />
-              </AlignItems>
-              <AlignItems space={24}>
+              </Space>
+              <Space size="large">
                 <Controller
                   as={Input}
-                  name="company"
-                  htmlFor="company"
-                  label={t('modal-edit-user-input-company')}
                   control={control}
                   error={errors.company}
+                  htmlFor="company"
+                  label={t('modal-edit-user-input-company')}
+                  name="company"
                   type="text"
                 />
                 <Controller
                   as={Input}
-                  name="companyField"
+                  control={control}
                   htmlFor="companyField"
                   label={t('modal-edit-user-input-companyField')}
-                  control={control}
+                  name="companyField"
                   type="text"
                 />
-              </AlignItems>
+              </Space>
               <Controller
                 as={Input}
-                name="username"
-                htmlFor="username"
-                label={t('modal-edit-user-input-username')}
                 control={control}
                 error={errors.username}
+                htmlFor="username"
+                label={t('modal-edit-user-input-username')}
+                name="username"
                 type="text"
               />
               <div>
@@ -192,53 +191,53 @@ const EditUserAdminModal: FC<IProps> = ({ className, toggleModal, userLight, del
                 <h3>
                   <b>YEM Optimization</b>
                 </h3>
-                <AlignItems align="flex-start" space={24} flex>
+                <Space size="large">
                   <Radio
-                    label="Subscription status"
                     items={[
                       { value: 'freemium', label: 'Freemium', key: 0 },
                       { value: 'premium', label: 'Premium', key: 1 },
                     ]}
-                    onChange={(e) => setFreemiumOrPremium(e.toString())}
+                    label="Subscription status"
                     value={freemiumOrPremium}
+                    onChange={(e) => setFreemiumOrPremium(e.toString())}
                   />
                   <div>
                     {freemiumOrPremium === 'freemium' ? (
-                      <AlignItems space={15}>
+                      <Space size="middle">
                         <div>{t('modal-edit-user-optimization-no-subscription')}</div>
-                      </AlignItems>
+                      </Space>
                     ) : (
                       <div>
-                        <AlignItems space={15}>
+                        <Space size="middle">
                           <Controller
-                            as={RangePicker}
-                            label="Subscription period"
-                            name="yopSubsriptionPeriod"
                             allowEmpty={[false, false]}
-                            format="ll"
+                            as={RangePicker}
                             control={control}
                             error={errors.yopSubsriptionPeriod}
+                            format="ll"
+                            label="Subscription period"
+                            name="yopSubsriptionPeriod"
                           />
-                        </AlignItems>
-                        <AlignItems space={15}>
+                        </Space>
+                        <Space size="middle">
                           <Controller
                             as={InputText}
-                            name="yopContracts"
                             control={control}
                             error={errors.yopContracts}
                             label="Contracts allowed"
-                            type="number"
-                            step="1"
-                            min="1"
                             max="100"
+                            min="1"
+                            name="yopContracts"
+                            step="1"
+                            type="number"
                           />
-                        </AlignItems>
+                        </Space>
                       </div>
                     )}
                   </div>
-                </AlignItems>
+                </Space>
               </div>
-            </AlignItems>
+            </Space>
 
             <Margin mt={10}>
               <WrapperFooter>

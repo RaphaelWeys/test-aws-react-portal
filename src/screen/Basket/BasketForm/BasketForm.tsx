@@ -1,3 +1,4 @@
+import { Col, Row } from 'antd';
 import { useStateMachine } from 'little-state-machine';
 import React, { FC, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,28 +10,17 @@ import { Input } from '../../../components/Input';
 import SelectCountry from '../../../components/SelectCountry';
 import { regexEmail } from '../../../constants';
 import prefixVAT from '../../../constants/prefixVAT';
+import { useOrder } from '../../../context/OrderContext';
 import { useUpdateBillingInfo } from '../../../endpoints/basket/useUpdateBillingInfo';
 import RectangleBox from '../../../layout/RectangleBox/RectangleBox';
 import { updateBasketForm } from '../../../StoreForm/updateState';
-import { useOrder } from '../BasketWrapper';
+import { FormData } from './BasketForm.interface';
 import { ContainerButton, FormStyled, WrapperForm } from './BasketForm.styled';
-import { Col, Row } from 'antd';
 
 interface Props {
   className?: string;
   previousStep: () => void;
   nextStep: () => void;
-}
-
-export interface FormData {
-  company: string;
-  name: string;
-  email: string;
-  address: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  vatNumber: string;
 }
 
 const BasketForm: FC<Props> = ({ className, previousStep, nextStep }) => {
@@ -83,105 +73,105 @@ const BasketForm: FC<Props> = ({ className, previousStep, nextStep }) => {
   };
 
   return (
-    <RectangleBox showLogo={false} className={className} title={t('basket-form-title')}>
+    <RectangleBox className={className} showLogo={false} title={t('basket-form-title')}>
       <FormStyled onSubmit={handleSubmit(onSubmit)}>
         <WrapperForm>
           <Row gutter={[0, 16]}>
             <Col span={24}>
               <Controller
+                autoFocus
                 as={Input}
-                name="company"
-                label={t('basket-form-company')}
                 control={control}
-                type="text"
                 error={errors?.company}
                 htmlFor="company"
-                autoFocus
+                label={t('basket-form-company')}
+                name="company"
+                type="text"
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={Input}
-                name="name"
-                label={t('basket-form-full-name')}
                 control={control}
-                type="text"
                 error={errors?.name}
                 htmlFor="name"
+                label={t('basket-form-full-name')}
+                name="name"
+                type="text"
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={Input}
-                name="email"
+                control={control}
+                error={errors?.email}
                 htmlFor="email"
                 label={t('basket-form-email')}
-                control={control}
+                name="email"
                 type="email"
-                error={errors?.email}
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={Input}
-                name="address"
+                control={control}
+                error={errors?.address}
                 htmlFor="address"
                 label={t('basket-form-address')}
-                control={control}
+                name="address"
                 type="text"
-                error={errors?.address}
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={Input}
-                name="postalCode"
+                control={control}
+                error={errors?.postalCode}
                 htmlFor="postalCode"
                 label={t('basket-form-postalCode')}
-                control={control}
+                name="postalCode"
                 type="text"
-                error={errors?.postalCode}
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={SelectCountry}
-                name="country"
-                label={t('basket-form-country')}
                 control={control}
-                placeholder={t('basket-form-placeholder-country')}
                 error={errors?.country}
+                label={t('basket-form-country')}
+                name="country"
+                placeholder={t('basket-form-placeholder-country')}
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={Input}
-                name="city"
+                control={control}
+                error={errors?.city}
                 htmlFor="city"
                 label={t('basket-form-city')}
-                control={control}
+                name="city"
                 type="text"
-                error={errors?.city}
               />
             </Col>
             <Col span={24}>
               <Controller
                 as={Input}
-                name="vatNumber"
+                control={control}
+                error={errors?.vatNumber}
                 htmlFor="vatNumber"
                 label={t('basket-form-vtaNumber')}
-                control={control}
+                name="vatNumber"
                 type="text"
-                error={errors?.vatNumber}
               />
             </Col>
           </Row>
         </WrapperForm>
         <ContainerButton>
-          <GradientButton onClick={previousStep} noGradient variant="outlined" fullWidth>
+          <GradientButton fullWidth noGradient variant="outlined" onClick={previousStep}>
             {t('global-back')}
           </GradientButton>
-          <GradientButton type="submit" fullWidth>
+          <GradientButton fullWidth type="submit">
             {t('global-next')}
           </GradientButton>
         </ContainerButton>

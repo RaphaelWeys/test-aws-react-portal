@@ -5,14 +5,13 @@ import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 
 import { useApi } from '../../context/ApiContext';
+import { useUserInfo } from '../../context/UserInfoContext';
+import useGetPortalApp from '../../hooks/useGetPortalApp';
+import useSaveToken from '../../hooks/useSaveToken';
 import { UserInfo } from '../../interface/user';
+import { FormRegisterStep3 } from '../../screen/Register/components/RegisterForm/RegisterForm.interface';
 import createUserState from '../../StoreForm/createUserState';
 import { updateRegisterForm } from '../../StoreForm/updateState';
-import { useUserInfo } from '../../context/UserInfoContext';
-import { saveTokenCookies } from '../../utils';
-import { FormRegisterStep3 } from '../../screen/Register/components/RegisterForm/ThirdStep/ThirdStep';
-import useGetPortalApp from '../../hooks/useGetPortalApp';
-import { useTenant } from '../../context/TenantContext';
 
 export const useCreateUser = () => {
   const client = useApi();
@@ -21,7 +20,7 @@ export const useCreateUser = () => {
   const { userInfo } = useUserInfo();
   const { setUserInfo } = useUserInfo();
   const { actions } = useStateMachine({ updateRegisterForm });
-  const { env } = useTenant();
+  const { saveToken } = useSaveToken();
 
   return useMutation<UserInfo, AxiosError<UserInfo>, FormRegisterStep3>(
     (data) =>
@@ -38,7 +37,7 @@ export const useCreateUser = () => {
     {
       onSuccess(data) {
         actions.updateRegisterForm(createUserState);
-        saveTokenCookies(data.token, env.REACT_APP_SUB_DOMAIN);
+        saveToken(data.token);
         setUserInfo(data);
         history.push(`/confirmEmail?userid=${data._id}`);
       },

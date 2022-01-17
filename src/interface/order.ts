@@ -12,7 +12,7 @@ export interface Order {
   amountToPay: number;
   app: string;
   company: string;
-  contracts: 1;
+  contracts: number;
   couponCode: string;
   couponValue: number;
   createdAt: string;
@@ -21,7 +21,7 @@ export interface Order {
   items: OrderItem[];
   itemsAmount: number;
   name: string;
-  paid: false;
+  paid: boolean;
   product: string;
   purpose: string;
   reference: string;
@@ -30,5 +30,5 @@ export interface Order {
   updatedAt: string;
   userId: string;
   vatAmount: number;
-  vatApply: false;
+  vatApply: boolean;
 }

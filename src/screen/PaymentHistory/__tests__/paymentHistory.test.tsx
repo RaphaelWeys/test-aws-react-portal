@@ -1,11 +1,11 @@
-import React from 'react';
 import { fireEvent, render as rtlRender, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import React from 'react';
 
-import PaymentHistory from '../PaymentHistory';
 import { LocalContext } from '../../../context/LocalContext';
-import { CONTACT_US_ENGLISH, CONTACT_US_ITALIAN } from '../../../hooks/useContactUs';
 import { UserInfoContext } from '../../../context/UserInfoContext';
+import { CONTACT_US_ENGLISH, CONTACT_US_ITALIAN } from '../../../hooks/useContactUs';
+import PaymentHistory from '../PaymentHistory';
 
 jest.mock('axios');
 

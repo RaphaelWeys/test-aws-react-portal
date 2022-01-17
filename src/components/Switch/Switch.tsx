@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
 import { Space, Switch as SwitchAnt, SwitchProps } from 'antd';
-import styled, { css } from 'styled-components';
+import React, { FC } from 'react';
 import { FieldError } from 'react-hook-form';
+import styled, { css } from 'styled-components';
 
 import { DisplayErrorType, Label } from '../../style/utils';
-import { getErrorMessage } from '../../utils/input';
 import { callAll } from '../../utils';
+import { getErrorMessage } from '../../utils/input';
 
 interface Props extends SwitchProps {
   className?: string;
@@ -15,8 +15,7 @@ interface Props extends SwitchProps {
   customOnChange?: (value: boolean) => void;
 }
 
-const Switch: FC<Props> = ({ className, label, error, labelValue, customOnChange, ...input }) => {
-  return (
+const Switch: FC<Props> = ({ className, label, error, labelValue, customOnChange, ...input }) => (
     <div className={className}>
       {label && (
         <div style={{ marginBottom: '18px' }}>
@@ -35,7 +34,6 @@ const Switch: FC<Props> = ({ className, label, error, labelValue, customOnChange
       {error && <DisplayErrorType>{error && getErrorMessage(error, 'switch')}</DisplayErrorType>}
     </div>
   );
-};
 
 export default styled(Switch)`
   ${({ theme: { colors } }) => css`

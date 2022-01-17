@@ -1,16 +1,16 @@
-import React, { FC, useCallback, useEffect } from 'react';
-import { ModalProps } from 'antd/lib/modal';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-import { Controller, useForm } from 'react-hook-form';
 import { Space } from 'antd';
+import { ModalProps } from 'antd/lib/modal';
+import React, { FC, useCallback, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Modal from '../Modal';
-import TextArea from '../../Input/TextArea';
-import CommonButton from '../../CommonButton';
-import useRequest from '../../../hooks/useRequest';
 import { optionsAbortCurrentContractClient, optionsAbortCurrentContractSupplier } from '../../../endpoints/signature';
+import useRequest from '../../../hooks/useRequest';
+import CommonButton from '../../CommonButton';
+import TextArea from '../../Input/TextArea';
+import Modal from '../Modal';
 
 type Props = {
   className?: string;
@@ -48,12 +48,12 @@ const ModalAbandonOffer: FC<Props> = ({ className, customCancel, packId, getSign
 
   return (
     <Modal
-      className={className}
       visible
-      title={t('modal-abandon-offer-title')}
-      getContainer={false}
+      className={className}
       footer={false}
+      getContainer={false}
       size="large"
+      title={t('modal-abandon-offer-title')}
       {...modalProps}
     >
       <Space direction="vertical" size="middle">
@@ -62,14 +62,14 @@ const ModalAbandonOffer: FC<Props> = ({ className, customCancel, packId, getSign
           <Space direction="vertical">
             <Controller
               as={TextArea}
-              name="reason"
               control={control}
-              label={t('modal-abandon-offer-text-area-label')}
               error={errors.reason}
+              label={t('modal-abandon-offer-text-area-label')}
+              name="reason"
             />
             <Space>
               <CommonButton onClick={customCancel}>{t('global-cancel')}</CommonButton>
-              <CommonButton htmlType="submit" className="orange">
+              <CommonButton className="orange" htmlType="submit">
                 {t('modal-abandon-offer-button')}
               </CommonButton>
             </Space>

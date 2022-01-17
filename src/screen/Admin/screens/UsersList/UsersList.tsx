@@ -4,10 +4,10 @@ import React, { FC, useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import EditUserAdminModal from '../../../../components/Modal/ScreenModal/EditUserAdminModal';
+import Table from '../../../../components/Table';
 import { useDeleteUser } from '../../../../endpoints/admin/users/useDeleteUser';
 import { useGetUsers } from '../../../../endpoints/admin/users/useGetUsers';
 import { useUpdateUser } from '../../../../endpoints/admin/users/useUpdateUser';
-import Table from '../../../../components/Table';
 
 interface IProps {
   className?: string;
@@ -46,12 +46,15 @@ const UsersList: FC<IProps> = ({ className }) => {
     [updateUser],
   );
 
-  const headerTableUsers = useMemo(() => {
-    return ['name', 'company', 'email / username', 'role', 'demo admin', 'created'].map((text) => ({
-      title: capitalize(text),
-      dataIndex: text,
-    }));
-  }, []);
+  const headerTableUsers = useMemo(
+    () =>
+      ['name', 'company', 'email / username', 'role', 'demo admin', 'created'].map((text) => ({
+        title: capitalize(text),
+        dataIndex: text,
+        ellipsis: true,
+      })),
+    [],
+  );
 
   const formattedUsers = useMemo(
     () =>
@@ -73,8 +76,9 @@ const UsersList: FC<IProps> = ({ className }) => {
       <Table
         bordered
         columns={headerTableUsers}
-        loading={getUsersLoading}
         dataSource={formattedUsers}
+        hasScroll={false}
+        loading={getUsersLoading}
         onRow={(record) => ({
           onDoubleClick: () => {
             setRowClicked(record);
@@ -84,10 +88,10 @@ const UsersList: FC<IProps> = ({ className }) => {
 
       {rowClicked && (
         <EditUserAdminModal
-          userLight={rowClicked}
           deleteUser={handleDeleteUser}
-          updateUser={handleUpdateUser}
           toggleModal={() => setRowClicked(null)}
+          updateUser={handleUpdateUser}
+          userLight={rowClicked}
         />
       )}
     </div>

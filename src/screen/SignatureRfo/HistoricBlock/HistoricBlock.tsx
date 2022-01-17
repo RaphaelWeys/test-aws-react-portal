@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import styled, { css } from 'styled-components';
 import { Col, Row, Space } from 'antd';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled, { css } from 'styled-components';
 
 import HistoricBlockItem from './HistoricBlockItem';
 
@@ -23,7 +23,7 @@ const HistoricBlock: FC<Props> = ({ className, archivedVersions, packId, isSuppl
 
   return (
     <>
-      <Space direction="vertical" size="middle" className={className}>
+      <Space className={className} direction="vertical" size="middle">
         <Space direction="vertical">
           <Row>
             <Col>
@@ -39,7 +39,7 @@ const HistoricBlock: FC<Props> = ({ className, archivedVersions, packId, isSuppl
 
         {archivedVersions.map((contract) => (
           <Box>
-            <HistoricBlockItem contract={contract} packId={packId} isSupplier={isSupplier} />
+            <HistoricBlockItem contract={contract} isSupplier={isSupplier} packId={packId} />
           </Box>
         ))}
       </Space>

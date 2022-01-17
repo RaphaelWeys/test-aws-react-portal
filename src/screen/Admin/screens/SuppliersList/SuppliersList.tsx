@@ -57,8 +57,8 @@ const SuppliersList: FC<IProps> = () => {
         actions: (
           <Space>
             <InvisibleButton
-              type="submit"
               data-testid="submit-btn"
+              type="submit"
               onClick={() => {
                 setSelectedSupplier(supplier);
               }}
@@ -66,10 +66,10 @@ const SuppliersList: FC<IProps> = () => {
               <EditTwoTone style={{ fontSize: '18px' }} />
             </InvisibleButton>
             <Popconfirm
+              cancelText="No"
+              okText="Yes"
               title="Are you sure you want to delete it ?"
               onConfirm={() => handleDeleteSupplier(supplier.id)}
-              okText="Yes"
-              cancelText="No"
             >
               <DeleteTwoTone twoToneColor="#eb2f96" />
             </Popconfirm>
@@ -81,19 +81,19 @@ const SuppliersList: FC<IProps> = () => {
 
   return (
     <div>
-      <Button onClick={() => setShowModal(true)} type="primary" style={{ marginBottom: 16 }}>
+      <Button style={{ marginBottom: 16 }} type="primary" onClick={() => setShowModal(true)}>
         Add a supplier
       </Button>
 
-      <Table columns={headerColumn} dataSource={dataSource} bordered size="small" loading={getSuppliersLoading} />
+      <Table bordered columns={headerColumn} dataSource={dataSource} loading={getSuppliersLoading} size="small" />
 
       {(showModal || selectedSupplier) && (
         <ModalEditSupplier
           visible
-          onCancel={handleCancelModal}
           customCancel={handleCancelModal}
-          selectedSupplier={selectedSupplier}
           handleOnSuccess={handleCancelModal}
+          selectedSupplier={selectedSupplier}
+          onCancel={handleCancelModal}
         />
       )}
     </div>

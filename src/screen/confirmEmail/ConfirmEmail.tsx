@@ -1,3 +1,4 @@
+import { Space } from 'antd';
 import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -8,12 +9,11 @@ import { useUserInfo } from '../../context/UserInfoContext';
 import { useSendEmail } from '../../endpoints/user/useSendEmail';
 import { useValidateEmail } from '../../endpoints/user/useValidateEmail';
 import MainLayout from '../../layout/MainLayout';
-import { AlignItems, TextRegular } from '../../style/utils';
-import { Error, FailedActivate } from './ConfirmEmail.styled';
-import '../../layout/WrapperWhiteBox/WrapperWhiteBox';
 import WrapperWhiteBox from '../../layout/WrapperWhiteBox/WrapperWhiteBox';
 import { Navigation } from '../../navigation';
+import { TextRegular } from '../../style/utils';
 import { getQueryParameters } from '../../utils/url';
+import { Error, FailedActivate } from './ConfirmEmail.styled';
 
 interface Props {
   className?: string;
@@ -51,7 +51,7 @@ const ConfirmEmail: FC<Props> = ({ className }) => {
     <div className={className}>
       <MainLayout hasBg={false}>
         <WrapperWhiteBox title={t('confirm-email-title')}>
-          <AlignItems direction="column" space={24} align="flex-start">
+          <Space direction="vertical" size="large">
             {isLoadingValidate && <TextRegular>Trying to activate your account ...</TextRegular>}
             {isSuccessValidate && <TextRegular>{t('confirm-email-success')}</TextRegular>}
             {errorValidate && (
@@ -59,18 +59,18 @@ const ConfirmEmail: FC<Props> = ({ className }) => {
             )}
             {!isEmailValidated && !tokenUrl && <TextRegular>{t('confirm-email')}</TextRegular>}
 
-            <AlignItems space={15}>
+            <Space size="middle">
               {!tokenUrl && !isEmailValidated && (
-                <GradientButton onClick={handleResetEmail} noGradient variant="outlined" isLoading={isLoadingSendEmail}>
+                <GradientButton noGradient isLoading={isLoadingSendEmail} variant="outlined" onClick={handleResetEmail}>
                   {isLoadingSendEmail ? t('confirm-email-resent-pending') : t('confirm-email-resent')}
                 </GradientButton>
               )}
               {isEmailValidated && (
                 <GradientButton onClick={() => history.push('/')}>{t('global-continue')}</GradientButton>
               )}
-            </AlignItems>
+            </Space>
             {errorSendEmail && <Error>{t('confirm-email-resent-failed')}</Error>}
-          </AlignItems>
+          </Space>
         </WrapperWhiteBox>
       </MainLayout>
     </div>

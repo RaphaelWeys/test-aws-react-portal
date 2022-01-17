@@ -3,11 +3,11 @@ import { Button, Upload } from 'antd';
 import { UploadProps } from 'antd/lib/upload';
 import Cookies from 'js-cookie';
 import React, { FC } from 'react';
-import styled, { css } from 'styled-components';
 import { FieldError } from 'react-hook-form';
+import styled, { css } from 'styled-components';
 
-import { getErrorMessage } from '../../utils/input';
 import { DisplayErrorType } from '../../style/utils';
+import { getErrorMessage } from '../../utils/input';
 
 type Props = {
   className?: string;

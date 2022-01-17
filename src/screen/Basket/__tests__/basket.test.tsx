@@ -1,13 +1,14 @@
 import 'jest-styled-components';
-import React from 'react';
+
 import { render as rtlRender, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import React from 'react';
 import { Router } from 'react-router-dom';
 
+import { LocalContext } from '../../../context/LocalContext';
+import { UserInfoContext } from '../../../context/UserInfoContext';
 import history from '../../../router/history';
 import Basket from '../Basket';
-import { UserInfoContext } from '../../../context/UserInfoContext';
-import { LocalContext } from '../../../context/LocalContext';
 
 interface IStateMachineProvider {
   children: React.ReactNode;

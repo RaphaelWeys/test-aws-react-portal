@@ -5,20 +5,12 @@ import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
 import { useCreateUser } from '../../../../endpoints/registration/useCreateUser';
-import { BlueStyle } from '../../../../style/utils';
+import { MainLinkStyle } from '../../../../style/utils';
 import FirstStep from './FirstStep';
 import IndicatorStep from './IndicatorStep';
+import { FormRegister, PropsRegisterForm } from './RegisterForm.interface';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
-import { FormRegisterStep1 } from './FirstStep/FirstStep';
-import { FormRegisterStep2 } from './SecondStep/SecondStep';
-import { FormRegisterStep3 } from './ThirdStep/ThirdStep';
-
-interface PropsRegisterForm {
-  className?: string;
-}
-
-export type FormRegister = FormRegisterStep1 & FormRegisterStep2 & FormRegisterStep3;
 
 const RegisterForm: FC<PropsRegisterForm> = ({ className }) => {
   const [t] = useTranslation();
@@ -36,43 +28,43 @@ const RegisterForm: FC<PropsRegisterForm> = ({ className }) => {
     <FirstStep key={0} nextStep={() => setActualStep(actualStep + 1)} />,
     <SecondStep
       key={1}
-      previousStep={() => setActualStep(actualStep - 1)}
       nextStep={() => setActualStep(actualStep + 1)}
+      previousStep={() => setActualStep(actualStep - 1)}
     />,
     <ThirdStep
-      key={2}
-      previousStep={() => setActualStep(actualStep - 1)}
       handleCreateUser={handleCreateUser}
+      key={2}
       mutationIsLoading={isLoading}
+      previousStep={() => setActualStep(actualStep - 1)}
     />,
   ];
 
   return (
     <div className={className}>
       <Space direction="vertical" size="large">
-        <IndicatorStep nbStep={steps.length} actualStep={actualStep} />
+        <IndicatorStep actualStep={actualStep} nbStep={steps.length} />
 
         {error && (
           <Alert
-            message={t(`register-alert-error-title-${error}`)}
-            description={t(`register-alert-error-description-${error}`)}
-            type="error"
             showIcon
             className="register-alert"
             data-testid="alert-registerForm"
+            description={t(`register-alert-error-description-${error}`)}
+            message={t(`register-alert-error-title-${error}`)}
+            type="error"
           />
         )}
 
         {steps.filter((step, index) => index === actualStep && step)}
 
-        <BlueStyle>{t('register-information')}</BlueStyle>
+        <MainLinkStyle>{t('register-information')}</MainLinkStyle>
       </Space>
     </div>
   );
 };
 
 export default styled(RegisterForm)`
-  ${BlueStyle} {
+  ${MainLinkStyle} {
     font-weight: normal;
   }
 

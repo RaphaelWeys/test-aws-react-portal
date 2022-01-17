@@ -1,18 +1,18 @@
+import { Col, Row, Space } from 'antd';
+import moment from 'moment';
 import React, { FC } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { Col, Row, Space } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import Hr from '../../../../components/Hr';
 import Radio from '../../../../components/Input/Radio';
-import { useTranslation } from 'react-i18next';
-import { isBoolean } from '../../../../utils/behavior';
-import { Error, Label, TextRegular } from '../../../../style/utils';
 import MarketItem from '../../../../components/MarketItem';
-import { getErrorMessage } from '../../../../utils/input';
 import SafeHTMLTranslate from '../../../../components/SafeHTMLTranslate';
 import { MANAGED_BY } from '../../../../constants';
-import moment from 'moment';
 import { ClientMarkets } from '../../../../interface/multiAccess';
+import { Error, Label, TextRegular } from '../../../../style/utils';
+import { isBoolean } from '../../../../utils/behavior';
+import { getErrorMessage } from '../../../../utils/input';
 
 interface Props {
   marketList?: ClientMarkets[];
@@ -77,12 +77,12 @@ const FormStep2: FC<Props> = ({ marketList }) => {
   return (
     <>
       <Controller
-        name="multiaccess.clientCanLogin"
-        error={errors?.multiaccess?.clientCanLogin}
         as={Radio}
         control={control}
-        label={t('multi-access-edit-is-manage-kam-step-2')}
+        error={errors?.multiaccess?.clientCanLogin}
         items={AccessToolRadio}
+        label={t('multi-access-edit-is-manage-kam-step-2')}
+        name="multiaccess.clientCanLogin"
       />
 
       <Hr />
@@ -92,12 +92,12 @@ const FormStep2: FC<Props> = ({ marketList }) => {
           <Row>
             <Col xs={24}>
               <Controller
-                name="multiaccess.contractsManagedBy"
-                error={errors?.multiaccess?.contractsManagedBy}
                 as={Radio}
                 control={control}
-                label={t('multi-access-edit-who-can-manage-contract')}
+                error={errors?.multiaccess?.contractsManagedBy}
                 items={ManagementRadio}
+                label={t('multi-access-edit-who-can-manage-contract')}
+                name="multiaccess.contractsManagedBy"
               />
             </Col>
           </Row>
@@ -117,19 +117,19 @@ const FormStep2: FC<Props> = ({ marketList }) => {
 
           <Row gutter={[40, 20]}>
             {fields.map((field, index) => (
-              <Col className="gutter-row" key={field.id} xs={24} sm={12} md={8}>
+              <Col className="gutter-row" key={field.id} md={8} sm={12} xs={24}>
                 <MarketItem
+                  clearErrors={clearErrors}
                   control={control}
-                  name={`multiaccess.clientMarkets[${index}]`}
-                  errors={errors?.multiaccess?.clientMarkets?.[index]}
-                  setValue={setValue}
                   country={field.country}
                   energy={field.energy}
-                  register={register}
-                  getValues={getValues}
-                  clearErrors={clearErrors}
-                  hasCompanyMarketTrend={field.hasCompanyMarketTrend}
+                  errors={errors?.multiaccess?.clientMarkets?.[index]}
                   field={field}
+                  getValues={getValues}
+                  hasCompanyMarketTrend={field.hasCompanyMarketTrend}
+                  name={`multiaccess.clientMarkets[${index}]`}
+                  register={register}
+                  setValue={setValue}
                 />
               </Col>
             ))}

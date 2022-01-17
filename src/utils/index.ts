@@ -1,7 +1,3 @@
-import Cookies from 'js-cookie';
-
-import { TOKEN_NAME } from '../hooks/useCookie';
-
 export const getCorrectBackend = (backend: string) => {
   switch (backend) {
     case 'follow': {
@@ -18,14 +14,3 @@ export const getCorrectBackend = (backend: string) => {
 
 export const callAll = (...fns: (((...args: any[]) => void) | undefined)[]) => (...args: any[]) =>
   fns.forEach((fn) => fn && fn(...args));
-
-export const saveTokenCookies = (token, domain) => {
-  const month13Later = new Date();
-  month13Later.setMonth(month13Later.getMonth() + 13);
-
-  Cookies.set(TOKEN_NAME, token, {
-    path: '/',
-    domain,
-    expires: month13Later,
-  });
-};

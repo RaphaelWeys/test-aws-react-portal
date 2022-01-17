@@ -1,5 +1,5 @@
-import { useMutation } from 'react-query';
 import axios, { AxiosError } from 'axios';
+import { useMutation } from 'react-query';
 
 import { TenantInfo } from '../../interface/tenant';
 

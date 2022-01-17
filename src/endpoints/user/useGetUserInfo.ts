@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
 import axios, { AxiosError } from 'axios';
+import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router';
 
+import { useTenant } from '../../context/TenantContext';
 import useCookie from '../../hooks/useCookie';
 import { UserInfo } from '../../interface/user';
 import { Navigation } from '../../navigation';
-import { useTenant } from '../../context/TenantContext';
 
 export const useGetUserInfo = (setUserInfo: React.Dispatch<React.SetStateAction<Partial<UserInfo>>>) => {
   const { getCookie, removeCookie } = useCookie();

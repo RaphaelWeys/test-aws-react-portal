@@ -1,9 +1,9 @@
-import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import React from 'react';
 
-import BasketPay from '../BasketPay';
 import { orderFake } from '../../AppBasket/__tests__/appBasket.test';
+import BasketPay from '../BasketPay';
 
 const props = {
   previousStep: jest.fn(),

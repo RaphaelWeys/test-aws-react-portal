@@ -3,15 +3,11 @@ import styled, { css } from 'styled-components';
 
 interface Props {
   className?: string;
-  noTop?: boolean;
-  noBottom?: boolean;
 }
 
-const Hr: FC<Props> = ({ className }) => {
-  return <div className={className} />;
-};
+const Hr: FC<Props> = ({ className }) => <div className={className} />;
 
-export default styled(Hr)`
+export default styled(Hr)<{ noTop?: boolean; noBottom?: boolean }>`
   ${({ theme: { colors }, noTop, noBottom }) => css`
     height: 1px;
     width: 100%;

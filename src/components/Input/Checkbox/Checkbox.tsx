@@ -27,17 +27,18 @@ const Checkbox: FC<Props> = ({ className, children, customOnChange, ...input }) 
 );
 
 export default styled(Checkbox)`
-  ${({ error }) => {
-    return css`
-      color: #727577;
+  ${({ error }) => css`
+      &&& {
+        color: #727577;
+        align-items: flex-start;
 
-      > span:last-child {
-        font-size: 0.81rem;
-      }
+        > span:last-child {
+          font-size: 0.81rem;
+        }
 
-      .ant-checkbox-inner {
-        ${error && 'border: 1px solid red'};
+        .ant-checkbox-inner {
+          ${error && 'border: 1px solid red'};
+        }
       }
-    `;
-  }}
+    `}
 `;

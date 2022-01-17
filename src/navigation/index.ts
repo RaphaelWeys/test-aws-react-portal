@@ -19,7 +19,12 @@ export const Navigation = {
   MULTI_ACCESS_DETAILS: '/multi-access/:userId',
   MULTI_ACCESS_EDIT: '/multi-access/:userId/edit',
 
+  GROUP_LIST: '/multi-access/group/list',
+  GROUP_CREATE: '/multi-access/group/create',
+  GROUP_DETAILS: '/multi-access/group/:id',
+
   CONTRACTS_DETAILS: '/contracts/:id',
+  CONTRACT_NEW: '/contracts/new',
 
   ADMIN: '/admin',
   ADMIN_TRANSLATION: 'admin/translations',

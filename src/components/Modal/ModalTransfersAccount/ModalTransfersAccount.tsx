@@ -1,20 +1,20 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import { Col, Row, Space } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
-import { useTranslation } from 'react-i18next';
-
-import Modal from '../Modal';
-import GradientButton from '../../GradientButton/GradientButton';
-import { useTransfersAccount } from '../../../endpoints/multiAccess/useTransfersAccount';
-import Hr from '../../Hr';
-import Select from '../../Select';
-import { TextRegular } from '../../../style/utils';
-import TransfersAccountIcon from '../../icons/TransfersAccountIcon';
-import { Navigation } from '../../../navigation';
-import { useHistory } from 'react-router';
+import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
+import styled from 'styled-components';
+
 import { useGetKamListForKam } from '../../../endpoints/multiAccess/useGetKamListForKam';
+import { useTransfersAccount } from '../../../endpoints/multiAccess/useTransfersAccount';
+import { Navigation } from '../../../navigation';
+import { TextRegular } from '../../../style/utils';
+import GradientButton from '../../GradientButton/GradientButton';
+import Hr from '../../Hr';
+import TransfersAccountIcon from '../../icons/TransfersAccountIcon';
+import Select from '../../Select';
+import Modal from '../Modal';
 
 interface Props extends ModalProps {
   className?: string;
@@ -65,18 +65,18 @@ const ModalTransfersAccount: FC<Props> = ({ className, title, onClose, userId, .
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row>
-              <Col xs={24} sm={8}>
+              <Col sm={8} xs={24}>
                 <Controller
                   as={Select}
-                  name="kam"
                   control={control}
+                  error={errors.kam}
                   items={(data || []).map((item) => ({
                     label: `${item.lastName} ${item.firstName}`,
                     value: item.id,
                     key: item.id,
                   }))}
                   label={t('modal-transfert-account-select')}
-                  error={errors.kam}
+                  name="kam"
                 />
               </Col>
             </Row>
@@ -84,7 +84,7 @@ const ModalTransfersAccount: FC<Props> = ({ className, title, onClose, userId, .
             <Hr />
 
             <Space size="middle">
-              <GradientButton onClick={onClose} variant="outlined">
+              <GradientButton variant="outlined" onClick={onClose}>
                 {t('global-close')}
               </GradientButton>
               <GradientButton isLoading={isLoading} type="submit">

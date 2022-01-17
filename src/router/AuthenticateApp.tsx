@@ -1,6 +1,6 @@
+import LogRocket from 'logrocket';
 import React, { FC, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import LogRocket from 'logrocket';
 
 import Header from '../components/Header';
 import RedirectUser from '../components/RedirectUser';
@@ -11,19 +11,22 @@ import { Navigation } from '../navigation';
 import ConfirmEmail from '../screen/confirmEmail';
 import Dashboard from '../screen/Dashboard';
 import Logout from '../screen/Logout';
+import GroupCreate from '../screen/multiAccess/group/GroupCreate';
+import GroupDetails from '../screen/multiAccess/group/GroupDetails';
+import GroupList from '../screen/multiAccess/group/GroupList';
+import MultiAccessCreate from '../screen/multiAccess/MultiAccessCreate';
 import MultiAccessDetails from '../screen/multiAccess/MultiAccessDetail';
+import MultiAccessEdit from '../screen/multiAccess/MultiAccessEdit';
 import MultiAccessList from '../screen/multiAccess/MultiAccessList';
 import PaymentHistory from '../screen/PaymentHistory';
 import SignatureRfo from '../screen/SignatureRfo';
-import UpdatePassword from '../screen/UpdatePassword';
-import { WrapperScroll } from './AuthenticatePage.styled';
 import TermCGU from '../screen/TermCGU';
 import TermRGPD from '../screen/TermRGPD';
-import MultiAccessCreate from '../screen/multiAccess/MultiAccessCreate';
-import MultiAccessEdit from '../screen/multiAccess/MultiAccessEdit';
+import UpdatePassword from '../screen/UpdatePassword';
+import { WrapperScroll } from './AuthenticatePage.styled';
 
 // Only load basket page, when making an order to avoid unnecessary call api Stripe
-const BasketWrapper = React.lazy(() => import('../screen/Basket/BasketWrapper'));
+const Basket = React.lazy(() => import('../screen/Basket'));
 const Admin = React.lazy(() => import('../screen/Admin'));
 
 const AuthenticateLayout: FC = () => {
@@ -60,28 +63,32 @@ const AuthenticateLayout: FC = () => {
       {!pathname.includes(Navigation.ADMIN) && <Header />}
 
       <Switch>
-        <Route path={Navigation.ADMIN} component={Admin} />
+        <Route component={Admin} path={Navigation.ADMIN} />
 
         <ScrollProvider scroll={scrollRef}>
           <WrapperScroll ref={setScrollRef}>
             <Switch>
-              <Route exact path={['/', Navigation.DASHBOARD]} component={Dashboard} />
-              <Route exact path={Navigation.BASKET} component={BasketWrapper} />
-              <Route exact path={Navigation.PAYMENT_HISTORY} component={PaymentHistory} />
-              <Route exact path={Navigation.UPDATE_PASSWORD} component={UpdatePassword} />
-              <Route exact path={Navigation.TERM_CGU} component={TermCGU} />
-              <Route exact path={Navigation.TERM_RGPD} component={TermRGPD} />
+              <Route exact component={Dashboard} path={['/', Navigation.DASHBOARD]} />
+              <Route exact component={Basket} path={Navigation.BASKET} />
+              <Route exact component={PaymentHistory} path={Navigation.PAYMENT_HISTORY} />
+              <Route exact component={UpdatePassword} path={Navigation.UPDATE_PASSWORD} />
+              <Route exact component={TermCGU} path={Navigation.TERM_CGU} />
+              <Route exact component={TermRGPD} path={Navigation.TERM_RGPD} />
 
-              <Route exact path={Navigation.SIGNATURE} component={SignatureRfo} />
+              <Route exact component={SignatureRfo} path={Navigation.SIGNATURE} />
 
-              <Route exact path={Navigation.MULTI_ACCESS} component={MultiAccessList} />
-              <Route exact path={Navigation.MULTI_ACCESS_CREATE} component={MultiAccessCreate} />
-              <Route exact path={Navigation.MULTI_ACCESS_DETAILS} component={MultiAccessDetails} />
-              <Route exact path={Navigation.MULTI_ACCESS_EDIT} component={MultiAccessEdit} />
+              <Route exact component={MultiAccessList} path={Navigation.MULTI_ACCESS} />
+              <Route exact component={MultiAccessCreate} path={Navigation.MULTI_ACCESS_CREATE} />
+              <Route exact component={MultiAccessDetails} path={Navigation.MULTI_ACCESS_DETAILS} />
+              <Route exact component={MultiAccessEdit} path={Navigation.MULTI_ACCESS_EDIT} />
 
-              <Route exact path={Navigation.CONFIRM_EMAIL} component={ConfirmEmail} />
-              <Route exact path={Navigation.LOGOUT} component={Logout} />
-              <Route exact path="*" component={RedirectUser} />
+              <Route exact component={GroupList} path={Navigation.GROUP_LIST} />
+              <Route exact component={GroupCreate} path={Navigation.GROUP_CREATE} />
+              <Route exact component={GroupDetails} path={Navigation.GROUP_DETAILS} />
+
+              <Route exact component={ConfirmEmail} path={Navigation.CONFIRM_EMAIL} />
+              <Route exact component={Logout} path={Navigation.LOGOUT} />
+              <Route exact component={RedirectUser} path="*" />
             </Switch>
           </WrapperScroll>
         </ScrollProvider>

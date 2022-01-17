@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
 import { Collapse as CollapseAnt } from 'antd';
 import { CollapseProps } from 'antd/lib/collapse/Collapse';
 import { CollapsePanelProps } from 'antd/lib/collapse/CollapsePanel';
+import React, { FC } from 'react';
+import styled, { css, ThemeContext } from 'styled-components';
 
 import { Label } from '../../style/utils';
 import ArrowRight from '../icons/ArrowRight';
@@ -36,7 +36,7 @@ const Collapse: FC<Props> = ({ className, collapseProps, panelProps, children })
   );
 
   return (
-    <CollapseAnt className={className} {...collapseProps} expandIconPosition="right" expandIcon={getCorrectIcon}>
+    <CollapseAnt className={className} {...collapseProps} expandIcon={getCorrectIcon} expandIconPosition="right">
       <Panel {...panelProps} header={<Label>{panelProps.header}</Label>}>
         {children}
       </Panel>

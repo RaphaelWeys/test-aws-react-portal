@@ -1,29 +1,29 @@
-import { useTranslation } from 'react-i18next';
-import { FormProvider, useForm } from 'react-hook-form';
-import React, { FC } from 'react';
 import { Space } from 'antd';
 import { useStateMachine } from 'little-state-machine';
+import React, { FC } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
-import InfoIcon from '../../../../components/icons/InfoIcon';
-import WrapperWhiteBox from '../../../../layout/WrapperWhiteBox';
-import UserGraphIcon from '../../../../components/icons/UserGraphIcon';
-import Hr from '../../../../components/Hr';
-import MainLayout from '../../../../layout/MainLayout';
-import Steps from '../../../../components/Steps';
-import { HeaderOne, TextRegular } from '../../../../style/utils';
-import FormStep1 from '../FormStep1';
-import FormStep2 from '../FormStep2';
 import GradientButton from '../../../../components/GradientButton';
-import { updateMultiAccessForm } from '../../../../StoreForm/updateState';
+import Hr from '../../../../components/Hr';
+import InfoIcon from '../../../../components/icons/InfoIcon';
+import UserGraphIcon from '../../../../components/icons/UserGraphIcon';
+import Steps from '../../../../components/Steps';
 import { useCreateMultiAccessUser } from '../../../../endpoints/multiAccess/useCreateMultiAccessUser';
-import multiAccessClientState from '../../../../StoreForm/multiAccessClientState';
-import useDesktop from '../../../../hooks/useDesktop';
 import { useGetMarketList } from '../../../../endpoints/multiAccess/useGetMarketList';
 import { useCheckUsername } from '../../../../endpoints/registration/useCheckUsername';
+import useDesktop from '../../../../hooks/useDesktop';
 import useGetPortalApp from '../../../../hooks/useGetPortalApp';
-import { hasSomeClientMarketActivated } from '../../utils';
+import MainLayout from '../../../../layout/MainLayout';
+import WrapperWhiteBox from '../../../../layout/WrapperWhiteBox';
+import { Navigation } from '../../../../navigation';
 import history from '../../../../router/history';
-import { Navigation } from '../../../../navigation/index';
+import multiAccessClientState from '../../../../StoreForm/multiAccessClientState';
+import { updateMultiAccessForm } from '../../../../StoreForm/updateState';
+import { HeaderOne, TextRegular } from '../../../../style/utils';
+import { hasSomeClientMarketActivated } from '../../utils';
+import FormStep1 from '../FormStep1';
+import FormStep2 from '../FormStep2';
 
 interface Props {
   currentStep: number;
@@ -45,12 +45,13 @@ const MultiAccessClientCreate: FC<Props> = ({ currentStep, setCurrentStep }) => 
     reset(state.multiAccessClient);
   }, [reset, state.multiAccessClient]);
 
-  React.useEffect(() => {
-    return () => {
+  React.useEffect(
+    () => () => {
       actions.updateMultiAccessForm(multiAccessClientState);
-    };
+    },
     // eslint-disable-next-line
-  }, []);
+    [],
+  );
 
   const steps = React.useMemo(
     () => [
@@ -103,18 +104,16 @@ const MultiAccessClientCreate: FC<Props> = ({ currentStep, setCurrentStep }) => 
             ...state.multiAccessClient.multiaccess,
             ...data.multiaccess,
             // Extract `period`, to not sent it in the payload
-            clientMarkets: data.multiaccess?.clientMarkets?.map(({ period, ...market }) => {
-              return {
-                ...market,
-                periodStart: market.enabled ? period[0].format('YYYY-MM-DD') : undefined,
-                periodEnd: market.enabled ? period[1].format('YYYY-MM-DD') : undefined,
-              };
-            }),
+            clientMarkets: data.multiaccess?.clientMarkets?.map(({ period, ...market }) => ({
+              ...market,
+              periodStart: market.enabled ? period[0].format('YYYY-MM-DD') : undefined,
+              periodEnd: market.enabled ? period[1].format('YYYY-MM-DD') : undefined,
+            })),
           },
         };
         createUser(result, {
-          onSuccess() {
-            history.push(Navigation.MULTI_ACCESS);
+          onSuccess(data) {
+            history.push(Navigation.MULTI_ACCESS_DETAILS.replace(':userId', data.id));
           },
         });
       }
@@ -145,7 +144,7 @@ const MultiAccessClientCreate: FC<Props> = ({ currentStep, setCurrentStep }) => 
   return (
     <MainLayout hasBg={false}>
       <WrapperWhiteBox hasCloseIcon onCancel={onCancel}>
-        {isDesktop && <Steps steps={steps} currentStep={currentStep} />}
+        {isDesktop && <Steps currentStep={currentStep} steps={steps} />}
         <Space direction="vertical" size={13}>
           <TextRegular>
             {t('multi-access-create-client-account')}
@@ -158,16 +157,16 @@ const MultiAccessClientCreate: FC<Props> = ({ currentStep, setCurrentStep }) => 
         <Hr noBottom noTop />
         <div style={{ width: '100%' }}>
           <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} style={{ width: '100%' }}>
+            <form style={{ width: '100%' }} onSubmit={methods.handleSubmit(onSubmit)}>
               {steps[currentStep].component}
 
               <Space size="middle">
                 {currentStep > 0 && (
-                  <GradientButton onClick={handleClickBack} variant="outlined">
+                  <GradientButton variant="outlined" onClick={handleClickBack}>
                     {t('global-previous')}
                   </GradientButton>
                 )}
-                <GradientButton type="submit" isLoading={isLoading || checkEmailPending}>
+                <GradientButton isLoading={isLoading || checkEmailPending} type="submit">
                   {currentStep === 1 ? t('multi-access-create-button') : t('global-next')}
                 </GradientButton>
               </Space>

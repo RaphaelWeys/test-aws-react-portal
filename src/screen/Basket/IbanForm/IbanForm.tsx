@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import { IbanElement } from '@stripe/react-stripe-js';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 interface Props {
   className?: string;
@@ -41,9 +41,9 @@ const IbanForm: FC<Props> = ({ className }) => {
   };
 
   return (
-    <label className={className}>
+    <div className={className}>
       <p>{t('basket-iban-form')}</p> <IbanElement options={IBAN_ELEMENT_OPTIONS} />
-    </label>
+    </div>
   );
 };
 

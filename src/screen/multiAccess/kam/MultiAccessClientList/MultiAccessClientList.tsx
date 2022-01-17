@@ -16,7 +16,7 @@ import { useGetMultiAccessList } from '../../../../endpoints/multiAccess/useGetM
 import MainLayout from '../../../../layout/MainLayout';
 import WrapperWhiteBox from '../../../../layout/WrapperWhiteBox';
 import { Navigation } from '../../../../navigation';
-import { BlueStyle, TextRegular } from '../../../../style/utils';
+import { MainLinkStyle, TextRegular } from '../../../../style/utils';
 
 interface Props {
   callback?: string;
@@ -40,7 +40,7 @@ const MultiAccessClientList: FC<Props> = ({ callback }) => {
         title: t('multi-access-client-list-company'),
         key: t('multi-access-client-list-company'),
         dataIndex: 'company',
-        render: (company) => <BlueStyle>{company}</BlueStyle>,
+        render: (company) => <MainLinkStyle>{company}</MainLinkStyle>,
       },
       {
         title: t('multi-access-client-list-name'),
@@ -108,9 +108,6 @@ const MultiAccessClientList: FC<Props> = ({ callback }) => {
     <MainLayout hasBg={false}>
       <WrapperWhiteBox
         backButtonText={t('global-back')}
-        to={callback}
-        icon={<CompanyIcon />}
-        title={t('multi-access-list-title')}
         extra={
           <GradientButton
             disabled={!usersList?.canCreateClientAccount ?? true}
@@ -119,6 +116,9 @@ const MultiAccessClientList: FC<Props> = ({ callback }) => {
             {t('multi-access-list-add-client')}
           </GradientButton>
         }
+        icon={<CompanyIcon />}
+        title={t('multi-access-list-title')}
+        to={callback}
       >
         <Space direction="vertical" size={25}>
           <Row>
@@ -144,13 +144,11 @@ const MultiAccessClientList: FC<Props> = ({ callback }) => {
               columns={header}
               dataSource={dataSource}
               loading={isLoading || isContractCountFetching}
-              onRow={(record) => {
-                return {
+              onRow={(record) => ({
                   onClick: () => {
                     history.push(Navigation.MULTI_ACCESS_DETAILS.replace(':userId', record.id));
                   },
-                };
-              }}
+                })}
             />
           </div>
         </Space>

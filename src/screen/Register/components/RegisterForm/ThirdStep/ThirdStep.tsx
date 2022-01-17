@@ -12,9 +12,9 @@ import Modal from '../../../../../components/Modal/Modal';
 import SafeHTMLTranslate from '../../../../../components/SafeHTMLTranslate';
 import { getValidationCheck } from '../../../../../constants';
 import { updateRegisterForm } from '../../../../../StoreForm/updateState';
-import { WrapperCheckbox } from './ThirdStep.styled';
-import { FormRegister } from '../RegisterForm';
 import { getTextWithFunctionInside } from '../../../../../utils/string';
+import { FormRegister, FormRegisterStep3 } from '../RegisterForm.interface';
+import { WrapperCheckbox } from './ThirdStep.styled';
 
 interface PropsThirdStep {
   className?: string;
@@ -22,16 +22,6 @@ interface PropsThirdStep {
   handleCreateUser: (payload: FormRegister) => void;
   mutationIsLoading: boolean;
 }
-
-export type FormRegisterStep3 = {
-  password: string;
-  confirmPassword: string;
-  preferences: {
-    personalDataProcessing: boolean;
-    agreeTermsConditions: boolean;
-    agreePrivacyPolicy: boolean;
-  };
-};
 
 const ThirdStep: FC<PropsThirdStep> = ({ className, previousStep, handleCreateUser, mutationIsLoading }) => {
   const { actions, state } = useStateMachine({ updateRegisterForm });
@@ -120,25 +110,25 @@ const ThirdStep: FC<PropsThirdStep> = ({ className, previousStep, handleCreateUs
         <Row gutter={[0, 18]}>
           <Col span={24}>
             <Controller
-              as={Input}
-              name="password"
-              label={t('register-password')}
-              control={control}
-              type="password"
-              error={errors?.password}
               autoFocus
+              as={Input}
+              control={control}
+              error={errors?.password}
               htmlFor="password"
+              label={t('register-password')}
+              name="password"
+              type="password"
             />
           </Col>
           <Col span={24}>
             <Controller
               as={Input}
-              name="confirmPassword"
-              label={t('register-confirm-password')}
               control={control}
-              type="password"
-              htmlFor="confirm-password"
               error={errors?.confirmPassword}
+              htmlFor="confirm-password"
+              label={t('register-confirm-password')}
+              name="confirmPassword"
+              type="password"
             />
           </Col>
 
@@ -149,7 +139,7 @@ const ThirdStep: FC<PropsThirdStep> = ({ className, previousStep, handleCreateUs
                   const error = opt.name.split('.').reduce((o, i) => o?.[i], errors);
 
                   return (
-                    <Controller key={opt.name} as={Checkbox} name={opt.name} control={control} error={!!error}>
+                    <Controller as={Checkbox} control={control} error={!!error} key={opt.name} name={opt.name}>
                       {opt.label}
                     </Controller>
                   );
@@ -161,12 +151,12 @@ const ThirdStep: FC<PropsThirdStep> = ({ className, previousStep, handleCreateUs
           <Col span={24}>
             <Row gutter={18} justify="center">
               <Col>
-                <GradientButton onClick={previousStep} noGradient variant="outlined" fullWidth>
+                <GradientButton fullWidth noGradient variant="outlined" onClick={previousStep}>
                   {t('global-previous')}
                 </GradientButton>
               </Col>
               <Col>
-                <GradientButton type="submit" fullWidth isLoading={mutationIsLoading}>
+                <GradientButton fullWidth isLoading={mutationIsLoading} type="submit">
                   {t('global-submit')}
                 </GradientButton>
               </Col>
@@ -177,12 +167,12 @@ const ThirdStep: FC<PropsThirdStep> = ({ className, previousStep, handleCreateUs
 
       {showModal && (
         <Modal
+          cancelButtonProps={{ style: { display: 'none' } }}
+          okText={t('global-close')}
+          size="large"
           title={modalInfo.title}
           onCancel={() => setShowModal(false)}
           onOk={() => setShowModal(false)}
-          okText={t('global-close')}
-          cancelButtonProps={{ style: { display: 'none' } }}
-          size="large"
         >
           <SafeHTMLTranslate template={modalInfo.content} Type="p" />
         </Modal>

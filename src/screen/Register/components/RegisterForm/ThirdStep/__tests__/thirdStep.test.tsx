@@ -1,12 +1,12 @@
-import React from 'react';
 import { fireEvent, render as rtlRender, waitFor } from '@testing-library/react';
+import React from 'react';
 import { Router } from 'react-router-dom';
 
+import { LocalContext } from '../../../../../../context/LocalContext';
+import { UserInfoContext } from '../../../../../../context/UserInfoContext';
+import { UserInfo } from '../../../../../../interface/user';
 import history from '../../../../../../router/history';
 import ThirdStep from '../ThirdStep';
-import { UserInfo } from '../../../../../../interface/user';
-import { UserInfoContext } from '../../../../../../context/UserInfoContext';
-import { LocalContext } from '../../../../../../context/LocalContext';
 
 jest.mock('axios');
 jest.mock('little-state-machine', () => ({
@@ -46,8 +46,8 @@ test('It should validate the form', async () => {
   const { getByTestId, getByLabelText } = render(
     <Router history={history}>
       <ThirdStep
-        registerUser={registerUser}
         previousStep={() => {}}
+        registerUser={registerUser}
         registerUserPending={false}
         setErrorRegisterUser={setErrorRegisterUser}
       />
@@ -105,8 +105,8 @@ test('It should show an error when the request failed', async () => {
 
   const { getByTestId, getByLabelText } = render(
     <ThirdStep
-      registerUser={registerUser}
       previousStep={() => {}}
+      registerUser={registerUser}
       registerUserPending={false}
       setErrorRegisterUser={setErrorRegisterUser}
     />,
@@ -156,8 +156,8 @@ test('It should display error field', async () => {
 
   const { getByTestId, getAllByTestId } = render(
     <ThirdStep
-      registerUser={registerUser}
       previousStep={() => {}}
+      registerUser={registerUser}
       registerUserPending={false}
       setErrorRegisterUser={() => {}}
     />,
@@ -175,8 +175,8 @@ test('It should display error field for no match password', async () => {
 
   const { getByTestId, getByLabelText } = render(
     <ThirdStep
-      registerUser={registerUser}
       previousStep={() => {}}
+      registerUser={registerUser}
       registerUserPending={false}
       setErrorRegisterUser={() => {}}
     />,
@@ -201,8 +201,8 @@ test('It should display bad format message', async () => {
 
   const { getByTestId, getByText, getByLabelText } = render(
     <ThirdStep
-      registerUser={registerUser}
       previousStep={() => {}}
+      registerUser={registerUser}
       registerUserPending={false}
       setErrorRegisterUser={() => {}}
     />,
@@ -227,8 +227,8 @@ test('It should display too long password', async () => {
 
   const { getByTestId, getByText, getByLabelText } = render(
     <ThirdStep
-      registerUser={registerUser}
       previousStep={() => {}}
+      registerUser={registerUser}
       registerUserPending={false}
       setErrorRegisterUser={() => {}}
     />,
@@ -253,8 +253,8 @@ test('It should back to previous step when click back button', () => {
 
   const { getByText } = render(
     <ThirdStep
-      registerUser={registerUser}
       previousStep={previousStep}
+      registerUser={registerUser}
       registerUserPending={false}
       setErrorRegisterUser={() => {}}
     />,

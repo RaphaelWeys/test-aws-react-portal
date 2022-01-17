@@ -9,15 +9,13 @@ interface PropsIndicatorStep {
   actualStep: number;
 }
 
-const IndicatorStep: FC<PropsIndicatorStep> = ({ className, nbStep, actualStep }) => {
-  return (
+const IndicatorStep: FC<PropsIndicatorStep> = ({ className, nbStep, actualStep }) => (
     <div className={className}>
       {Array.from({ length: nbStep }).map((_, index) => (
-        <CircleStep key={index} isActive={index === actualStep} />
+        <CircleStep isActive={index === actualStep} key={index} />
       ))}
     </div>
   );
-};
 
 export default styled(IndicatorStep)`
   display: flex;

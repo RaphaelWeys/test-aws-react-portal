@@ -12,11 +12,9 @@ export const useDeleteSupplier = () => {
   const queryClient = useQueryClient();
 
   return useMutation<void, AxiosError<void>, string, TContext>(
-    (supplierId) => {
-      return client
+    (supplierId) => client
         .delete(`${process.env.REACT_APP_BACKEND_TENDER_URL}/suppliers/${supplierId}`)
-        .then((res) => res.data);
-    },
+        .then((res) => res.data),
     {
       onMutate(supplierId) {
         const suppliers = queryClient.getQueryData('get-suppliers') as Supplier[];

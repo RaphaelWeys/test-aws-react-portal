@@ -1,14 +1,14 @@
 import capitalize from 'lodash/capitalize';
 import React from 'react';
 
+import { Checkbox } from '../../../../components/Input';
+import ModalTranslation from '../../../../components/Modal/ModalTranslation';
+import Select from '../../../../components/Select';
+import Table from '../../../../components/Table';
+import { AdminLanguageItems } from '../../../../config/app-config';
 import { Translation, useGetTranslations } from '../../../../endpoints/admin/translation/useGetTranslations';
 import { useUpdateTranslation } from '../../../../endpoints/admin/translation/useUpdateTranslation';
 import { ChoiceFilter, InputStyled } from './TranslationList.styled';
-import Table from '../../../../components/Table';
-import Select from '../../../../components/Select';
-import { Checkbox } from '../../../../components/Input';
-import ModalTranslation from '../../../../components/Modal/ModalTranslation';
-import { AdminLanguageItems } from '../../../../config/app-config';
 
 const TranslationsList = () => {
   const [lang, setLang] = React.useState<string>('en');
@@ -53,7 +53,8 @@ const TranslationsList = () => {
         </div>
       ),
       dataIndex: key,
-      width: `${100 / defaultHeader.length}%`,
+      width: 100 / defaultHeader.length,
+      ellipsis: true,
     }));
   };
 
@@ -73,31 +74,32 @@ const TranslationsList = () => {
     <>
       <ChoiceFilter>
         <Select
-          value={app}
-          onChange={setApp}
           items={[
             { label: 'Optimization', value: 'follow', key: '0' },
             { label: 'Portal', value: 'portal', key: '1' },
             { label: 'Marketplace', value: 'tender', key: '2' },
           ]}
           style={{ width: '140px' }}
+          value={app}
+          onChange={setApp}
         />
-        <Select value={lang} onChange={setLang} items={AdminLanguageItems} style={{ width: '120px' }} />
+        <Select items={AdminLanguageItems} style={{ width: '120px' }} value={lang} onChange={setLang} />
         <Checkbox checked={checkboxValue} customOnChange={setCheckboxValue}>
           Show only missing translations
         </Checkbox>
       </ChoiceFilter>
 
       <Table
+        bordered
+        columns={getHeaderTable()}
+        dataSource={filteredData()}
+        hasScroll={false}
+        loading={translationsIsLoading}
         onRow={(record) => ({
           onDoubleClick: () => {
             setRowClicked(record);
           },
         })}
-        bordered
-        dataSource={filteredData()}
-        columns={getHeaderTable()}
-        loading={translationsIsLoading}
       />
 
       {rowClicked && (

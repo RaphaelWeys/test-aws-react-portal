@@ -18,7 +18,7 @@ const MultiAccessEdit = () => {
   return userInfo.role === 'kam' ? (
     <MultiAccessClientEdit companyName={data.user.company} defaultValues={data.user} />
   ) : (
-    <MultiAccessKamCreateEdit defaultValues={data.user} isEditMode />
+    <MultiAccessKamCreateEdit isEditMode defaultValues={data.user} />
   );
 };
 

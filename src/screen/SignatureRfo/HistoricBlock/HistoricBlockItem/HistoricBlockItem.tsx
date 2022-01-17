@@ -1,14 +1,14 @@
-import React, { FC, useCallback, useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import { DownloadOutlined } from '@ant-design/icons/lib';
 import { Col, Row, Space } from 'antd';
 import moment from 'moment';
+import React, { FC, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DownloadOutlined } from '@ant-design/icons/lib';
+import styled, { css, ThemeContext } from 'styled-components';
 
-import { ArchivedVersions } from '../../../../interface/signature';
 import InvisibleButton from '../../../../components/InvisibleButton';
-import ValidatorsSigners from '../../StatusValidatorsSigners/ValidatorsSigners';
+import { ArchivedVersions } from '../../../../interface/signature';
 import { BoldBlack } from '../../../../style/utils';
+import ValidatorsSigners from '../../StatusValidatorsSigners/ValidatorsSigners';
 
 interface Props {
   className?: string;
@@ -32,7 +32,7 @@ const HistoricBlockItem: FC<Props> = ({ className, contract, packId, isSupplier 
   );
 
   return (
-    <Space direction="vertical" size="middle" className={className}>
+    <Space className={className} direction="vertical" size="middle">
       <Space direction="vertical">
         <div className="title">{t(`signature-rfo-historic-block-item-${contract.docSupplierStatus}`)}</div>
         <div>
@@ -81,7 +81,7 @@ const HistoricBlockItem: FC<Props> = ({ className, contract, packId, isSupplier 
         </>
       )}
       {isOpen && !isSupplier && (contract.signers.length > 0 || contract.validators.length > 0) && (
-        <ValidatorsSigners signers={contract.signers} validators={contract.validators} canSendEmail={false} />
+        <ValidatorsSigners canSendEmail={false} signers={contract.signers} validators={contract.validators} />
       )}
 
       <InvisibleButton onClick={() => setIsOpen((s) => !s)}>

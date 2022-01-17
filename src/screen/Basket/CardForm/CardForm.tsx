@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import { CardElement } from '@stripe/react-stripe-js';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
 interface Props {
   className?: string;
@@ -11,9 +11,9 @@ const CardForm: FC<Props> = ({ className }) => {
   const [t] = useTranslation();
 
   return (
-    <label className={className}>
+    <div className={className}>
       <p>{t('basket-card-form')}</p> <CardElement options={{ hidePostalCode: true }} />
-    </label>
+    </div>
   );
 };
 

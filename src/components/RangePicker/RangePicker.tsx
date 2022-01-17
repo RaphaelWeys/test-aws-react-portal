@@ -2,12 +2,12 @@ import { DatePicker } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
 import { Moment } from 'moment';
 import React from 'react';
+import { FieldError } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 
-import { callAll } from '../../utils';
-import { DisplayErrorType, Label } from '../../style/utils';
-import { FieldError } from 'react-hook-form';
 import useDesktop from '../../hooks/useDesktop';
+import { DisplayErrorType, Label } from '../../style/utils';
+import { callAll } from '../../utils';
 import { getErrorMessage } from '../../utils/input';
 
 const { RangePicker: RangePickerAnt } = DatePicker;
@@ -32,8 +32,8 @@ const RangePicker = ({ className, customOnChange, label, error, ...input }: IPro
       )}
       <RangePickerAnt
         {...input}
-        onChange={callAll(input.onChange, customOnChange)}
         size={isDesktop ? 'large' : 'middle'}
+        onChange={callAll(input.onChange, customOnChange)}
       />
       {error && <DisplayErrorType>{error && getErrorMessage(error, 'range-picker')}</DisplayErrorType>}
     </div>

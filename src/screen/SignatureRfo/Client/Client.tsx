@@ -1,18 +1,18 @@
-import React, { FC, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { Col, Row, Space } from 'antd';
+import React, { FC, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 
-import { SignaturePackClient } from '../../../interface/signature';
-import { SIGNATURE_DOC_SIGNER_STATUS } from '../../../config/app-config';
-import InfoStatusRfo from '../../../components/InfoStatusRfo/InfoStatusRfo';
-import DocumentUploaded from '../DocumentUploaded/DocumentUploaded';
-import RectangleBox from '../../../layout/RectangleBox/RectangleBox';
 import CommonButton from '../../../components/CommonButton';
+import InfoStatusRfo from '../../../components/InfoStatusRfo/InfoStatusRfo';
+import { SIGNATURE_DOC_SIGNER_STATUS } from '../../../config/app-config';
+import { SignaturePackClient } from '../../../interface/signature';
+import RectangleBox from '../../../layout/RectangleBox/RectangleBox';
 import AddNewSigner from '../AddNewSigner';
+import DocumentUploaded from '../DocumentUploaded/DocumentUploaded';
+import HistoricBlock from '../HistoricBlock/HistoricBlock';
 import StatusValidatorsSigners from '../StatusValidatorsSigners';
 import ValidatorsSigners from '../StatusValidatorsSigners/ValidatorsSigners';
-import HistoricBlock from '../HistoricBlock/HistoricBlock';
 
 interface Props {
   className?: string;
@@ -29,17 +29,17 @@ const Client: FC<Props> = ({ className, signaturePack, packId, getSignaturePack 
   const extra = useMemo(
     () => (
       <ValidatorsSigners
+        canSendEmail={false}
         signers={signaturePack.currentVersion.signers}
         validators={signaturePack.currentVersion.validators}
-        canSendEmail={false}
       />
     ),
     [signaturePack],
   );
 
   return (
-    <RectangleBox showLogo={false} title={title} className={className}>
-      <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+    <RectangleBox className={className} showLogo={false} title={title}>
+      <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         <div>
           <div>
             {t('client-signature-name-rfo')}: {signaturePack.documentName}
@@ -70,8 +70,8 @@ const Client: FC<Props> = ({ className, signaturePack, packId, getSignaturePack 
         <Row>
           <Col span={24}>
             <InfoStatusRfo
-              title={t(`signature-rfo-${signaturePack.currentVersion.docSignerStatus}-title`)}
               description={t(`signature-rfo-${signaturePack.currentVersion.docSignerStatus}-description`)}
+              title={t(`signature-rfo-${signaturePack.currentVersion.docSignerStatus}-title`)}
             />
           </Col>
         </Row>
@@ -82,10 +82,10 @@ const Client: FC<Props> = ({ className, signaturePack, packId, getSignaturePack 
           ) && (
             <>
               <DocumentUploaded
-                getSignaturePack={getSignaturePack}
                 currentVersion={signaturePack.currentVersion}
-                packId={packId as string}
+                getSignaturePack={getSignaturePack}
                 isSupplier={false}
+                packId={packId as string}
                 status={signaturePack.currentVersion.docSignerStatus}
               />
 
@@ -99,38 +99,38 @@ const Client: FC<Props> = ({ className, signaturePack, packId, getSignaturePack 
 
         {showAddValidators && (
           <AddNewSigner
-            setShowAddValidators={setShowAddValidators}
-            packId={packId}
             getSignaturePack={getSignaturePack}
+            packId={packId}
+            setShowAddValidators={setShowAddValidators}
             onSubmitSuccess={() => setShowAddValidators(false)}
           />
         )}
 
         {[SIGNATURE_DOC_SIGNER_STATUS.PROCEDURE_STARTED].includes(signaturePack.currentVersion.docSignerStatus) && (
           <StatusValidatorsSigners
-            validators={signaturePack.currentVersion.validators}
-            signers={signaturePack.currentVersion.signers}
-            packId={packId}
             canSendEmail
+            packId={packId}
+            signers={signaturePack.currentVersion.signers}
+            validators={signaturePack.currentVersion.validators}
           />
         )}
 
         {[SIGNATURE_DOC_SIGNER_STATUS.PROCEDURE_SIGNED].includes(signaturePack.currentVersion.docSignerStatus) && (
           <DocumentUploaded
-            getSignaturePack={getSignaturePack}
             currentVersion={signaturePack.currentVersion}
-            packId={packId as string}
-            isSupplier={false}
-            status={signaturePack.currentVersion.docSignerStatus}
             extra={extra}
+            getSignaturePack={getSignaturePack}
+            isSupplier={false}
+            packId={packId as string}
+            status={signaturePack.currentVersion.docSignerStatus}
           />
         )}
 
         {signaturePack.archivedVersions.length > 0 && (
           <HistoricBlock
             archivedVersions={signaturePack.archivedVersions}
-            packId={packId as string}
             isSupplier={false}
+            packId={packId as string}
           />
         )}
       </Space>

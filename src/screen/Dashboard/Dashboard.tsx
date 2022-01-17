@@ -8,10 +8,10 @@ import CustomLink from '../../components/CustomLink';
 import GradientButton from '../../components/GradientButton';
 import InvisibleButton from '../../components/InvisibleButton';
 import TitlePage from '../../components/TitlePage';
-import MainLayout from '../../layout/MainLayout';
-import { App, WrapperApps } from './Dashboard.styled';
 import useGetFollowApp from '../../hooks/useGetFollowApp';
 import useGetTenderApp from '../../hooks/useGetTenderApp';
+import MainLayout from '../../layout/MainLayout';
+import { App, WrapperApps } from './Dashboard.styled';
 
 interface Props {
   className?: string;
@@ -40,10 +40,10 @@ const Dashboard: FC<Props> = ({ className }) => {
 
         <WrapperApps>
           {apps.map((app) => (
-            <InvisibleButton onClick={() => redirectApp(app.key)} key={app.key}>
+            <InvisibleButton key={app.key} onClick={() => redirectApp(app.key)}>
               <App>
                 <div>{app.title}</div>
-                <img src={app.logo} alt="logo" />
+                <img alt="logo" src={app.logo} />
               </App>
             </InvisibleButton>
           ))}

@@ -11,6 +11,10 @@ ${({ theme: { breakpoints } }) => css`
     font-size: 1rem;
     font-family: 'Open Sans', serif;
     background: #fafafa;
+
+    iframe {
+      //display: none;
+    }
   }
 
   *,
@@ -21,6 +25,15 @@ ${({ theme: { breakpoints } }) => css`
 
   .ant-space-vertical {
     width: 100%;
+  }
+
+  .ant-space {
+    display: flex;
+  }
+
+  #main-content {
+    margin-top: 1.5em !important;
+    padding-top: 0;
   }
 
   h1 {

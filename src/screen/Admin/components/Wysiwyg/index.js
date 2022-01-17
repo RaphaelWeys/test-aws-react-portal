@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import React, { useMemo } from 'react';
 
 const RichEditorExample = ({ setValue, value }) => {
   const formatValue = useMemo(() => {
@@ -14,7 +14,6 @@ const RichEditorExample = ({ setValue, value }) => {
   return (
     <Editor
       apiKey="jy0ddbjrt8gnyip1mzo7x8r150zkqug94xv5zf0auljtgvxb"
-      value={formatValue}
       init={{
         height: 300,
         menubar: true,
@@ -24,8 +23,10 @@ const RichEditorExample = ({ setValue, value }) => {
           'insertdatetime media table paste code help wordcount',
         ],
         toolbar:
-          'undo redo | formatselect | bold italic backcolor |alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+          'undo redo | formatselect | bold italic backcolor |alignleft aligncenter alignright alignjustify | ' +
+          'bullist numlist outdent indent | removeformat | help',
       }}
+      value={formatValue}
       onEditorChange={handleEditorChange}
     />
   );

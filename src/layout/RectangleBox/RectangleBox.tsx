@@ -16,7 +16,7 @@ const RectangleBox: FC<Props> = ({ className, children, showLogo = true, title }
   return (
     <div className={className}>
       {showLogo && <SelectLang />}
-      {showLogo && <img src={themeContext.logo.login} alt="logo" style={{ marginBottom: '2rem' }} />}
+      {showLogo && <img alt="logo" src={themeContext.logo.login} style={{ marginBottom: '2rem' }} />}
       {title && <HeaderOne>{title}</HeaderOne>}
       {children}
     </div>

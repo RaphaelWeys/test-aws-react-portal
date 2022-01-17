@@ -3,12 +3,13 @@ import { useMutation } from 'react-query';
 
 import { useApi } from '../../context/ApiContext';
 import { Order } from '../../interface/order';
-import { FormData } from '../../screen/Basket/BasketForm/BasketForm';
+import { FormData } from '../../screen/Basket/BasketForm/BasketForm.interface';
 
 interface TValues {
   orderId: string;
   billingInfo: FormData;
 }
+
 export const useUpdateBillingInfo = () => {
   const client = useApi();
 

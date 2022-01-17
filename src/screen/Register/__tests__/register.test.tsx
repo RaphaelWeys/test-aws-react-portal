@@ -2,10 +2,10 @@ import { render as rtlRender } from '@testing-library/react';
 import React from 'react';
 import { Router } from 'react-router-dom';
 
-import Register from '..';
-import history from '../../../router/history';
-import { UserInfoContext } from '../../../context/UserInfoContext';
 import { LocalContext } from '../../../context/LocalContext';
+import { UserInfoContext } from '../../../context/UserInfoContext';
+import history from '../../../router/history';
+import Register from '..';
 
 interface IStateMachineProvider {
   children: React.ReactNode;

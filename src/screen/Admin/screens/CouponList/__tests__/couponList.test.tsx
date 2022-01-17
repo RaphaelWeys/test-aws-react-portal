@@ -1,7 +1,7 @@
-import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import moment from 'moment';
+import React from 'react';
 
 import CouponList from '../CouponList';
 

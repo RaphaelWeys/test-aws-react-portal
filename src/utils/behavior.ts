@@ -15,18 +15,30 @@ export const i18nItemsForCountry = (): Item[] =>
 export const formatStringToBoolean = <T extends { [key: string]: any }>(obj: T): T =>
   Object.keys(obj).reduce((newObj, key) => {
     const value = obj[key];
+    let convertedValue;
+
+    if (value === 'true') convertedValue = true;
+    else if (value === 'false') convertedValue = false;
+    else convertedValue = value;
+
     return {
       ...newObj,
-      [key]: value === 'true' ? true : value === 'false' ? false : value,
+      [key]: convertedValue,
     };
   }, {} as T);
 
 export const formatBooleanToString = (obj: { [k: string]: any }) =>
   Object.keys(obj).reduce((newObj, key) => {
     const value = obj[key];
+    let convertedValue;
+
+    if (value === true) convertedValue = 'true';
+    else if (value === false) convertedValue = 'false';
+    else convertedValue = value;
+
     return {
       ...newObj,
-      [key]: value === true ? 'true' : value === false ? 'false' : value,
+      [key]: convertedValue,
     };
   }, {});
 

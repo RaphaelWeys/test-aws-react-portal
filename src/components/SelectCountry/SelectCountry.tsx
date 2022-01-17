@@ -26,11 +26,11 @@ const SelectCountry: FC<Props> = ({ className, label, error, ...select }) => {
         label={label}
         style={{ width: '100%' }}
         {...select}
+        showSearch
         items={allCountries.map((country) => ({
           label: country,
           value: country,
         }))}
-        showSearch
       />
       {error && <DisplayErrorType>{getErrorMessage(error, 'select-country')}</DisplayErrorType>}
     </div>

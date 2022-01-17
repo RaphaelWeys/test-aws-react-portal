@@ -5,16 +5,12 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import { regexEmail } from '../../../../constants';
-import { useForgotPassword } from '../../../../endpoints/registration/useForgetPassword';
+import { FormForgotPasswordModal, useForgotPassword } from '../../../../endpoints/registration/useForgetPassword';
 import { TextRegular } from '../../../../style/utils';
 import GradientButton from '../../../GradientButton';
 import { Input } from '../../../Input';
 import Modal from '../../Modal';
 import { FormStyled } from './ForgotPasswordModal.styled';
-
-export interface FormForgotPasswordModal {
-  username: string;
-}
 
 interface PropsForgotPasswordModal {
   className?: string;
@@ -39,8 +35,8 @@ const ForgotPasswordModal: FC<PropsForgotPasswordModal> = ({ className, toggleMo
   };
 
   return (
-    <Modal onCancel={toggleModal} title={t('forgot-password-title')} size="small" className={className}>
-      {errorMailNotFound && <Alert message={t('forgot-password-email-not-found')} type="error" showIcon />}
+    <Modal className={className} size="small" title={t('forgot-password-title')} onCancel={toggleModal}>
+      {errorMailNotFound && <Alert showIcon message={t('forgot-password-email-not-found')} type="error" />}
       {data ? (
         <>
           <TextRegular>{t('forgot-password-email-found')}</TextRegular>
@@ -52,14 +48,14 @@ const ForgotPasswordModal: FC<PropsForgotPasswordModal> = ({ className, toggleMo
         <Spin spinning={isLoading}>
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              as={Input}
-              name="username"
-              label={t('forgot-password-email')}
-              control={control}
-              type="email"
-              htmlFor="username"
-              error={errors?.username}
               autoFocus
+              as={Input}
+              control={control}
+              error={errors?.username}
+              htmlFor="username"
+              label={t('forgot-password-email')}
+              name="username"
+              type="email"
             />
             <GradientButton type="submit">{t('global-send')}</GradientButton>
           </FormStyled>

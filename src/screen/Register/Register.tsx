@@ -2,9 +2,11 @@ import { Space } from 'antd';
 import { useStateMachine } from 'little-state-machine';
 import React, { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Redirect } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import InvisibleButton from '../../components/InvisibleButton';
+import { useTenant } from '../../context/TenantContext';
 import RectangleBox from '../../layout/RectangleBox';
 import { Navigation } from '../../navigation';
 import history from '../../router/history';
@@ -13,8 +15,6 @@ import { updateRegisterForm } from '../../StoreForm/updateState';
 import { HeaderOne, TextRegular } from '../../style/utils';
 import RegisterForm from './components/RegisterForm';
 import { Quotation } from './Register.styled';
-import { useTenant } from '../../context/TenantContext';
-import { Redirect } from 'react-router-dom';
 
 interface PropsRegister {
   className?: string;
@@ -37,7 +37,7 @@ const Register: FC<PropsRegister> = ({ className }) => {
   return (
     <div className={className}>
       <RectangleBox>
-        <Space direction="vertical" size="large" align="center">
+        <Space align="center" direction="vertical" size="large">
           <TextRegular>
             <span>{t('register-have-account')} </span>
             <InvisibleButton onClick={handleClickLogin}>{t('register-connection-link')}</InvisibleButton>

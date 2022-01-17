@@ -1,6 +1,16 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { ButtonProps } from './GradientButton';
+type Button = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export type ButtonProps = {
+  className?: string;
+  fullWidth?: boolean;
+  isLoading?: boolean;
+  noButton?: boolean;
+  noGradient?: boolean;
+  variant?: 'contained' | 'outlined';
+} & Button;
 
 export const WrapperGradientButton = styled.button<ButtonProps>`
   ${({ theme: { fontSize, colors }, noGradient, variant, fullWidth, isLoading, disabled }) => {

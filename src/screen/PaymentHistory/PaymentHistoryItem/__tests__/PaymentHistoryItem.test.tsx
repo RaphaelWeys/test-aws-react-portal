@@ -1,9 +1,10 @@
-import React from 'react';
 import 'jest-styled-components';
-import { render, fireEvent } from '@testing-library/react';
 
-import PaymentHistoryItem from '../PaymentHistoryItem';
+import { fireEvent,render } from '@testing-library/react';
+import React from 'react';
+
 import { formatNumber } from '../../../../utils';
+import PaymentHistoryItem from '../PaymentHistoryItem';
 
 const getProps = (override?: { [key: string]: string | number | boolean | null }) => ({
   className: 'sc-pJurq cwzEZF',

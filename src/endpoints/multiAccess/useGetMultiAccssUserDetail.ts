@@ -1,9 +1,9 @@
+import { message } from 'antd';
 import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
 
 import { useApi } from '../../context/ApiContext';
 import { MultiAccessClient } from '../../interface/multiAccess';
-import { message } from 'antd';
 
 export const useGetMultiAccessUserDetail = (userId) => {
   const client = useApi();

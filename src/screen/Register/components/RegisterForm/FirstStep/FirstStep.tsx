@@ -1,22 +1,17 @@
+import { Col, Row } from 'antd';
+import { useStateMachine } from 'little-state-machine';
 import React, { FC, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useStateMachine } from 'little-state-machine';
 
-import { Input } from '../../../../../components/Input';
 import GradientButton from '../../../../../components/GradientButton';
+import { Input } from '../../../../../components/Input';
 import { updateRegisterForm } from '../../../../../StoreForm/updateState';
-import { Col, Row } from 'antd';
+import { FormRegisterStep1 } from '../RegisterForm.interface';
 
 interface PropsFirstStep {
   className?: string;
   nextStep: () => void;
-}
-
-export interface FormRegisterStep1 {
-  company: string;
-  companyField: string;
-  affiliation?: string;
 }
 
 const FirstStep: FC<PropsFirstStep> = ({ className, nextStep }) => {
@@ -43,40 +38,40 @@ const FirstStep: FC<PropsFirstStep> = ({ className, nextStep }) => {
         <Row gutter={[0, 18]}>
           <Col span={24}>
             <Controller
+              autoFocus
               as={Input}
-              name="company"
-              label={t('register-society')}
               control={control}
-              type="text"
               error={errors?.company}
               htmlFor="company"
-              autoFocus
+              label={t('register-society')}
+              name="company"
+              type="text"
             />
           </Col>
           <Col span={24}>
             <Controller
               as={Input}
-              name="companyField"
-              label={t('register-sector')}
               control={control}
-              type="text"
               error={errors?.companyField}
               htmlFor="companyField"
+              label={t('register-sector')}
+              name="companyField"
+              type="text"
             />
           </Col>
           <Col span={24}>
             <Controller
               as={Input}
-              name="affiliation"
-              label={t('register-affiliation')}
               control={control}
-              type="text"
-              htmlFor="affiliation"
               error={errors?.affiliation}
+              htmlFor="affiliation"
+              label={t('register-affiliation')}
+              name="affiliation"
+              type="text"
             />
           </Col>
-          <Col span={12} push={6}>
-            <GradientButton type="submit" fullWidth>
+          <Col push={6} span={12}>
+            <GradientButton fullWidth type="submit">
               {t('global-next')}
             </GradientButton>
           </Col>

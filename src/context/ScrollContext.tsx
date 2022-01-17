@@ -6,9 +6,9 @@ interface IScrollProvider {
   scroll: HTMLDivElement | null;
 }
 
-const ScrollProvider: FC<IScrollProvider> = ({ children, scroll }) => {
-  return <ScrollContext.Provider value={scroll}>{children}</ScrollContext.Provider>;
-};
+const ScrollProvider: FC<IScrollProvider> = ({ children, scroll }) => (
+  <ScrollContext.Provider value={scroll}>{children}</ScrollContext.Provider>
+);
 
 function useScroll() {
   const context = useContext(ScrollContext);
@@ -18,4 +18,4 @@ function useScroll() {
   return context;
 }
 
-export { ScrollProvider, useScroll, ScrollContext };
+export { ScrollContext, ScrollProvider, useScroll };

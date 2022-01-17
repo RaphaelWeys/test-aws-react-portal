@@ -1,5 +1,6 @@
-import { Checkbox, Divider, Input, Modal } from 'antd';
 import 'draft-js/dist/Draft.css';
+
+import { Checkbox, Divider, Input, Modal } from 'antd';
 import React, { useMemo, useState } from 'react';
 
 import { Translation } from '../../../endpoints/admin/translation/useGetTranslations';
@@ -34,7 +35,7 @@ const ModalTranslation = ({ translation, onSaveTranslation, onClose }: Props) =>
   };
 
   return (
-    <Modal title={`Translate key: ${key}`} visible onOk={() => handleSave()} width={1000} onCancel={onClose}>
+    <Modal visible title={`Translate key: ${key}`} width={1000} onCancel={onClose} onOk={() => handleSave()}>
       <p>{`English: ${english}`}</p>
       <Divider />
       <p>{`Default: ${local}`}</p>
@@ -57,7 +58,7 @@ const ModalTranslation = ({ translation, onSaveTranslation, onClose }: Props) =>
       {checkboxValueHtml && hasCorrectPrefix ? (
         <RichEditorExample setValue={setValue} value={value} />
       ) : (
-        <TextArea value={value} onChange={(e) => setValue(e.target.value)} autoSize={{ minRows: 2 }} autoFocus />
+        <TextArea autoFocus autoSize={{ minRows: 2 }} value={value} onChange={(e) => setValue(e.target.value)} />
       )}
     </Modal>
   );

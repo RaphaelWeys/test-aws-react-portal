@@ -14,7 +14,7 @@ const colors = {
   black: '#202124',
   belgian: '#CCB39B',
   grayDark: '#5B6970',
-  gray: '#BDBEBF',
+  gray: '#DBDEDE',
   grayLight: '#E6E7E8',
   whiteDark: '#FAFAFA',
   white: '#FFFFFF',

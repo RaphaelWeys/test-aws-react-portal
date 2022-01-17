@@ -1,6 +1,6 @@
+import { message } from 'antd';
 import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
-import { message } from 'antd';
 
 import { useApi } from '../../../context/ApiContext';
 import { ScoreResponse } from '../cerved';

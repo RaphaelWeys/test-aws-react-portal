@@ -1,23 +1,36 @@
 import Cookies, { CookieAttributes } from 'js-cookie';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+
+import { useTenant } from '../context/TenantContext';
 
 interface CookieRtrn {
-  setCookie: (name: string, value: string, options: CookieAttributes) => void;
+  setCookie: (name: string, value: string, config?: CookieAttributes) => void;
   getCookie: (name?: string) => string | { [key: string]: string } | undefined;
-  removeCookie: (name: string, options?: CookieAttributes) => void;
+  removeCookie: (name: string, config?: CookieAttributes) => void;
 }
-
-export const TOKEN_NAME = process.env.REACT_APP_JWT_COOKIE || 'yem_jwt';
 
 const useCookie = (): CookieRtrn => {
   const isDevelopment = process.env.NODE_ENV === 'development';
+  const { env } = useTenant();
+
+  const defaultConfig = useMemo(
+    () => ({
+      path: '/',
+      domain: env.REACT_APP_SUB_DOMAIN,
+    }),
+    [env.REACT_APP_SUB_DOMAIN],
+  );
 
   const setCookie = useCallback(
-    (name: string, value: string, options: CookieAttributes) => {
+    (name: string, value: string, config?: CookieAttributes) => {
       if (isDevelopment) Cookies.set(name, value);
-      else Cookies.set(name, value, options);
+      else
+        Cookies.set(name, value, {
+          ...defaultConfig,
+          ...config,
+        });
     },
-    [isDevelopment],
+    [defaultConfig, isDevelopment],
   );
 
   const getCookie = useCallback((name?: string) => {
@@ -27,11 +40,15 @@ const useCookie = (): CookieRtrn => {
   }, []);
 
   const removeCookie = useCallback(
-    (name: string, options?: CookieAttributes): void => {
+    (name: string, config?: CookieAttributes): void => {
       if (isDevelopment) Cookies.remove(name);
-      else Cookies.remove(name, options);
+      else
+        Cookies.remove(name, {
+          ...defaultConfig,
+          ...config,
+        });
     },
-    [isDevelopment],
+    [defaultConfig, isDevelopment],
   );
 
   return { setCookie, getCookie, removeCookie };

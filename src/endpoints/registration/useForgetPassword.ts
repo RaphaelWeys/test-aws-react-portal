@@ -1,9 +1,13 @@
 import { message } from 'antd';
 import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
+
 import { useApi } from '../../context/ApiContext';
-import { FormForgotPasswordModal } from '../../components/Modal/ScreenModal/ForgotPasswordModal/ForgotPasswordModal';
 import useGetPortalApp from '../../hooks/useGetPortalApp';
+
+export interface FormForgotPasswordModal {
+  username: string;
+}
 
 export const useForgotPassword = () => {
   const client = useApi();

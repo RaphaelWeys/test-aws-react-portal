@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
 import { Space } from 'antd';
+import React, { FC } from 'react';
 import styled, { css, ThemeContext } from 'styled-components';
 
-import { BlueStyle } from '../../style/utils';
+import { MainLinkStyle } from '../../style/utils';
 
 interface Props {
   className?: string;
@@ -20,14 +20,14 @@ const Steps: FC<Props> = ({ className, steps, currentStep }) => {
     <div className={className}>
       <Space size={40}>
         {steps.map((step, index) => (
-          <BlueStyle disabled={currentStep !== index} key={step.title}>
-            <Space direction="vertical" align="center">
+          <MainLinkStyle disabled={currentStep !== index} key={step.title}>
+            <Space align="center" direction="vertical">
               {React.cloneElement(step.icon, {
                 color: currentStep === index ? themeContext.colors.baseColor : themeContext.colors.gray,
               })}
               {step.title}
             </Space>
-          </BlueStyle>
+          </MainLinkStyle>
         ))}
       </Space>
     </div>

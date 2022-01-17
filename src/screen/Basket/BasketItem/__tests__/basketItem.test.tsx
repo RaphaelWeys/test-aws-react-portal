@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import React from 'react';
 
-import BasketItem from '../BasketItem';
-import { orderFake } from '../../AppBasket/__tests__/appBasket.test';
 import { formatNumber } from '../../../../utils';
+import { orderFake } from '../../AppBasket/__tests__/appBasket.test';
+import BasketItem from '../BasketItem';
 
 jest.mock('axios');
 
@@ -13,7 +13,7 @@ const order = orderFake();
 test('It should display the correct numbers of items', () => {
   const mockNextStep = jest.fn();
 
-  const { getAllByTestId } = render(<BasketItem order={order} nextStep={mockNextStep} setOrder={() => {}} />);
+  const { getAllByTestId } = render(<BasketItem nextStep={mockNextStep} order={order} setOrder={() => {}} />);
 
   expect(getAllByTestId(/wrapperPrice/i).length).toEqual(order.items.length);
 });
@@ -21,7 +21,7 @@ test('It should display the correct numbers of items', () => {
 test('It should go next step when pressing the button Next', async () => {
   const mockNextStep = jest.fn();
 
-  const { getByText } = render(<BasketItem order={order} nextStep={mockNextStep} setOrder={() => {}} />);
+  const { getByText } = render(<BasketItem nextStep={mockNextStep} order={order} setOrder={() => {}} />);
 
   fireEvent.click(getByText(/global-next/i));
 
@@ -36,7 +36,7 @@ test('It should validate coupon', async () => {
   });
   const mockSetOrder = jest.fn();
   const { getByText, getByTestId, queryByTestId } = render(
-    <BasketItem order={order} nextStep={() => {}} setOrder={mockSetOrder} />,
+    <BasketItem nextStep={() => {}} order={order} setOrder={mockSetOrder} />,
   );
   const inputCountValue = 'coupon-test';
 
@@ -72,7 +72,7 @@ test('It should validate coupon', async () => {
 
 test('It should display an error message if coupon is not correct', async () => {
   (axios.request as jest.Mock).mockRejectedValueOnce({ response: { status: 405 } });
-  const { getByText, getByTestId } = render(<BasketItem order={order} nextStep={() => {}} setOrder={() => {}} />);
+  const { getByText, getByTestId } = render(<BasketItem nextStep={() => {}} order={order} setOrder={() => {}} />);
 
   fireEvent.click(getByText(/basket-item-promo-code/i));
 

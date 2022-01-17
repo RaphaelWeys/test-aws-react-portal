@@ -22,9 +22,16 @@ export interface MultiAccessClientUser {
   lastName: string;
   username: string;
   multiaccess: MultiAccessMultiAccessForm;
+  kamGroupIds: string[];
+}
+
+interface KamGroups {
+  id: string;
+  name: string;
 }
 
 export interface MultiAccessClient {
+  kamGroups: KamGroups[];
   user: MultiAccessClientUser;
   multiAccessForYop: boolean;
   multiAccessForMarketplace: boolean;

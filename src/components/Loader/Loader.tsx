@@ -1,22 +1,19 @@
-import React, { FC } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import React, { FC } from 'react';
 import styled, { css } from 'styled-components';
 
 interface Props {
   className?: string;
-  isAbsolute?: boolean;
 }
 
-const antIcon = <LoadingOutlined style={{ fontSize: '6.25rem' }} spin />;
+const antIcon = <LoadingOutlined spin style={{ fontSize: '6.25rem' }} />;
 
-const Loader: FC<Props> = ({ className }) => {
-  return (
-    <div className={className} data-testid="loader">
-      <Spin indicator={antIcon} />
-    </div>
-  );
-};
+const Loader: FC<Props> = ({ className }) => (
+  <div className={className} data-testid="loader">
+    <Spin indicator={antIcon} />
+  </div>
+);
 
 export default styled(Loader)<{ isAbsolute?: boolean }>`
   ${({ isAbsolute }) => css`

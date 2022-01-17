@@ -22,8 +22,7 @@ type Props = {
   customOnChange?: (event: React.ChangeEventHandler<HTMLTextAreaElement>) => void;
 } & TextAreaProps;
 
-const TextArea: FC<Props> = ({ className, label, error, customOnChange, ...inputTextArea }) => {
-  return (
+const TextArea: FC<Props> = ({ className, label, error, customOnChange, ...inputTextArea }) => (
     <WrapperInputText className={className}>
       {label && (
         <div style={{ marginBottom: '10px' }}>
@@ -36,6 +35,5 @@ const TextArea: FC<Props> = ({ className, label, error, customOnChange, ...input
       <DisplayErrorType data-testid="inputError">{error && getErrorMessage(error, 'text-area')}</DisplayErrorType>
     </WrapperInputText>
   );
-};
 
 export default styled(TextArea)``;

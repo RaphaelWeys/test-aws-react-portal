@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
+import { FieldError } from 'react-hook-form';
 import RpiPhoneInput, { PhoneInputProps } from 'react-phone-input-2';
 import styled, { css } from 'styled-components';
 
 import { Error, Label } from '../../../style/utils';
 import { getErrorMessage } from '../../../utils/input';
-import { FieldError } from 'react-hook-form';
 
 type Props = {
   className?: string;
@@ -29,7 +29,7 @@ const PhoneInput: FC<Props> = ({ className, error, label, country, ...props }) =
       </Label>
     )}
 
-    <RpiPhoneInput inputClass="input-class" country={getCountryCode(country)} {...props} />
+    <RpiPhoneInput country={getCountryCode(country)} inputClass="input-class" {...props} />
     {error && <Error data-testid="inputError">{getErrorMessage(error, 'phone')}</Error>}
   </div>
 );

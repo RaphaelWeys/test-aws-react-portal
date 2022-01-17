@@ -1,0 +1,8 @@
+node_modules
+build
+public
+jest.config.js
+src/serviceWorker.ts
+src/components/icons/*.tsx
+src/**/*.test.tsx
+.eslintrc.js

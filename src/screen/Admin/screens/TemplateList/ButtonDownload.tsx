@@ -26,7 +26,7 @@ const ButtonDownload: FC<IProps> = ({ app, filename, action, isTemplateSaved }) 
   };
 
   return (
-    <Button onClick={handleClickDownload} disabled={!filename || !isTemplateSaved}>
+    <Button disabled={!filename || !isTemplateSaved} onClick={handleClickDownload}>
       {t('global-download')}
     </Button>
   );

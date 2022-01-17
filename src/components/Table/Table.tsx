@@ -1,19 +1,20 @@
 import { Table as TableAnt } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import React, { FC } from 'react';
-import styled, { css } from 'styled-components';
 import { FieldError } from 'react-hook-form';
+import styled, { css } from 'styled-components';
 
+import useDesktop from '../../hooks/useDesktop';
 import { Error } from '../../style/utils';
 import { getErrorMessage } from '../../utils/input';
-import useDesktop from '../../hooks/useDesktop';
 
 type Props = {
   className?: string;
   error?: FieldError;
+  hasScroll?: boolean;
 } & TableProps<any>;
 
-const Table: FC<Props> = ({ className, error, ...tableProps }) => {
+const Table: FC<Props> = ({ className, error, hasScroll = true, ...tableProps }) => {
   const isDesktop = useDesktop();
 
   return (
@@ -21,15 +22,16 @@ const Table: FC<Props> = ({ className, error, ...tableProps }) => {
       <TableAnt
         size={isDesktop ? 'middle' : 'small'}
         {...tableProps}
-        scroll={{ x: 'auto' }}
         pagination={{
           hideOnSinglePage: true,
         }}
+        scroll={hasScroll && { x: true }}
       />
       {error && <Error data-testid="inputError">{error && getErrorMessage(error, 'table')}</Error>}
     </div>
   );
 };
+
 export default styled(Table)<{ isClickable?: boolean }>`
   ${({ theme: { colors, fontSize }, isClickable = true }) => css`
     width: 100%;

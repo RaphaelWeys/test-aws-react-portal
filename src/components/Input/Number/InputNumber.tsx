@@ -1,14 +1,14 @@
+import { InputNumber as InputNumberAnt } from 'antd';
+import { InputNumberProps } from 'antd/lib/input-number';
 import React, { FC } from 'react';
 import { FieldError } from 'react-hook-form';
 import styled, { css } from 'styled-components';
-import { InputNumber as InputNumberAnt } from 'antd';
 
+import useDesktop from '../../../hooks/useDesktop';
 import { DisplayErrorType, Label } from '../../../style/utils';
 import { callAll } from '../../../utils';
 import { getErrorMessage } from '../../../utils/input';
 import { WrapperInputText } from './InputNumber.styled';
-import { InputNumberProps } from 'antd/lib/input-number';
-import useDesktop from '../../../hooks/useDesktop';
 
 type Props = {
   className?: string;

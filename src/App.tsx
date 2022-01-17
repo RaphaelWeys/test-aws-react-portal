@@ -1,20 +1,20 @@
-import React, { FC, Suspense } from 'react';
 import { createStore, StateMachineProvider } from 'little-state-machine';
+import React, { FC, Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Router } from 'react-router-dom';
 import Analytics from 'react-router-ga';
-// import { ReactQueryDevtools } from 'react-query/devtoolse';
 
+// import { ReactQueryDevtools } from 'react-query/devtoolse';
 import { ApiProvider } from './context/ApiContext';
 import { LocalProvider } from './context/LocalContext';
+import { TenantProvider } from './context/TenantContext';
 import { UserInfoProvider } from './context/UserInfoContext';
 import Routes from './router';
 import history from './router/history';
-import createUserState from './StoreForm/createUserState';
-import GlobalStyle from './style/globalStyle';
 import basketState from './StoreForm/basketState';
+import createUserState from './StoreForm/createUserState';
 import multiAccessClientState from './StoreForm/multiAccessClientState';
-import { TenantProvider } from './context/TenantContext';
+import GlobalStyle from './style/globalStyle';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,7 +37,7 @@ createStore({
   multiAccessClient: multiAccessClientState,
 });
 
-window.onunload = function () {
+window.onunload = () => {
   // Clear all form when refreshing the page
   sessionStorage.clear();
 

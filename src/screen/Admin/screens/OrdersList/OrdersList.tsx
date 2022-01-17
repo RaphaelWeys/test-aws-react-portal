@@ -1,10 +1,11 @@
+import moment from 'moment';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { useGetOrdersList } from '../../../../endpoints/orders/useGetOrdersList';
-import Table from '../../../../components/Table';
-import { getCurrencyFormatted } from '../../../../utils/number';
+
 import ModalOrder from '../../../../components/Modal/ModalOrder';
-import moment from 'moment';
+import Table from '../../../../components/Table';
+import { useGetOrdersList } from '../../../../endpoints/orders/useGetOrdersList';
+import { getCurrencyFormatted } from '../../../../utils/number';
 
 interface Props {
   className?: string;
@@ -18,8 +19,7 @@ const OrdersList: FC<Props> = ({ className }) => {
     getOrders();
   }, [getOrders]);
 
-  const columns = React.useMemo(() => {
-    return [
+  const columns = React.useMemo(() => [
       {
         title: 'date',
         dataIndex: 'createdAt',
@@ -31,8 +31,7 @@ const OrdersList: FC<Props> = ({ className }) => {
       { title: 'paid', dataIndex: 'amountToPay', key: 'amount', render: (amount) => getCurrencyFormatted(amount) },
       { title: 'payment', dataIndex: 'paymentMethod', key: 'payment' },
       { title: 'app', dataIndex: 'app', key: 'app', render: (app) => (app === 'tender' ? 'MKP' : 'YOP') },
-    ];
-  }, []);
+    ], []);
 
   if (!isSuccess) {
     return null;
@@ -43,13 +42,11 @@ const OrdersList: FC<Props> = ({ className }) => {
       <Table
         columns={columns}
         dataSource={orders}
-        onRow={(record) => {
-          return {
+        onRow={(record) => ({
             onClick: () => {
               setSelectedOrder(record);
             },
-          };
-        }}
+          })}
       />
 
       {selectedOrder && <ModalOrder order={selectedOrder} onClose={() => setSelectedOrder(undefined)} />}

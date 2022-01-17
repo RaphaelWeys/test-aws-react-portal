@@ -1,9 +1,10 @@
+import { Col, Row, Space } from 'antd';
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import Modal from '../Modal';
-import { Col, Row, Space } from 'antd';
+
 import { HeaderOne, HeaderThree, TextRegular } from '../../../style/utils';
 import Table from '../../Table';
+import Modal from '../Modal';
 
 interface Props {
   className?: string;
@@ -12,14 +13,12 @@ interface Props {
 }
 
 const ModalOrder: FC<Props> = ({ className, order, onClose }) => {
-  const columns = React.useMemo(() => {
-    return [
+  const columns = React.useMemo(() => [
       { title: 'name', dataIndex: 'name', key: 'name' },
       { title: 'description', dataIndex: 'description', key: 'description' },
       { title: 'quantity', dataIndex: 'quantity', key: 'quantity' },
       { title: 'price', dataIndex: 'price', key: 'price' },
-    ];
-  }, []);
+    ], []);
 
   return (
     <Modal visible className={className} footer={false} size="large" onCancel={onClose}>

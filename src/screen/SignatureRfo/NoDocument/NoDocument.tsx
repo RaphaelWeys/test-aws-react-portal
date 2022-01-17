@@ -1,15 +1,15 @@
-import React, { FC, useCallback, useEffect } from 'react';
 import { Col, Row, Space } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { Controller, useForm } from 'react-hook-form';
 import { UploadChangeParam } from 'antd/lib/upload';
+import React, { FC, useCallback, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
-import { Step } from '../SignatureRfo.styled';
-import UploadButton from '../../../components/UploadButton/UploadButton';
-import TextArea from '../../../components/Input/TextArea/TextArea';
 import CommonButton from '../../../components/CommonButton/CommonButton';
-import useRequest from '../../../hooks/useRequest';
+import TextArea from '../../../components/Input/TextArea/TextArea';
+import UploadButton from '../../../components/UploadButton/UploadButton';
 import { optionsUpdateSignaturePack } from '../../../endpoints/signature';
+import useRequest from '../../../hooks/useRequest';
+import { Step } from '../SignatureRfo.styled';
 
 interface Props {
   packId: string;
@@ -105,14 +105,14 @@ const NoDocument: FC<Props> = ({ packId, getSignaturePack }) => {
           <Row>
             <Col span={24}>
               <UploadButton
-                label={t('signature-rfo-upload-label')}
-                action={`${process.env.REACT_APP_BACKEND_PORTAL_URL}/signature/docSupplier/upload/${packId}`}
-                onChange={handleChangeUploadButton}
-                onRemove={handleOnRemove}
-                beforeUpload={beforeUpload}
-                error={errors.documents?.[0]}
                 multiple
                 accept=".pdf"
+                action={`${process.env.REACT_APP_BACKEND_PORTAL_URL}/signature/docSupplier/upload/${packId}`}
+                beforeUpload={beforeUpload}
+                error={errors.documents?.[0]}
+                label={t('signature-rfo-upload-label')}
+                onChange={handleChangeUploadButton}
+                onRemove={handleOnRemove}
               />
             </Col>
           </Row>
@@ -127,18 +127,18 @@ const NoDocument: FC<Props> = ({ packId, getSignaturePack }) => {
             <Col span={24}>
               <Controller
                 as={TextArea}
+                autoSize={{ minRows: 5, maxRows: 5 }}
                 control={control}
                 error={errors.message}
                 name="message"
-                autoSize={{ minRows: 5, maxRows: 5 }}
               />
             </Col>
           </Row>
           <CommonButton
-            htmlType="submit"
-            type="primary"
             disabled={!documents || documents?.length === 0}
+            htmlType="submit"
             loading={isPending}
+            type="primary"
           >
             {t('signature-rfo-send-document-btn')}
           </CommonButton>

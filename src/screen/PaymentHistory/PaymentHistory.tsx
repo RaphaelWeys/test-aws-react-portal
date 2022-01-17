@@ -1,3 +1,4 @@
+import { Col, Row } from 'antd';
 import moment from 'moment';
 import React, { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +12,9 @@ import Loader from '../../components/Loader';
 import { useGetPaymentHistory } from '../../endpoints/user/useGetPaymentHistory';
 import useContactUs from '../../hooks/useContactUs';
 import MainLayout from '../../layout/MainLayout';
+import WrapperWhiteBox from '../../layout/WrapperWhiteBox';
 import { ContentButton } from './PaymentHistory.styled';
 import PaymentHistoryItem from './PaymentHistoryItem';
-import WrapperWhiteBox from '../../layout/WrapperWhiteBox';
-import { Col, Row } from 'antd';
 
 interface Props {
   className?: string;
@@ -47,14 +47,14 @@ const PaymentHistory: FC<Props> = ({ className }) => {
                 {paymentsHistory.map((payment, index) =>
                   payment.items.map((item) => (
                     <PaymentHistoryItem
-                      key={index}
+                      amount={payment.amountToPay}
+                      description={item.description}
                       icon={payment.app === 'tender' ? marketplaceIcon : optimizationIcon}
+                      isLast={paymentsHistory.length - 1 === index}
+                      key={index}
                       startDate={moment(payment.createdAt).format('DD/MM/YYYY')}
                       title={item.name}
-                      description={item.description}
-                      amount={payment.amountToPay}
                       urlToRedirect={payment.receiptUrl}
-                      isLast={paymentsHistory.length - 1 === index}
                     />
                   )),
                 )}

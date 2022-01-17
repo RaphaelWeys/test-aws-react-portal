@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message, Space } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 import React, { FC, useCallback, useEffect, useState } from 'react';
@@ -9,7 +9,6 @@ import { useGeneratePDF } from '../../../endpoints/admin/rfos/useGeneratePDF';
 import { useUpdateRfo } from '../../../endpoints/admin/rfos/useUpdateRfo';
 import { useValidateRfo } from '../../../endpoints/admin/rfos/useValidateRfo';
 import { Rfo, RfoDetailFiles } from '../../../interface/rfo';
-import { AlignItems } from '../../../style/utils';
 import CommonButton from '../../CommonButton';
 import UploadButton from '../../UploadButton';
 import Modal from '../Modal';
@@ -40,9 +39,9 @@ const ModalValidateRfo: FC<IProps> = ({ className, rfo, onClose, ...modalProps }
     // Check if companies are present and score is defined for each company
     if (!rfoItem.companies.length) return false;
 
-    return rfoItem.companies.every((company) => {
-      return company.cervedScore && company.cervedScore.score > 0 && company.cervedScore.fake !== true;
-    });
+    return rfoItem.companies.every(
+      (company) => company.cervedScore && company.cervedScore.score > 0 && company.cervedScore.fake !== true,
+    );
   }, []);
 
   const volumeFileDownloadUrl = useCallback(
@@ -51,11 +50,11 @@ const ModalValidateRfo: FC<IProps> = ({ className, rfo, onClose, ...modalProps }
     [],
   );
 
-  const excelFileDownloadUrl = useCallback(
-    (rfoItem: Rfo, file) =>
-      `${process.env.REACT_APP_BACKEND_TENDER_URL}/rfo-operation/multisite/file/download/${rfoItem.id}/${file.filename}`,
-    [],
-  );
+  const excelFileDownloadUrl = useCallback((rfoItem: Rfo, file) => {
+    const backend = process.env.REACT_APP_BACKEND_TENDER_URL;
+
+    return `${backend}/rfo-operation/multisite/file/download/${rfoItem.id}/${file.filename}`;
+  }, []);
 
   const canEditSupplierFiles = useCallback(
     (rfoItem) => rfoItem.state === RFO_STATE.sent && !rfoItem.sentToSuppliers,
@@ -85,16 +84,14 @@ const ModalValidateRfo: FC<IProps> = ({ className, rfo, onClose, ...modalProps }
   );
 
   const sendToSuppliers = useCallback(() => {
-    const volumeCheckedFiles: RfoDetailFiles[] = fileList.map((file) => {
-      return {
-        complete: true,
-        lastModifiedDate: file.lastModifiedDate,
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        filename: file.response.filename,
-      };
-    });
+    const volumeCheckedFiles: RfoDetailFiles[] = fileList.map((file) => ({
+      complete: true,
+      lastModifiedDate: file.lastModifiedDate,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      filename: file.response.filename,
+    }));
 
     updateRfo(
       { ...rfo, volumeCheckedFiles },
@@ -127,24 +124,22 @@ const ModalValidateRfo: FC<IProps> = ({ className, rfo, onClose, ...modalProps }
   return (
     <Modal
       className={className}
-      title={`${rfo.name} - ${rfo.reference} - V${rfo.version}`}
-      getContainer={false}
       footer={false}
+      getContainer={false}
       size="large"
+      title={`${rfo.name} - ${rfo.reference} - V${rfo.version}`}
       onCancel={onClose}
       {...modalProps}
     >
       <h4>Cerved Score</h4>
-      {rfo.companies.map((company) => {
-        return (
-          <div key={company.fiscalId}>
-            <span>
-              {company.name} - {company.fiscalId} - Score: {company && company.cervedScore && company.cervedScore.score}
-            </span>
-            {company && company.cervedScore && company.cervedScore.fake && <span>Score is fake (demo)</span>}
-          </div>
-        );
-      })}
+      {rfo.companies.map((company) => (
+        <div key={company.fiscalId}>
+          <span>
+            {company.name} - {company.fiscalId} - Score: {company && company.cervedScore && company.cervedScore.score}
+          </span>
+          {company && company.cervedScore && company.cervedScore.fake && <span>Score is fake (demo)</span>}
+        </div>
+      ))}
       {cervedScoreIsAvailable(rfo) && <div className="correct">Every company have a real score</div>}
       {!cervedScoreIsAvailable(rfo) && (
         <div className="error">Score is missing or demo, do not send to supplier!!!</div>
@@ -171,12 +166,12 @@ const ModalValidateRfo: FC<IProps> = ({ className, rfo, onClose, ...modalProps }
         <div>
           <UploadButton
             action={`${process.env.REACT_APP_BACKEND_TENDER_URL}/rfo-operation/volume/file/upload/${rfo.id}`}
-            onChange={onUploadFilesChanged}
             label={t('page-rfo-page-site-volumes-upload-title')}
+            onChange={onUploadFilesChanged}
             onRemove={handleOnRemove}
           />
           <br />
-          <CommonButton onClick={sendToSuppliers} disabled={!canSendToSuppliers}>
+          <CommonButton disabled={!canSendToSuppliers} onClick={sendToSuppliers}>
             Save & send to suppliers
           </CommonButton>
         </div>
@@ -184,10 +179,10 @@ const ModalValidateRfo: FC<IProps> = ({ className, rfo, onClose, ...modalProps }
 
       <hr />
       <br />
-      <AlignItems space={5}>
+      <Space>
         <CommonButton onClick={() => onClose()}>Close</CommonButton>
         <CommonButton onClick={generatePDF}>Re-generate all RFO PDF</CommonButton>
-      </AlignItems>
+      </Space>
 
       {validateRfoLoading && <ModalPending content="Sending to suppliers, please wait..." />}
       {generatePDFLoading && <ModalPending content="Generating PDF files, please wait..." />}

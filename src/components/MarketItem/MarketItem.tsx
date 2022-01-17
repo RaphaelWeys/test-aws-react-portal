@@ -1,20 +1,20 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { Controller } from 'react-hook-form';
-import Switch from '../Switch/Switch';
-import { Control } from 'react-hook-form/dist/types/form';
-import RangePicker from '../RangePicker/RangePicker';
-import Checkbox from '../Input/Checkbox';
-import { useTranslation } from 'react-i18next';
 import { Space } from 'antd';
+import React, { FC } from 'react';
+import { Controller } from 'react-hook-form';
+import { Control } from 'react-hook-form/dist/types/form';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+
 import { Error, TextRegularBold } from '../../style/utils';
+import Checkbox from '../Input/Checkbox';
 import InputNumber from '../Input/Number/InputNumber';
+import RangePicker from '../RangePicker/RangePicker';
+import Switch from '../Switch/Switch';
 
 interface Props {
   className?: string;
   name: string;
   control: Control<any>;
-  customOnChange?: (value: boolean) => void;
   errors: any;
   hasCompanyMarketTrend: boolean;
   setValue: any;
@@ -87,14 +87,8 @@ const MarketItem: FC<Props> = ({
   return (
     <Space className={className} direction="vertical" size="middle">
       <Controller
-        name={`${name}.enabled`}
         as={Switch}
         control={control}
-        labelValue={
-          <TextRegularBold>
-            {t(`country-${country}`)} / {t(`global-${energy}`)}
-          </TextRegularBold>
-        }
         customOnChange={(value) => {
           if (!value) {
             clearErrors([
@@ -111,36 +105,42 @@ const MarketItem: FC<Props> = ({
           }
         }}
         defaultValue={field.enabled}
+        labelValue={
+          <TextRegularBold>
+            {t(`country-${country}`)} / {t(`global-${energy}`)}
+          </TextRegularBold>
+        }
+        name={`${name}.enabled`}
       />
       <Controller
-        name={`${name}.period`}
         as={RangePicker}
         control={control}
-        format="L"
-        error={errors?.period}
-        disabled={!enabled}
         defaultValue={field.period}
+        disabled={!enabled}
+        error={errors?.period}
+        format="L"
+        name={`${name}.period`}
       />
       <TextRegularBold>{t('market-item-forecase-type')}</TextRegularBold>
       <Controller
-        defaultValue={field.marketTrendsPartner}
-        name={`${name}.marketTrendsPartner`}
         as={Checkbox}
         control={control}
-        error={hasCheckboxesError}
         customOnChange={handleChangeCheckboxes}
+        defaultValue={field.marketTrendsPartner}
+        error={hasCheckboxesError}
+        name={`${name}.marketTrendsPartner`}
       >
         {t('market-item-partner')}
       </Controller>
       <Space direction="vertical" size="small">
         <Controller
-          defaultValue={field.marketTrendsCompany}
-          name={`${name}.marketTrendsCompany`}
           as={Checkbox}
           control={control}
+          customOnChange={handleChangeCheckboxes}
+          defaultValue={field.marketTrendsCompany}
           disabled={!hasCompanyMarketTrend}
           error={hasCheckboxesError && hasCompanyMarketTrend}
-          customOnChange={handleChangeCheckboxes}
+          name={`${name}.marketTrendsCompany`}
         >
           {t('market-item-company')}
         </Controller>
@@ -148,21 +148,21 @@ const MarketItem: FC<Props> = ({
         {hasCheckboxesError && <Error>{t('market-item-no-checkboxes-selected')}</Error>}
       </Space>
       <Controller
-        defaultValue={field.marketTrendsUser}
-        name={`${name}.marketTrendsUser`}
         as={Checkbox}
         control={control}
+        defaultValue={field.marketTrendsUser}
+        name={`${name}.marketTrendsUser`}
       >
         {t('market-item-user')}
       </Controller>
       <Controller
-        name={`${name}.contracts`}
-        defaultValue={field.contracts}
         as={InputNumber}
-        min={1}
         control={control}
-        label={<TextRegularBold>{t('market-item-number-contracts')}</TextRegularBold>}
+        defaultValue={field.contracts}
         error={errors?.contracts}
+        label={<TextRegularBold>{t('market-item-number-contracts')}</TextRegularBold>}
+        min={1}
+        name={`${name}.contracts`}
       />
     </Space>
   );

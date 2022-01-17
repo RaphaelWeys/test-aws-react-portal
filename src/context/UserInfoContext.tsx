@@ -31,4 +31,4 @@ function useUserInfo() {
   return context;
 }
 
-export { UserInfoProvider, useUserInfo, UserInfoContext };
+export { UserInfoContext,UserInfoProvider, useUserInfo };

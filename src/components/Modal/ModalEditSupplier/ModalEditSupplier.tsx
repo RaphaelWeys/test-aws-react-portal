@@ -1,3 +1,4 @@
+import { Space } from 'antd';
 import { ModalProps } from 'antd/lib/modal';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,13 +9,14 @@ import { useCreateSupplier } from '../../../endpoints/admin/suppliers/useCreateS
 import { useUpdateSupplier } from '../../../endpoints/admin/suppliers/useUpdateSupplier';
 import { Supplier } from '../../../interface/supplier';
 import RichEditorExample from '../../../screen/Admin/components/Wysiwyg';
-import { AlignItems, Margin } from '../../../style/utils';
-import { i18nItemsForCountry, formatBooleanToString, formatStringToBoolean } from '../../../utils/behavior';
+import { Margin } from '../../../style/utils';
+import { formatBooleanToString, formatStringToBoolean, i18nItemsForCountry } from '../../../utils/behavior';
 import CommonButton from '../../CommonButton';
 import InputText from '../../Input/Text';
 import TextArea from '../../Input/TextArea';
 import Select from '../../Select';
 import Modal from '../Modal';
+import { FormData } from './ModalEditSupplier.interface';
 
 type IProps = {
   className?: string;
@@ -22,21 +24,6 @@ type IProps = {
   selectedSupplier?: Supplier;
   handleOnSuccess: () => void;
 } & ModalProps;
-
-export interface FormData {
-  name: string;
-  country: string;
-  language: string;
-  description: string;
-  providePower: string;
-  provideGreenPower: string;
-  provideGas: string;
-  demo: string;
-  scoreDisabled: string;
-  imageUrl: string;
-  website: string;
-  greenMixPercent?: number;
-}
 
 const ModalEditSupplier: FC<IProps> = ({
   className,
@@ -110,137 +97,137 @@ const ModalEditSupplier: FC<IProps> = ({
   );
 
   return (
-    <Modal className={className} getContainer={false} footer={false} size="large" {...modalProps}>
+    <Modal className={className} footer={false} getContainer={false} size="large" {...modalProps}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <AlignItems direction="column" align="stretch">
-          <AlignItems space={24} flex>
+        <Space direction="vertical">
+          <Space size="large">
             <Controller
               as={InputText}
-              name="name"
               control={control}
               error={errors.name}
-              label="Supplier name"
               htmlFor="name"
+              label="Supplier name"
+              name="name"
             />
             <div />
-          </AlignItems>
-          <AlignItems space={24} flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={Select}
-              name="country"
               control={control}
               error={errors.country}
-              label="Country"
               items={i18nItemsForCountry()}
+              label="Country"
+              name="country"
             />
             <Controller
               as={Select}
-              name="language"
               control={control}
               error={errors.language}
-              label="Language"
               items={AdminLanguageItems}
+              label="Language"
+              name="language"
             />
-          </AlignItems>
-          <AlignItems flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={TextArea}
-              name="description"
-              htmlFor="description"
               control={control}
               error={errors.description}
+              htmlFor="description"
               label="Description"
+              name="description"
             />
-          </AlignItems>
-          <AlignItems space={24} flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={Select}
-              name="providePower"
               control={control}
               error={errors.providePower}
-              label="Provide Power"
               items={itemsYes}
+              label="Provide Power"
+              name="providePower"
             />
             <Controller
               as={Select}
-              name="provideGreenPower"
               control={control}
               error={errors.provideGreenPower}
-              label="Provide Green power"
               items={itemsYes}
+              label="Provide Green power"
+              name="provideGreenPower"
             />
-          </AlignItems>
-          <AlignItems space={24} flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={Select}
-              name="provideGas"
               control={control}
               error={errors.provideGas}
-              label="Provide Gas"
               items={itemsYes}
+              label="Provide Gas"
+              name="provideGas"
             />
             <Controller
               as={Select}
-              name="demo"
               control={control}
               error={errors.demo}
-              label="Demo mode for this provider"
               items={itemsYes}
+              label="Demo mode for this provider"
+              name="demo"
             />
-          </AlignItems>
-          <AlignItems space={24} flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={Select}
-              name="scoreDisabled"
               control={control}
               error={errors.scoreDisabled}
-              label="Cerved score disabled"
               items={itemsYes}
+              label="Cerved score disabled"
+              name="scoreDisabled"
             />
             <div />
-          </AlignItems>
-          <AlignItems space={24} flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={InputText}
-              name="imageUrl"
               control={control}
               error={errors.imageUrl}
-              label="Image url"
               htmlFor="imageUrl"
+              label="Image url"
+              name="imageUrl"
             />
             <Controller
               as={InputText}
-              name="website"
               control={control}
               error={errors.website}
-              label="Web site"
               htmlFor="website"
+              label="Web site"
+              name="website"
             />
-          </AlignItems>
-          <AlignItems space={24} flex>
+          </Space>
+          <Space size="large">
             <Controller
               as={InputText}
-              name="greenMixPercent"
               control={control}
               error={errors.greenMixPercent}
-              label="Green mix percent"
               htmlFor="greenMixPercent"
-              type="number"
+              label="Green mix percent"
+              name="greenMixPercent"
               step=".01"
+              type="number"
             />
             <div />
-          </AlignItems>
+          </Space>
 
           <RichEditorExample setValue={setGreenMixDescriptionValue} value={greenMixDescriptionValue} />
-        </AlignItems>
+        </Space>
 
         <Margin mt={10}>
-          <AlignItems space={15} justify="flex-end">
+          <Space size="middle">
             <CommonButton onClick={customCancel}>Annuler</CommonButton>
-            <CommonButton htmlType="submit" type="primary" loading={createLoading || updateLoading}>
+            <CommonButton htmlType="submit" loading={createLoading || updateLoading} type="primary">
               Save
             </CommonButton>
-          </AlignItems>
+          </Space>
         </Margin>
       </form>
     </Modal>

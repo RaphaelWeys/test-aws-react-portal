@@ -60,8 +60,7 @@ const RfoList: FC<IProps> = ({ className }) => {
   );
   const [categoryTable, setCategoryTable] = useState<string>(navigationValue[0].key);
 
-  const headerTableI18n = useMemo(() => {
-    return [
+  const headerTableI18n = useMemo(() => [
       t('label-reference'),
       t('label-version'),
       t('label-name'),
@@ -69,8 +68,7 @@ const RfoList: FC<IProps> = ({ className }) => {
       t('label-rfoState'),
       t('label-rfoDate'),
       'actions',
-    ];
-  }, [t]);
+    ], [t]);
 
   const headerTable = useMemo(
     () =>
@@ -123,10 +121,10 @@ const RfoList: FC<IProps> = ({ className }) => {
               <EditTwoTone style={{ fontSize: '18px' }} />
             </InvisibleButton>
             <Popconfirm
+              cancelText="No"
+              okText="Yes"
               title="Are you sure you want to delete it ?"
               onConfirm={() => handleDeleteRfo(rfo.id)}
-              okText="Yes"
-              cancelText="No"
             >
               <DeleteTwoTone twoToneColor="#eb2f96" />
             </Popconfirm>
@@ -153,12 +151,12 @@ const RfoList: FC<IProps> = ({ className }) => {
       <Select items={filterValues} value={filterValues[0].value} onChange={setFilter} />
 
       <HorizontalNavigation
-        menuItemProps={navigationValue}
-        defaultValue={categoryTable}
         customOnClick={setCategoryTable}
+        defaultValue={categoryTable}
+        menuItemProps={navigationValue}
       />
 
-      <Table columns={headerTable} dataSource={filteredData} bordered size="small" loading={getRfosLoading} />
+      <Table bordered columns={headerTable} dataSource={filteredData} loading={getRfosLoading} size="small" />
 
       {selectedRfo && <ModalValidateRfo visible rfo={selectedRfo} onClose={() => setSelectedRfo(undefined)} />}
     </div>

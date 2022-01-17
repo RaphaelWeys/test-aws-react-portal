@@ -5,19 +5,19 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled, { css, ThemeContext } from 'styled-components';
 
+import { useTenant } from '../../context/TenantContext';
 import { useUserInfo } from '../../context/UserInfoContext';
 import useClickAway from '../../hooks/useClickAway';
 import useDesktop from '../../hooks/useDesktop';
+import useGetFollowApp from '../../hooks/useGetFollowApp';
+import { Navigation } from '../../navigation';
+import { isClient, isKam, isManager, isMultiAccess } from '../../utils/behavior';
 import AccountIcon from '../icons/AccountIcon';
 import InvisibleButton from '../InvisibleButton';
 import Modal from '../Modal';
 import SafeHTMLTranslate from '../SafeHTMLTranslate';
 import SelectLang from '../SelectLang';
 import { AccountLang, BurgerMenu, Content, LeftSide, RightSide, Title, WrapperEnterprise } from './Header.styled';
-import { isClient, isKam, isManager, isMultiAccess } from '../../utils/behavior';
-import { useTenant } from '../../context/TenantContext';
-import useGetFollowApp from '../../hooks/useGetFollowApp';
-import { Navigation } from '../../navigation/index';
 
 interface Props {
   className?: string;
@@ -105,7 +105,7 @@ const Header: FC<Props> = ({ className }) => {
           </InvisibleButton>
         </>
       );
-    } else if (!isMultiAccess(userInfo) && isClient(userInfo)) {
+    } if (!isMultiAccess(userInfo) && isClient(userInfo)) {
       return (
         <>
           <InvisibleButton onClick={() => handleOpenModal(0)}>{t('header-general-condition')}</InvisibleButton>
@@ -139,7 +139,9 @@ const Header: FC<Props> = ({ className }) => {
               </InvisibleButton>
             )}
             {userInfo.admin && (
-              <InvisibleButton onClick={() => history.push(Navigation.ADMIN)}>{t('header-admin')}</InvisibleButton>
+              <InvisibleButton onClick={() => history.push(Navigation.ADMIN_TRANSLATION)}>
+                {t('header-admin')}
+              </InvisibleButton>
             )}
           </>
         )}
@@ -151,25 +153,25 @@ const Header: FC<Props> = ({ className }) => {
   return (
     <header className={className} ref={slideNavRef}>
       <LeftSide data-testid="logo-test" onClick={() => handleRedirect(Navigation.DASHBOARD)}>
-        <img src={themeContext.logo.dashboard} alt="logo" />
+        <img alt="logo" src={themeContext.logo.dashboard} />
       </LeftSide>
       {!isDesktop && (
         <BurgerMenu>
           <MenuOutlined onClick={() => setShowSidebar(!showSidebar)} />
         </BurgerMenu>
       )}
-      <RightSide show={showSidebar} isDesktop={isDesktop}>
+      <RightSide isDesktop={isDesktop} show={showSidebar}>
         {!isDesktop && content}
 
         <AccountLang isDesktop={isDesktop}>
           <Space>
             {isDesktop && (
               <Popover
+                content={content}
                 placement="bottomRight"
                 title={title}
-                content={content}
-                visible={showPopover}
                 trigger="click"
+                visible={showPopover}
                 onVisibleChange={setShowPopover}
               >
                 <WrapperEnterprise data-testid="enterprise-testid">
@@ -184,14 +186,14 @@ const Header: FC<Props> = ({ className }) => {
       </RightSide>
 
       <Modal
-        visible={showModal}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        closable={false}
+        okText={t('global-close')}
+        size="large"
         title={modalInfo.title}
+        visible={showModal}
         onCancel={(): void => setShowModal(false)}
         onOk={(): void => setShowModal(false)}
-        okText={t('global-close')}
-        closable={false}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        size="large"
       >
         <SafeHTMLTranslate template={modalInfo.content} Type="p" />
       </Modal>

@@ -1,11 +1,11 @@
-import React from 'react';
-import { render as rtlRender, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render as rtlRender, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import React from 'react';
 
-import BasketForm from '../BasketForm';
-import { orderFake } from '../../AppBasket/__tests__/appBasket.test';
-import { UserInfoContext } from '../../../../context/UserInfoContext';
 import { LocalContext } from '../../../../context/LocalContext';
+import { UserInfoContext } from '../../../../context/UserInfoContext';
+import { orderFake } from '../../AppBasket/__tests__/appBasket.test';
+import BasketForm from '../BasketForm';
 
 const props = {
   previousStep: jest.fn(),

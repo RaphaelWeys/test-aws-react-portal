@@ -19,7 +19,7 @@ export default styled(InputSearch)`
       .ant-input {
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
-        background: ${colors.grayLight};
+        background: ${colors.whiteDark};
         border: 1px solid #d9d9d9;
 
         &:focus,
@@ -29,10 +29,20 @@ export default styled(InputSearch)`
         }
       }
 
+      .ant-input-affix-wrapper {
+        background: #fafafa;
+      }
+
+      .anticon.ant-input-clear-icon svg {
+        fill: ${colors.baseColor};
+      }
+
       button {
         border-radius: 0 4px 4px 0 !important;
         background: ${colors.gray};
         border: 1px solid #d9d9d9;
+        border-color: transparent !important;
+        pointer-events: none;
 
         :hover {
           outline: 0;

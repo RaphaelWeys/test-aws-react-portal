@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import 'es6-shim';
-import * as serviceWorker from './serviceWorker';
 import 'react-phone-input-2/lib/style.css';
-import LogRocket from 'logrocket';
-
 import './i18n';
+
+import LogRocket from 'logrocket';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import App from './App';
+import * as serviceWorker from './serviceWorker';
 
 if (process.env.NODE_ENV === 'production') {
   LogRocket.init(process.env.REACT_APP_LOG_ROCKET);

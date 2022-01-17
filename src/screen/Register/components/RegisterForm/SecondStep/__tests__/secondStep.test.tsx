@@ -1,6 +1,6 @@
-import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
+import React from 'react';
 
 import SecondStep from '../SecondStep';
 

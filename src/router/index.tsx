@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { Switch, useLocation } from 'react-router-dom';
 
-import { useUserInfo } from '../context/UserInfoContext';
 import ReactHelmet from '../components/ReactHelmet';
 import { useTenant } from '../context/TenantContext';
+import { useUserInfo } from '../context/UserInfoContext';
 import useGetFollowApp from '../hooks/useGetFollowApp';
-import { Navigation } from '../navigation/index';
+import { Navigation } from '../navigation';
 import { getQueryParameters } from '../utils/url';
 
 const AuthenticateApp = React.lazy(() => import('./AuthenticateApp'));

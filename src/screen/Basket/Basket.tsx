@@ -6,10 +6,11 @@ import styled, { css } from 'styled-components';
 import marketplaceIcon from '../../assets/picto-marketplace.svg';
 import optimizationIcon from '../../assets/picto-optimization.svg';
 import Loader from '../../components/Loader';
+import { OrderProvider } from '../../context/OrderContext';
 import { useGetOrder } from '../../endpoints/basket/useGetOrder';
 import MainLayout from '../../layout/MainLayout';
-import AppBasket from './AppBasket';
 import { getQueryParameters } from '../../utils/url';
+import AppBasket from './AppBasket';
 
 interface Props {
   className?: string;
@@ -36,7 +37,9 @@ const Basket: FC<Props> = ({ className }) => {
         {isError ? (
           <h1>{t('basket-order-not-found')}</h1>
         ) : (
-          <AppBasket icon={order?.app === 'tender' ? marketplaceIcon : optimizationIcon} />
+          <OrderProvider>
+            <AppBasket icon={order?.app === 'tender' ? marketplaceIcon : optimizationIcon} />
+          </OrderProvider>
         )}
       </div>
     </MainLayout>

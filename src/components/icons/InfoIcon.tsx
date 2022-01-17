@@ -3,19 +3,19 @@ import React from 'react';
 function InfoIcon({ color = '#BDBEBF' }) {
   return (
     <svg
-      style={{ display: 'block' }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24.2"
       height="24.2"
+      style={{ display: 'block' }}
       viewBox="0 0 24.2 24.2"
+      width="24.2"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <g transform="translate(-.216 -.217)">
         <g
+          data-name="Groupe 1778"
           fill="none"
           stroke={color}
           strokeMiterlimit="10"
           strokeWidth="1.2"
-          data-name="Groupe 1778"
           transform="translate(.816 .817)"
         >
           <path d="M23 11.5A11.5 11.5 0 1111.5 0 11.5 11.5 0 0123 11.5z" data-name="Tracé 258" />

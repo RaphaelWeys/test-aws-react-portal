@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { Input } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import styled from 'styled-components';
 
 export const WrapperInputText = styled.div`
   flex: 1;

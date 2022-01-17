@@ -1,8 +1,8 @@
+import { message } from 'antd';
 import { AxiosError } from 'axios';
 import { useQuery } from 'react-query';
 
 import { useApi } from '../../context/ApiContext';
-import { message } from 'antd';
 import { KamInfo } from '../../interface/kamInfo';
 
 export const useGetMultiAccessKamInfo = (userId) => {

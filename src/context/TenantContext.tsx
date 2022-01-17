@@ -2,8 +2,8 @@ import { changeAntdTheme } from 'mini-dynamic-antd-theme';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import theme, { overrideTheme } from '../style/theme';
 import { useGetTenantInfo } from '../endpoints/tenant/useGetTenantInfo';
+import theme, { overrideTheme } from '../style/theme';
 
 const TenantContext = React.createContext(null);
 

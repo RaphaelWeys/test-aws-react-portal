@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
+
 import ButtonLink from '../../../../components/ButtonLink';
 import Collapse from '../../../../components/Collapse';
 import GradientButton from '../../../../components/GradientButton';
@@ -21,7 +22,7 @@ import MainLayout from '../../../../layout/MainLayout';
 import WrapperWhiteBox from '../../../../layout/WrapperWhiteBox';
 import { Navigation } from '../../../../navigation';
 import history from '../../../../router/history';
-import { Label, TextRegular, TextRegularBold, WarningText } from '../../../../style/utils';
+import { Label, MainLinkStyle, TextRegular, TextRegularBold, WarningText } from '../../../../style/utils';
 
 const MultiAccessClientDetails: FC = () => {
   const [t] = useTranslation();
@@ -39,6 +40,7 @@ const MultiAccessClientDetails: FC = () => {
       {
         title: t('multi-access-name-contract-title'),
         dataIndex: 'name',
+        render: (name) => <MainLinkStyle>{name}</MainLinkStyle>,
         key: 'name',
         width: '30%',
         sorter: (a, b) => a.name.localeCompare(b.name),
@@ -51,7 +53,8 @@ const MultiAccessClientDetails: FC = () => {
         sorter: (a, b) => {
           if (a.optimized && !b.optimized) {
             return -1;
-          } else if (!a.optimized && b.optimized) {
+          }
+          if (!a.optimized && b.optimized) {
             return 1;
           }
 
@@ -153,6 +156,23 @@ const MultiAccessClientDetails: FC = () => {
     return [{ title: t('multi-access-user-market-forecast'), data: markerList }];
   }, [data, markerList, t]);
 
+  const extraHeader = React.useMemo(
+    () => (
+      <Space>
+        <GradientButton
+          variant="outlined"
+          onClick={() => history.push(Navigation.MULTI_ACCESS_EDIT.replace(':userId', userId))}
+        >
+          {t('multi-access-list-modify-client')}
+        </GradientButton>
+        <GradientButton onClick={() => window.location.assign(`${followAppUrl}${Navigation.CONTRACT_NEW}`)}>
+          {t('multi-access-list-create-contract')}
+        </GradientButton>
+      </Space>
+    ),
+    [followAppUrl, t, userId],
+  );
+
   if (isLoading) {
     return null;
   }
@@ -162,25 +182,18 @@ const MultiAccessClientDetails: FC = () => {
       <MainLayout hasBg={false}>
         <WrapperWhiteBox
           backButtonText="multi-access-all-acount-client"
-          to={Navigation.MULTI_ACCESS}
+          extra={extraHeader}
           icon={<CompanyIcon />}
           title={data.user.company}
-          extra={
-            <GradientButton onClick={() => history.push(Navigation.MULTI_ACCESS_EDIT.replace(':userId', userId))}>
-              {t('multi-access-list-modify-client')}
-            </GradientButton>
-          }
+          to={Navigation.MULTI_ACCESS}
         >
           <Space direction="vertical" size={25}>
             <Row gutter={[0, 25]}>
               <Col span={24}>
-                <Collapse
-                  collapseProps={{ defaultActiveKey: [0] }}
-                  panelProps={{ key: 0, header: t('multi-access-user-information-title') }}
-                >
+                <Collapse panelProps={{ key: 0, header: t('multi-access-user-information-title') }}>
                   <Space direction="vertical">
                     <Row gutter={[25, 20]}>
-                      <Col xs={24} sm={7}>
+                      <Col sm={7} xs={24}>
                         <Space direction="vertical" size="middle">
                           <Label>{t('multi-access-user-contact-title')}</Label>
                           <div>
@@ -192,7 +205,7 @@ const MultiAccessClientDetails: FC = () => {
                         </Space>
                       </Col>
                       {data.user.multiaccess.clientReference && (
-                        <Col xs={24} sm={7}>
+                        <Col sm={7} xs={24}>
                           <Space direction="vertical" size="middle">
                             <Label>{t('multi-access-user-reference-client')}</Label>
                             <div>
@@ -209,14 +222,11 @@ const MultiAccessClientDetails: FC = () => {
                 </Collapse>
               </Col>
               <Col span={24}>
-                <Collapse
-                  collapseProps={{ defaultActiveKey: [0] }}
-                  panelProps={{ key: 0, header: t('multi-access-user-management-client-access') }}
-                >
+                <Collapse panelProps={{ key: 0, header: t('multi-access-user-management-client-access') }}>
                   <Space direction="vertical" size="middle">
                     <Row gutter={[25, 20]}>
                       {managementClientAccess.map((item, index) => (
-                        <Col span={24} key={index}>
+                        <Col key={index} span={24}>
                           <Space direction="vertical" size="middle">
                             <Label>{item.title}</Label>
                           </Space>
@@ -226,12 +236,12 @@ const MultiAccessClientDetails: FC = () => {
                     {data.user.multiaccess.clientCanLogin && (
                       <Row>
                         {marketForecast.map((item, index) => (
-                          <Col xs={24} key={index}>
+                          <Col key={index} xs={24}>
                             <Space direction="vertical" size="middle">
                               <Label>{item.title}</Label>
                               <Row>
                                 {item.data.map((info, index) => (
-                                  <Col xs={24} md={8} key={index}>
+                                  <Col key={index} md={8} xs={24}>
                                     {info}
                                   </Col>
                                 ))}
@@ -251,19 +261,17 @@ const MultiAccessClientDetails: FC = () => {
                 >
                   <Table
                     columns={header}
-                    loading={isKamContractListLoading}
                     dataSource={dataSource}
+                    loading={isKamContractListLoading}
                     rowKey={(record) => record.id}
                     showSorterTooltip={false}
-                    onRow={(record) => {
-                      return {
-                        onClick: () => {
-                          window.location.assign(
-                            `${followAppUrl}${Navigation.CONTRACTS_DETAILS.replace(':id', record.id)}`,
-                          );
-                        },
-                      };
-                    }}
+                    onRow={(record) => ({
+                      onClick: () => {
+                        window.location.assign(
+                          `${followAppUrl}${Navigation.CONTRACTS_DETAILS.replace(':id', record.id)}`,
+                        );
+                      },
+                    })}
                   />
                 </Collapse>
               </Col>
@@ -281,19 +289,19 @@ const MultiAccessClientDetails: FC = () => {
 
       {showModalTransfers && (
         <ModalTransfersAccount
-          onClose={() => setShowModalTransfers(false)}
-          userId={data.user.id}
           title={`${data.user.company} - ${data.user.firstName} ${data.user.lastName}`}
+          userId={data.user.id}
+          onClose={() => setShowModalTransfers(false)}
         />
       )}
       {showModalDelete && (
         <ModalDeleteMultiAccess
-          userId={data.user._id}
-          onClose={() => setShowModalDelete(false)}
           canDelete
           companyName={data.user.company}
           firstName={data.user.firstName}
           lastName={data.user.lastName}
+          userId={data.user._id}
+          onClose={() => setShowModalDelete(false)}
         />
       )}
     </>

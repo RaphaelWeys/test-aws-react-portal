@@ -25,7 +25,7 @@ const HorizontalNavigation: FC<IProps> = ({ className, defaultValue, menuItemPro
 
   return (
     <div className={className}>
-      <Menu {...menuProps} onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Menu {...menuProps} mode="horizontal" selectedKeys={[current]} onClick={handleClick}>
         {menuItemProps.map((item) => (
           <Menu.Item {...item} key={item.key}>
             {item.title}

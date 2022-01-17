@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import styled, { css } from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import styled, { css } from 'styled-components';
 
-import { Center, Date, Icon, Title, CenterPrice } from './PaymentHistoryItem.styled';
-import InvisibleButton from '../../../components/InvisibleButton';
 import DownloadIcon from '../../../components/icons/DownloadIcon';
+import InvisibleButton from '../../../components/InvisibleButton';
 import { getCurrencyFormatted } from '../../../utils/number';
+import { Center, CenterPrice, Date, Icon, Title } from './PaymentHistoryItem.styled';
 
 interface Props {
   className?: string;
@@ -15,7 +15,6 @@ interface Props {
   description: string;
   amount: number;
   urlToRedirect: string;
-  isLast: boolean;
 }
 
 const PaymentHistoryItem: FC<Props> = ({ className, icon, startDate, title, description, amount, urlToRedirect }) => {
@@ -29,7 +28,7 @@ const PaymentHistoryItem: FC<Props> = ({ className, icon, startDate, title, desc
     <div className={className} data-testid="payment-history-item">
       <Center>
         <Icon>
-          <img src={icon} alt="picto logo" />
+          <img alt="picto logo" src={icon} />
         </Icon>
         <Date>{startDate}</Date>
         <Title>
@@ -53,7 +52,7 @@ const PaymentHistoryItem: FC<Props> = ({ className, icon, startDate, title, desc
   );
 };
 
-export default styled(PaymentHistoryItem)`
+export default styled(PaymentHistoryItem)<{ isLast: boolean }>`
   ${({ isLast }) => css`
     display: flex;
     justify-content: space-between;

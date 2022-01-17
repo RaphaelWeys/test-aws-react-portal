@@ -1,5 +1,7 @@
-import styled, { css } from 'styled-components';
 import '../../components/InvisibleButton/InvisibleButton';
+
+import styled, { css } from 'styled-components';
+
 import InvisibleButton from '../../components/InvisibleButton';
 
 export const ButtonClose = styled(InvisibleButton)`

@@ -8,7 +8,7 @@ interface Props {
 
 const SafeHTMLTranslate: FC<Props> = ({ template, Type = 'div', ...props }) => {
   const [t] = useTranslation();
-  let text = t(template, { interpolation: { escapeValue: false } });
+  const text = t(template, { interpolation: { escapeValue: false } });
   // text = text.split('\n').join('<br />').split('\r').join('<br />');
 
   return (

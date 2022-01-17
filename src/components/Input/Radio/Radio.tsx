@@ -21,8 +21,7 @@ type Props = {
   error?: FieldError;
 } & RadioGroupProps;
 
-const Radio: FC<Props> = ({ className, items, label, error, ...input }) => {
-  return (
+const Radio: FC<Props> = ({ className, items, label, error, ...input }) => (
     <div className={className}>
       {label && (
         <div style={{ marginBottom: '18px' }}>
@@ -39,7 +38,6 @@ const Radio: FC<Props> = ({ className, items, label, error, ...input }) => {
       {error && <DisplayErrorType>{error && getErrorMessage(error, 'radio')}</DisplayErrorType>}
     </div>
   );
-};
 
 export default styled(Radio)`
   display: flex;

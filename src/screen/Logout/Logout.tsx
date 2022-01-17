@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { useTenant } from '../../context/TenantContext';
 import { useUserInfo } from '../../context/UserInfoContext';
 import useCookie from '../../hooks/useCookie';
 import { Navigation } from '../../navigation';
-import { useTenant } from '../../context/TenantContext';
 
 const Logout = () => {
   const { setUserInfo } = useUserInfo();

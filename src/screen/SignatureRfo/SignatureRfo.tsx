@@ -1,18 +1,18 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import React, { FC, useCallback, useEffect } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
 import { Space } from 'antd';
+import React, { FC, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import styled, { css, ThemeContext } from 'styled-components';
 
 import InvisibleButton from '../../components/InvisibleButton';
-import useRequest from '../../hooks/useRequest';
-import { optionsGetSignaturePackSupplier, optionsGetSignaturePackClient } from '../../endpoints/signature';
-import { SignaturePackClient, SignaturePackSupplier } from '../../interface/signature';
 import { useScroll } from '../../context/ScrollContext';
-import Supplier from './Supplier';
-import Client from './Client';
+import { optionsGetSignaturePackClient, optionsGetSignaturePackSupplier } from '../../endpoints/signature';
+import useRequest from '../../hooks/useRequest';
+import { SignaturePackClient, SignaturePackSupplier } from '../../interface/signature';
 import { getQueryParameters } from '../../utils/url';
+import Client from './Client';
+import Supplier from './Supplier';
 
 interface Props {
   className?: string;
@@ -57,11 +57,11 @@ const SignatureRfo: FC<Props> = ({ className }) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [getSignaturePack]);
 
   useEffect(() => {
     getSignaturePack();
-  }, []);
+  }, [getSignaturePack]);
 
   useEffect(() => {
     if (scroll)
@@ -87,10 +87,10 @@ const SignatureRfo: FC<Props> = ({ className }) => {
           </b>
         </InvisibleButton>
         {isClient(signaturePack) && (
-          <Client signaturePack={signaturePack} packId={packId as string} getSignaturePack={getSignaturePack} />
+          <Client getSignaturePack={getSignaturePack} packId={packId as string} signaturePack={signaturePack} />
         )}
         {!isClient(signaturePack) && (
-          <Supplier signaturePack={signaturePack} packId={packId as string} getSignaturePack={getSignaturePack} />
+          <Supplier getSignaturePack={getSignaturePack} packId={packId as string} signaturePack={signaturePack} />
         )}
       </Space>
     </div>

@@ -1,5 +1,5 @@
-import memoize from 'lodash/memoize';
 import { AxiosRequestConfig } from 'axios';
+import memoize from 'lodash/memoize';
 
 export const optionsGetSuppliers = memoize(
   (): AxiosRequestConfig => ({

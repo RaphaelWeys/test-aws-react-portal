@@ -42,13 +42,13 @@ const CervedList: FC<IProps> = ({ className }) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
+            autoFocus
             as={InputText}
-            name="codiceFiscale"
             control={control}
             error={errors.codiceFiscale}
-            label="Supplier naTax code (11 digits, just digits, no IT)"
             htmlFor="codiceFiscale"
-            autoFocus
+            label="Supplier naTax code (11 digits, just digits, no IT)"
+            name="codiceFiscale"
           />
 
           <Margin mt={10}>

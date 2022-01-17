@@ -1,19 +1,19 @@
 /* eslint-disable no-nested-ternary */
+import { Col, Row, Space } from 'antd';
 import React, { FC, useRef } from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
 import CustomLink from '../../components/CustomLink/CustomLink';
-import RectangleBox from '../../layout/RectangleBox/RectangleBox';
-import { Input } from '../../components/Input';
 import GradientButton from '../../components/GradientButton/GradientButton';
+import { Input } from '../../components/Input';
 import { AlertStyled } from '../../components/Modal/ScreenModal/ForgotPasswordModal/ForgotPasswordModal.styled';
 import { getValidationCheck } from '../../constants';
-import { HeaderOne, TextRegular } from '../../style/utils';
 import { useResetPassword } from '../../endpoints/user/useResetPassword';
-import { Col, Row, Space } from 'antd';
+import RectangleBox from '../../layout/RectangleBox/RectangleBox';
+import { HeaderOne, TextRegular } from '../../style/utils';
 import { getQueryParameters } from '../../utils/url';
 
 interface Props {
@@ -59,7 +59,7 @@ const ResetPassword: FC<Props> = ({ className }) => {
   return (
     <div className={className}>
       <RectangleBox>
-        <Space direction="vertical" size="large" align="center">
+        <Space align="center" direction="vertical" size="large">
           {!resResetPassword && (
             <>
               <TextRegular>
@@ -68,13 +68,13 @@ const ResetPassword: FC<Props> = ({ className }) => {
               <HeaderOne>{t('reset-password-title')}</HeaderOne>
             </>
           )}
-          {error && <AlertStyled message={t('reset-password-change-password-failed')} type="error" showIcon />}
+          {error && <AlertStyled showIcon message={t('reset-password-change-password-failed')} type="error" />}
           {!token ? (
-            <AlertStyled message={t('reset-password-no-token')} type="warning" showIcon />
+            <AlertStyled showIcon message={t('reset-password-no-token')} type="warning" />
           ) : resResetPassword ? (
             <>
-              <AlertStyled message={t('reset-password-change-password-success')} type="success" showIcon />
-              <GradientButton onClick={(): void => history.push('/login')} noGradient variant="outlined" fullWidth>
+              <AlertStyled showIcon message={t('reset-password-change-password-success')} type="success" />
+              <GradientButton fullWidth noGradient variant="outlined" onClick={(): void => history.push('/login')}>
                 {t('reset-password-back-login')}
               </GradientButton>
             </>
@@ -84,25 +84,25 @@ const ResetPassword: FC<Props> = ({ className }) => {
                 <Col span={24}>
                   <Controller
                     as={Input}
-                    name="password"
-                    label={t('reset-password-new-password')}
                     control={control}
-                    type="password"
                     error={errors?.password}
+                    label={t('reset-password-new-password')}
+                    name="password"
+                    type="password"
                   />
                 </Col>
                 <Col span={24}>
                   <Controller
                     as={Input}
-                    name="confirmPassword"
-                    label={t('reset-password-confirm-new-password')}
                     control={control}
-                    type="password"
                     error={errors?.confirmPassword}
+                    label={t('reset-password-confirm-new-password')}
+                    name="confirmPassword"
+                    type="password"
                   />
                 </Col>
 
-                <GradientButton type="submit" isLoading={isLoading} fullWidth>
+                <GradientButton fullWidth isLoading={isLoading} type="submit">
                   {t('reset-password-change-password')}
                 </GradientButton>
               </Row>

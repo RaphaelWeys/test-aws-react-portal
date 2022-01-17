@@ -1,5 +1,5 @@
-import React, { FC, useContext, useMemo } from 'react';
 import axios, { AxiosInstance } from 'axios';
+import React, { FC, useContext, useMemo } from 'react';
 
 import { useUserInfo } from './UserInfoContext';
 
@@ -17,9 +17,7 @@ const ApiProvider: FC = ({ children }) => {
 
     instance.interceptors.response.use(
       (response) => response,
-      (error) => {
-        return Promise.reject(error);
-      },
+      (error) => Promise.reject(error),
     );
 
     return instance;
@@ -36,4 +34,4 @@ function useApi() {
   return context;
 }
 
-export { ApiProvider, useApi, ApiContext };
+export { ApiContext,ApiProvider, useApi };

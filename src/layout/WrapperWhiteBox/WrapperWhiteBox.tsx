@@ -3,9 +3,10 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import styled, { css, ThemeContext } from 'styled-components';
+
 import ButtonLink from '../../components/ButtonLink';
 import CloseIcon from '../../components/icons/CloseIcon';
-import { BlueStyle, HeaderOne } from '../../style/utils';
+import { HeaderOne, MainLinkStyle, TextSmall } from '../../style/utils';
 import { ButtonClose, NavigationIcon } from './WrapperWhiteBox.styled';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   onCancel?: () => void;
   icon?: React.ReactNode;
   title?: React.ReactNode;
+  preTitle?: string;
   extra?: React.ReactNode;
 }
 
@@ -29,14 +31,13 @@ const WrapperWhiteBox: FC<Props> = ({
   icon,
   title,
   extra,
+  preTitle,
 }) => {
   const [t] = useTranslation();
   const history = useHistory();
   const themeContext = React.useContext(ThemeContext);
 
-  const isDifferentDomain = React.useMemo(() => {
-    return to?.startsWith('https://') || to?.startsWith('http://');
-  }, [to]);
+  const isDifferentDomain = React.useMemo(() => to?.startsWith('https://') || to?.startsWith('http://'), [to]);
 
   const handleClickBackButton = React.useCallback(() => {
     if (isDifferentDomain) {
@@ -50,7 +51,7 @@ const WrapperWhiteBox: FC<Props> = ({
     <>
       {backButtonText && to && (
         <NavigationIcon align="left">
-          <ButtonLink onClick={handleClickBackButton} iconPosition="left">
+          <ButtonLink iconPosition="left" onClick={handleClickBackButton}>
             {isDifferentDomain ? t('global-back') : t(backButtonText)}
           </ButtonLink>
         </NavigationIcon>
@@ -58,29 +59,34 @@ const WrapperWhiteBox: FC<Props> = ({
       <>
         {hasCloseIcon && (
           <NavigationIcon align="right">
-            <BlueStyle>
+            <MainLinkStyle>
               <ButtonClose onClick={() => onCancel()}>
                 <Space align="center">
                   {t('global-cancel')}
                   <CloseIcon color={themeContext.colors.baseColor} />
                 </Space>
               </ButtonClose>
-            </BlueStyle>
+            </MainLinkStyle>
           </NavigationIcon>
         )}
-        <Space direction="vertical" size="large" className={className}>
-          {(icon || title) && (
-            <Row align="middle" justify="space-between" gutter={[0, 12]} style={{ width: '100%' }}>
-              <Col>
-                <Space size="middle">
-                  {icon && icon}
-                  {title && <HeaderOne>{title}</HeaderOne>}
-                </Space>
-              </Col>
-              <Col>{extra}</Col>
-            </Row>
-          )}
+        <Space className={className} direction="vertical" size="large">
+          {(preTitle || icon || title) && (
+            <Space direction="vertical">
+              {preTitle && <TextSmall>{preTitle.toUpperCase()}</TextSmall>}
 
+              {(icon || title) && (
+                <Row align="middle" gutter={[0, 12]} justify="space-between" style={{ width: '100%' }}>
+                  <Col>
+                    <Space size="middle">
+                      {icon && icon}
+                      {title && <HeaderOne>{title}</HeaderOne>}
+                    </Space>
+                  </Col>
+                  <Col>{extra}</Col>
+                </Row>
+              )}
+            </Space>
+          )}
           {children}
         </Space>
       </>

@@ -1,1 +1,1 @@
-export { default } from './BasketWrapper';
+export { default } from './Basket';

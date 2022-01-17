@@ -1,25 +1,25 @@
-import { useTranslation } from 'react-i18next';
-import React, { FC } from 'react';
 import { Col, Row, Space } from 'antd';
 import moment from 'moment';
+import React, { FC } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import WrapperWhiteBox from '../../../../layout/WrapperWhiteBox';
-import MainLayout from '../../../../layout/MainLayout/MainLayout';
-import { HeaderOne, TextRegular } from '../../../../style/utils';
-import Collapse from '../../../../components/Collapse';
 import logoCompany from '../../../../assets/picto-compte-entreprise.svg';
+import Collapse from '../../../../components/Collapse';
 import GradientButton from '../../../../components/GradientButton';
-import FormStep1 from '../FormStep1';
-import { FormProvider, useForm } from 'react-hook-form';
-import FormStep2 from '../FormStep2';
-import { MultiAccessClientUser } from '../../../../interface/multiAccess';
-import { useUpdateMultiAccessUser } from '../../../../endpoints/multiAccess/useUpdateMultiAccessUser';
-import { hasSomeClientMarketActivated } from '../../utils';
 import { useGetMarketList } from '../../../../endpoints/multiAccess/useGetMarketList';
+import { useUpdateMultiAccessUser } from '../../../../endpoints/multiAccess/useUpdateMultiAccessUser';
 import useGetPortalApp from '../../../../hooks/useGetPortalApp';
+import { MultiAccessClientUser } from '../../../../interface/multiAccess';
+import MainLayout from '../../../../layout/MainLayout/MainLayout';
+import WrapperWhiteBox from '../../../../layout/WrapperWhiteBox';
+import { Navigation } from '../../../../navigation';
 import history from '../../../../router/history';
-import { Navigation } from '../../../../navigation/index';
+import { HeaderOne, TextRegular } from '../../../../style/utils';
+import { hasSomeClientMarketActivated } from '../../utils';
+import FormStep1 from '../FormStep1';
+import FormStep2 from '../FormStep2';
 
 interface Props {
   defaultValues: MultiAccessClientUser;
@@ -154,7 +154,7 @@ const MultiAccessClientEdit: FC<Props> = ({ defaultValues, companyName }) => {
       <WrapperWhiteBox>
         <Space direction="vertical" size="middle">
           <Space size="middle">
-            <img src={logoCompany} alt="logo" />
+            <img alt="logo" src={logoCompany} />
             <HeaderOne>{companyName}</HeaderOne>
           </Space>
 
@@ -183,10 +183,10 @@ const MultiAccessClientEdit: FC<Props> = ({ defaultValues, companyName }) => {
                 </Row>
 
                 <Space size="middle">
-                  <GradientButton onClick={() => backToDetails()} variant="outlined">
+                  <GradientButton variant="outlined" onClick={() => backToDetails()}>
                     {t('global-cancel')}
                   </GradientButton>
-                  <GradientButton type="submit" isLoading={isLoading}>
+                  <GradientButton isLoading={isLoading} type="submit">
                     {t('global-modify')}
                   </GradientButton>
                 </Space>

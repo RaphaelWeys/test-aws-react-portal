@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
+
 import { useTenant } from '../../../context/TenantContext';
 import { useUpdateTermAndCondition } from '../../../endpoints/user/useUpdateTermAndCondition';
 import { UserInfo } from '../../../interface/user';
@@ -74,12 +75,12 @@ const ModalTermAndCondition: FC<Props> = ({ className, onClose, title, handleSuc
 
   return (
     <Modal
-      size="small"
-      icon={<TermConditionIcon />}
-      title={title}
-      closable={false}
-      maskClosable={false}
       className={className}
+      closable={false}
+      icon={<TermConditionIcon />}
+      maskClosable={false}
+      size="small"
+      title={title}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Space direction="vertical" size="large">
@@ -90,10 +91,10 @@ const ModalTermAndCondition: FC<Props> = ({ className, onClose, title, handleSuc
               </TextRegular>
             </Col>
           </Row>
-          <Hr noTop noBottom />
+          <Hr noBottom noTop />
           <Row gutter={[0, 16]}>
             <Col>
-              <Controller as={Checkbox} control={control} name="generalCondition" error={!!errors?.generalCondition}>
+              <Controller as={Checkbox} control={control} error={!!errors?.generalCondition} name="generalCondition">
                 {getTextWithFunctionInside(
                   t('modal-cgu-rgpd-general-condition-1'),
                   [() => handleOpenModal(ModalType.GENERAL_CONDITION), t('modal-cgu-rgpd-general-condition-2')],
@@ -102,7 +103,7 @@ const ModalTermAndCondition: FC<Props> = ({ className, onClose, title, handleSuc
               </Controller>
             </Col>
             <Col>
-              <Controller as={Checkbox} control={control} name="privacyPolicy" error={!!errors?.privacyPolicy}>
+              <Controller as={Checkbox} control={control} error={!!errors?.privacyPolicy} name="privacyPolicy">
                 {getTextWithFunctionInside(
                   t('modal-cgu-rgpd-privacy-policy-1'),
                   [() => handleOpenModal(ModalType.PRIVACY_POLICY), t('modal-cgu-rgpd-privacy-policy-2')],
@@ -111,10 +112,10 @@ const ModalTermAndCondition: FC<Props> = ({ className, onClose, title, handleSuc
               </Controller>
             </Col>
           </Row>
-          <Hr noTop noBottom />
+          <Hr noBottom noTop />
           <Row>
             <Col>
-              <GradientButton type="submit" isLoading={isLoading}>
+              <GradientButton isLoading={isLoading} type="submit">
                 {t('term-and-condition-button-valid')}
               </GradientButton>
             </Col>
@@ -124,12 +125,12 @@ const ModalTermAndCondition: FC<Props> = ({ className, onClose, title, handleSuc
 
       {modalInfo && (
         <Modal
-          title={modalInfo.title}
-          size="large"
-          onCancel={() => setModalInfo(null)}
+          closable={false}
           icon={<TermConditionIcon />}
           maskClosable={false}
-          closable={false}
+          size="large"
+          title={modalInfo.title}
+          onCancel={() => setModalInfo(null)}
         >
           <TextRegular>
             <SafeHTMLTranslate template={modalInfo.description} />

@@ -4,20 +4,19 @@ import { useMutation } from 'react-query';
 
 import { useApi } from '../../context/ApiContext';
 import { useUserInfo } from '../../context/UserInfoContext';
+import useSaveToken from '../../hooks/useSaveToken';
 import { UserInfo } from '../../interface/user';
-import { saveTokenCookies } from '../../utils';
-import { useTenant } from '../../context/TenantContext';
 
 export const useValidateEmail = (token: string) => {
   const client = useApi();
   const { setUserInfo } = useUserInfo();
-  const { env } = useTenant();
+  const { saveToken } = useSaveToken();
 
   return useMutation<UserInfo, AxiosError<UserInfo>>(
     () => client.post('/users/validateEmail', { token }).then((res) => res.data),
     {
       onSuccess(data) {
-        saveTokenCookies(data.token, env.REACT_APP_SUB_DOMAIN);
+        saveToken(data.token);
         setUserInfo(data);
       },
       onError(error) {
