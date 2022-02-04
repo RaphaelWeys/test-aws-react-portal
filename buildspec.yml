@@ -10,7 +10,7 @@ phases:
   build:
     commands:
       - yarn build
-   post_build:
+  post_build:
     commands:
       - aws s3 sync ./build s3://$BUCKET_NAME/ --delete --cache-control max-age=3600
 
